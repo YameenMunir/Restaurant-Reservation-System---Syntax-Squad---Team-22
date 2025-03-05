@@ -19,9 +19,9 @@
 <nav class="bg-black text-white p-4 flex justify-between items-center">
   <div class="text-xl font-bold">🔥 Fog &amp; Flame</div>
   <div class="space-x-4">
-    <a class="hover:underline" href="#">Home</a>
-    <a class="hover:underline" href="#">Reservations</a>
-    <a class="hover:underline" href="#">Contact</a>
+    <a class="hover:underline" href="index.html">Home</a>
+    <a class="hover:underline" href="reservation.html">Reservations</a>
+    <a class="hover:underline" id="contact-btn" href="contact.html">Contact</a>
   </div>
 </nav>
 
@@ -83,10 +83,15 @@
   </div>
 </footer>
 
-<!-- JavaScript to Redirect to Reservation Page -->
+<!-- JavaScript to Redirect to Reservation & Contact Pages -->
 <script>
   document.getElementById("reserve-btn").addEventListener("click", function() {
-    window.location.href = "reservation.html"; // Redirect to the reservation page
+    window.location.href = "reservation.html"; // Redirect to reservation page
+  });
+
+  document.getElementById("contact-btn").addEventListener("click", function(event) {
+    event.preventDefault();
+    window.location.href = "contact.html"; // Redirect to contact page
   });
 </script>
 
