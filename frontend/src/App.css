@@ -1,42 +1,97 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: white;
+  color: black;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* Prevent scrolling */
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ensure it fills the whole screen */
+  width: 100vw;
+}
+
+/* Top Menu */
+.top-menu {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  width: 100%;
+  height: 10vh; /* Makes the menu bar 10% of the screen height */
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.2rem; /* Reduce the gap slightly */
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+nav ul li:last-child {
+  margin-right: 2rem; /* Move 'Contact' slightly left */
 }
 
-.card {
-  padding: 2em;
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
 }
 
-.read-the-docs {
-  color: #888;
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Main Content */
+.content {
+  flex-grow: 1;
+  text-align: center;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Ensures it fills remaining space */
+}
+
+.reserve-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.reserve-btn:hover {
+  background-color: #333;
+}
+
+/* Bottom Footer */
+.bottom-menu {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  width: 100%;
+  height: 10vh; /* Makes the footer 10% of the screen height */
 }
