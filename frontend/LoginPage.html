@@ -1,71 +1,48 @@
 <html>
 <head>
-    <title>
-        Fog &amp; Flame
-    </title>
-    <script src="https://cdn.tailwindcss.com">
-    </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <title>Fog & Flame</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-<body class="bg-gray-100 font-roboto">
-<header class="bg-black text-white p-4 flex justify-between items-center">
-    <div class="text-xl font-bold">
-         Fog &amp; Flame
+<body class="bg-gray-100">
+<!-- Navbar -->
+<nav class="bg-black text-white p-4 flex justify-between items-center">
+    <div class="text-lg font-bold">Fog & Flame</div>
+    <div class="space-x-4">
+        <a href="#" class="hover:underline">Home</a>
+        <a href="#" class="hover:underline">Contact</a>
     </div>
-    <nav>
-        <ul class="flex space-x-4">
-            <li>
-                <a class="hover:underline" href="#">
-                    Home
-                </a>
-            </li>
-            <li>
-                <a class="hover:underline" href="#">
-                    Contact
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main class="flex flex-col items-center justify-center min-h-screen">
-    <h1 class="text-3xl font-bold mt-8">
-        Welcome Back
-    </h1>
-    <p class="text-gray-600 mt-2 mb-8">
-        Indulge in our luxurious chocolate creations, sushi, and pasta dishes.
-    </p>
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 class="text-xl font-bold mb-4">
-            Login
-        </h2>
+</nav>
+
+<!-- Main Content -->
+<div class="flex flex-col items-center justify-center min-h-screen">
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold mb-2">Welcome Back</h1>
+        <p class="text-gray-600">Indulge in our luxurious chocolate creations, sushi, and pasta dishes.</p>
+    </div>
+
+    <!-- Login Form -->
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md mb-6">
+        <h2 class="text-xl font-bold mb-4">Login</h2>
         <form>
             <div class="mb-4">
-                <label class="block text-gray-700">
-                    Email
-                </label>
-                <input class="w-full p-2 border rounded" placeholder="Email" type="email"/>
+                <label for="email" class="block text-gray-700">Email</label>
+                <input type="email" id="email" class="w-full p-2 border border-gray-300 rounded mt-1" placeholder="Email">
             </div>
-            <div class="mb-4">
-                <label class="block text-gray-700">
-                    Password
-                </label>
-                <input class="w-full p-2 border rounded" placeholder="Password" type="password"/>
+            <div class="mb-6">
+                <label for="password" class="block text-gray-700">Password</label>
+                <input type="password" id="password" class="w-full p-2 border border-gray-300 rounded mt-1" placeholder="Password">
             </div>
-            <button class="w-full bg-black text-white p-2 rounded" type="submit">
-                Log In
-            </button>
+            <button type="submit" class="w-full bg-black text-white p-2 rounded transform transition-transform duration-300 hover:scale-105">Log In</button>
         </form>
     </div>
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-8">
-        <h2 class="text-xl font-bold mb-4">
-            Continue as Guest
-        </h2>
-        <p class="text-gray-600 mb-4">
-            Explore our menu and make reservations without logging in.
-        </p>
-        <button class="w-full border border-black text-black p-2 rounded">
-            Continue as Guest
-        </button>
+
+    <!-- Guest Login -->
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 class="text-xl font-bold mb-4">Continue as Guest</h2>
+        <p class="text-gray-600 mb-4">Explore our menu and make reservations without logging in.</p>
+        <button class="w-full border border-black text-black p-2 rounded transform transition-transform duration-300 hover:scale-105">Continue as Guest</button>
     </div>
-</main>
+</div>
+</body>
+</html>
