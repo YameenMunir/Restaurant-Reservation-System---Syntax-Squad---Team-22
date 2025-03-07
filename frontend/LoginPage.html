@@ -1,71 +1,165 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>
-        Fog &amp; Flame
-    </title>
-    <script src="https://cdn.tailwindcss.com">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fog & Flame - Welcome Back</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+            rel="stylesheet"
+    />
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1a1a1a",
+                        secondary: "#4A5568",
+                    },
+                    borderRadius: {
+                        none: "0px",
+                        sm: "4px",
+                        DEFAULT: "8px",
+                        md: "12px",
+                        lg: "16px",
+                        xl: "20px",
+                        "2xl": "24px",
+                        "3xl": "32px",
+                        full: "9999px",
+                        button: "8px",
+                    },
+                },
+            },
+        };
     </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
 </head>
-<body class="bg-gray-100 font-roboto">
-<header class="bg-black text-white p-4 flex justify-between items-center">
-    <div class="text-xl font-bold">
-         Fog &amp; Flame
-    </div>
-    <nav>
-        <ul class="flex space-x-4">
-            <li>
-                <a class="hover:underline" href="#">
-                    Home
-                </a>
-            </li>
-            <li>
-                <a class="hover:underline" href="#">
-                    Contact
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main class="flex flex-col items-center justify-center min-h-screen">
-    <h1 class="text-3xl font-bold mt-8">
-        Welcome Back
-    </h1>
-    <p class="text-gray-600 mt-2 mb-8">
-        Indulge in our luxurious chocolate creations, sushi, and pasta dishes.
-    </p>
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 class="text-xl font-bold mb-4">
-            Login
-        </h2>
-        <form>
-            <div class="mb-4">
-                <label class="block text-gray-700">
-                    Email
-                </label>
-                <input class="w-full p-2 border rounded" placeholder="Email" type="email"/>
+<body class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+<nav class="bg-primary">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex-shrink-0">
+                <a href="/" class="text-white font-['Pacifico'] text-2xl"
+                >Fog & Flame</a
+                >
             </div>
-            <div class="mb-4">
-                <label class="block text-gray-700">
-                    Password
-                </label>
-                <input class="w-full p-2 border rounded" placeholder="Password" type="password"/>
+            <div class="flex space-x-8">
+                <a
+                        href="/"
+                        class="text-white hover:text-gray-300 px-3 py-2 text-sm font-medium"
+                >Home</a
+                >
+                <a
+                        href="/contact"
+                        class="text-white hover:text-gray-300 px-3 py-2 text-sm font-medium"
+                >Contact</a
+                >
             </div>
-            <button class="w-full bg-black text-white p-2 rounded" type="submit">
-                Log In
-            </button>
-        </form>
+        </div>
     </div>
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-8">
-        <h2 class="text-xl font-bold mb-4">
-            Continue as Guest
-        </h2>
-        <p class="text-gray-600 mb-4">
-            Explore our menu and make reservations without logging in.
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-12">
+        <h1
+                class="text-4xl font-bold font-['Playfair_Display'] text-gray-900 mb-4"
+        >
+            Welcome Back
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Experience our exquisite culinary journey featuring artisanal
+            chocolates, authentic sushi, and handcrafted pasta dishes.
         </p>
-        <button class="w-full border border-black text-black p-2 rounded">
-            Continue as Guest
-        </button>
+    </div>
+
+    <div class="max-w-md mx-auto space-y-6">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-2xl font-semibold mb-6">Login</h2>
+            <form class="space-y-4" id="loginForm">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1"
+                    >Email</label
+                    >
+                    <input
+                            type="email"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-button focus:ring-2 focus:ring-primary focus:border-transparent"
+                            required
+                    />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1"
+                    >Password</label
+                    >
+                    <input
+                            type="password"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-button focus:ring-2 focus:ring-primary focus:border-transparent"
+                            required
+                    />
+                </div>
+                <button
+                        type="submit"
+                        class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition duration-200 cursor-pointer"
+                >
+                    Log In
+                </button>
+            </form>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-2xl font-semibold mb-4">Continue as Guest</h2>
+            <p class="text-gray-600 mb-6">
+                Browse our menu and make reservations without creating an account.
+            </p>
+            <button
+                    id="guestButton"
+                    class="w-full border-2 border-primary text-primary py-2 px-4 rounded-button hover:bg-primary hover:text-white transition duration-200 cursor-pointer"
+            >
+                Continue as Guest
+            </button>
+        </div>
     </div>
 </main>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const email = formData.get("email");
+        const password = formData.get("password");
+
+        const notification = document.createElement("div");
+        notification.className =
+            "fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded shadow-lg transition-opacity duration-300";
+        notification.textContent = "Login successful!";
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.opacity = "0";
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
+    });
+
+    document.getElementById("guestButton").addEventListener("click", function () {
+        const notification = document.createElement("div");
+        notification.className =
+            "fixed top-4 right-4 bg-blue-500 text-white px-6 py-3 rounded shadow-lg transition-opacity duration-300";
+        notification.textContent = "Continuing as guest...";
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.opacity = "0";
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
+    });
+</script>
+</body>
+</html>

@@ -2,78 +2,230 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Fog & Flame - Contact Us</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Fog & Flame</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+    </style>
     <script>
-        function validateForm(event) {
-            event.preventDefault();
-            const name = document.getElementById("name").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const message = document.getElementById("message").value.trim();
-
-            if (!name || !email || !message) {
-                alert("Please fill in all fields.");
-                return;
-            }
-
-            alert("Thank you for contacting us! We'll get back to you soon.");
-            document.getElementById("contact-form").reset();
-        }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#000000",
+                        secondary: "#4B5563",
+                    },
+                    borderRadius: {
+                        none: "0px",
+                        sm: "4px",
+                        DEFAULT: "8px",
+                        md: "12px",
+                        lg: "16px",
+                        xl: "20px",
+                        "2xl": "24px",
+                        "3xl": "32px",
+                        full: "9999px",
+                        button: "8px",
+                    },
+                },
+            },
+        };
     </script>
 </head>
-<body class="bg-gray-100">
-<!-- Header -->
-<header class="bg-black text-white p-4 flex justify-between items-center">
-    <div class="flex items-center">
-        <i class="fas fa-utensils mr-2"></i>
-        <span class="font-bold text-xl">Fog & Flame</span>
+<body class="min-h-screen bg-white">
+<header class="fixed top-0 left-0 right-0 bg-primary z-50">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="/" class="font-['Pacifico'] text-2xl text-white">Fog & Flame</a>
+        <nav class="flex gap-8">
+            <a href="/" class="text-gray-300 hover:text-white transition-colors">Home</a>
+            <a href="/reservation" class="text-gray-300 hover:text-white transition-colors">Reservation</a>
+            <a href="/contact" class="text-white">Contact</a>
+        </nav>
     </div>
-    <nav>
-        <a class="text-white mx-2 hover:underline" href="index.html">Home</a>
-        <a class="text-white mx-2 hover:underline" href="reservation.html">Reservation</a>
-        <a class="text-white mx-2 hover:underline" href="contact.html">Contact</a>
-    </nav>
 </header>
-
-<!-- Main Content -->
-<main class="p-8 flex flex-col lg:flex-row justify-between">
-    <!-- Contact Information -->
-    <div class="bg-gray-300 p-6 rounded-lg mb-8 lg:mb-0 lg:w-1/3 shadow-md">
-        <h2 class="text-xl font-bold mb-4">Contact Information</h2>
-        <p class="mb-2">📍 Location: London, UK</p>
-        <p class="mb-2">📧 Email: <a href="mailto:fogandflame@restaurant.com" class="text-blue-600 underline">fogandflame@restaurant.com</a></p>
-        <p class="mb-2">📞 Phone: <a href="tel:+442012345678" class="text-blue-600 underline">+44 20 1234 5678</a></p>
-        <p class="mb-2">🌐 Website: <a href="https://www.fogandflame.com" class="text-blue-600 underline" target="_blank">www.fogandflame.com</a></p>
-    </div>
-
-    <!-- Contact Form .  -->
-    <div class="bg-gray-200 p-6 rounded-lg mb-8 lg:mb-0 lg:w-1/3 shadow-md">
-        <h2 class="text-xl font-bold mb-4">Send Us a Message</h2>
-        <form id="contact-form" onsubmit="validateForm(event)">
-            <input id="name" class="w-full p-2 mb-4 border rounded" placeholder="Your Name" type="text"/>
-            <input id="email" class="w-full p-2 mb-4 border rounded" placeholder="Your Email" type="email"/>
-            <textarea id="message" class="w-full p-2 mb-4 border rounded h-32" placeholder="Your Message"></textarea>
-            <button class="bg-black text-white p-2 rounded w-full hover:bg-gray-800 transition" type="submit">Submit</button>
-        </form>
-    </div>
-
-    <!-- Map -->
-    <div class="lg:w-1/3 shadow-md">
-        <img alt="Fog & Flame Location" class="w-full rounded-lg" src="https://storage.googleapis.com/a1aa/image/3mMK-rbtSqWF9JvY9nltQhnKzv3iQLddfa965mavY8o.jpg"/>
-    </div>
+<main class="pt-24 pb-16 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-gray-50 p-8 rounded-lg">
+                <h2 class="text-xl font-semibold mb-6">Contact Information</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <i class="ri-map-pin-2-line text-primary"></i>
+                        </div>
+                        <span>London, UK</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <i class="ri-mail-line text-primary"></i>
+                        </div>
+                        <a href="mailto:fogandflame@restaurant.com" class="text-blue-600 hover:underline">fogandflame@restaurant.com</a>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <i class="ri-phone-line text-primary"></i>
+                        </div>
+                        <a href="tel:+442012345678" class="text-blue-600 hover:underline">+44 20 1234 5678</a>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <i class="ri-global-line text-primary"></i>
+                        </div>
+                        <a href="http://www.fogandflame.com" target="_blank" class="text-blue-600 hover:underline">www.fogandflame.com</a>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
+                <h2 class="text-xl font-semibold mb-6">Send Us a Message</h2>
+                <form id="contactForm" class="space-y-4">
+                    <div>
+                        <input type="text" id="name" name="name" placeholder="Your Name" required
+                               class="w-full px-4 py-2 rounded border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors">
+                    </div>
+                    <div>
+                        <input type="email" id="email" name="email" placeholder="Your Email" required
+                               class="w-full px-4 py-2 rounded border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors">
+                    </div>
+                    <div>
+<textarea id="message" name="message" rows="5" placeholder="Your Message" required
+          class="w-full px-4 py-2 rounded border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-gray-800 transition-colors">
+                        Submit
+                    </button>
+                </form>
+            </div>
+            <div class="bg-gray-100 rounded-lg overflow-hidden h-[400px] relative">
+                <img src="https://public.readdy.ai/gen_page/map_placeholder_1280x720.png" alt="Location Map" class="absolute inset-0 w-full h-full object-cover">
+            </div>
+        </div>
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-2xl font-semibold text-center mb-12">Special Offers</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100">
+                        <img src="https://public.readdy.ai/ai/img_res/ddcaa21cd971ca39464167cd76db6ea8.jpg" alt="Fine Dining" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold mb-2">Weekend Special</h3>
+                            <p class="text-gray-600 mb-4">Enjoy 20% off on our chef's special menu every weekend. Valid for dinner reservations only.</p>
+                            <button class="bg-primary text-white px-6 py-2 rounded-button hover:bg-gray-800 transition-colors whitespace-nowrap">Book Now</button>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100">
+                        <img src="https://public.readdy.ai/ai/img_res/317235f620bf18daaa5c1f18c80c0fed.jpg" alt="Romantic Dinner" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold mb-2">Romantic Package</h3>
+                            <p class="text-gray-600 mb-4">Special romantic 4-course dinner with complimentary champagne. Perfect for anniversaries.</p>
+                            <button onclick="showRomanticDetails()" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-gray-800 transition-colors whitespace-nowrap">Learn More</button>
+                        </div>
+                    </div>
+                    <div id="romanticModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+                        <div class="bg-white rounded-lg p-8 max-w-2xl w-full mx-4">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-2xl font-semibold">Romantic Dinner Package Details</h3>
+                                <button onclick="closeRomanticModal()" class="text-gray-500 hover:text-gray-700">
+                                    <div class="w-6 h-6 flex items-center justify-center">
+                                        <i class="ri-close-line text-xl"></i>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold mb-2">Package Includes:</h4>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                                        <li>Intimate candlelit table setting with rose petals</li>
+                                        <li>Complimentary bottle of premium champagne</li>
+                                        <li>Personalized 4-course menu selection</li>
+                                        <li>Special dessert with personalized message</li>
+                                        <li>Professional photography service (optional)</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold mb-2">Menu Highlights:</h4>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                                        <li>Choice of premium appetizers</li>
+                                        <li>Signature soup or salad</li>
+                                        <li>Selection of main courses including seafood and premium cuts</li>
+                                        <li>Decadent dessert options</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold mb-2">Pricing:</h4>
+                                    <p class="text-gray-600">£199 per couple</p>
+                                    <p class="text-sm text-gray-500 mt-2">* Advance booking required. Available every day for dinner service.</p>
+                                </div>
+                                <div class="mt-8 flex justify-end">
+                                    <button onclick="closeRomanticModal()" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-button hover:bg-gray-300 transition-colors mr-4">Close</button>
+                                    <button onclick="bookRomanticPackage()" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-gray-800 transition-colors">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100">
+                        <img src="https://public.readdy.ai/ai/img_res/fd404799a24fa3757f864b9d52a746c4.jpg" alt="Gourmet Experience" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold mb-2">Tasting Menu</h3>
+                            <p class="text-gray-600 mb-4">Experience our 7-course tasting menu with wine pairing. Available daily for dinner.</p>
+                            <button class="bg-primary text-white px-6 py-2 rounded-button hover:bg-gray-800 transition-colors whitespace-nowrap">Reserve Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 </main>
-
-<!-- Footer -->
-<footer class="bg-gray-300 p-4 flex justify-between items-center">
-    <div class="flex items-center">
-        <a class="text-black mx-2 hover:text-gray-600" href="#"><i class="fab fa-facebook"></i></a>
-        <a class="text-black mx-2 hover:text-gray-600" href="#"><i class="fab fa-twitter"></i></a>
-        <a class="text-black mx-2 hover:text-gray-600" href="#"><i class="fab fa-instagram"></i></a>
-        <span class="ml-2">Fog & Flame</span>
+<footer class="bg-primary">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div class="flex gap-4">
+            <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <i class="ri-facebook-fill"></i>
+                </div>
+            </a>
+            <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <i class="ri-instagram-line"></i>
+                </div>
+            </a>
+        </div>
+        <div class="font-['Pacifico'] text-white">Fog & Flame</div>
+        <div class="text-sm text-gray-300">© 2023 All Rights Reserved</div>
     </div>
-    <div>© 2023 All Rights Reserved.</div>
 </footer>
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-green-100 rounded-full">
+            <i class="ri-check-line text-green-500 text-3xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Thank You!</h3>
+        <p class="text-gray-600 mb-6">We have received your message and will get back to you shortly.</p>
+        <button onclick="closeModal()" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-gray-800 transition-colors">Close</button>
+    </div>
+</div>
+<script>
+    function closeModal() {
+        document.getElementById("successModal").classList.add("hidden");
+    }
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        document.getElementById("successModal").classList.remove("hidden");
+        this.reset();
+    });
+    function showRomanticDetails() {
+        document.getElementById("romanticModal").classList.remove("hidden");
+    }
+    function closeRomanticModal() {
+        document.getElementById("romanticModal").classList.add("hidden");
+    }
+    function bookRomanticPackage() {
+        closeRomanticModal();
+        window.location.href = "/reservation";
+    }
+</script>
 </body>
 </html>
