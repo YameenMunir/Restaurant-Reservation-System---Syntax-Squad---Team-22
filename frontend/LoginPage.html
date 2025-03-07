@@ -1,49 +1,71 @@
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Fog &amp; Flame</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>
+        Fog &amp; Flame
+    </title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
 </head>
-<body class="bg-gray-100 flex flex-col min-h-screen">
-<header class="bg-black text-white py-4">
-    <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-xl font-bold flex items-center" style="font-family: 'Roboto', sans-serif;">
-            <i class="fas fa-utensils mr-2"></i>
-            Fog &amp; Flame
-        </h1>
-        <img alt="Fog &amp; Flame logo with a fork and knife crossed behind a banner" class="h-12" height="50" src="https://storage.googleapis.com/a1aa/image/VdaAWcPDrdAdxmt_n5LBXAMemDr9OGRjNbjauWRJnHE.jpg" width="150"/>
+<body class="bg-gray-100 font-roboto">
+<header class="bg-black text-white p-4 flex justify-between items-center">
+    <div class="text-xl font-bold">
+         Fog &amp; Flame
     </div>
+    <nav>
+        <ul class="flex space-x-4">
+            <li>
+                <a class="hover:underline" href="#">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a class="hover:underline" href="#">
+                    Contact
+                </a>
+            </li>
+        </ul>
+    </nav>
 </header>
-<main class="flex-grow flex flex-col items-center justify-center">
-    <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold mb-2">Welcome Back</h2>
-        <p class="text-gray-600">Indulge in our luxurious chocolate creations, sushi, and pasta dishes.</p>
-    </div>
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md mb-6">
-        <h3 class="text-xl font-bold mb-4">Login</h3>
+<main class="flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-3xl font-bold mt-8">
+        Welcome Back
+    </h1>
+    <p class="text-gray-600 mt-2 mb-8">
+        Indulge in our luxurious chocolate creations, sushi, and pasta dishes.
+    </p>
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 class="text-xl font-bold mb-4">
+            Login
+        </h2>
         <form>
             <div class="mb-4">
-                <label class="block text-gray-700" for="email">Email</label>
-                <input class="w-full p-2 border rounded" id="email" type="email"/>
+                <label class="block text-gray-700">
+                    Email
+                </label>
+                <input class="w-full p-2 border rounded" placeholder="Email" type="email"/>
             </div>
             <div class="mb-4">
-                <label class="block text-gray-700" for="password">Password</label>
-                <input class="w-full p-2 border rounded" id="password" type="password"/>
+                <label class="block text-gray-700">
+                    Password
+                </label>
+                <input class="w-full p-2 border rounded" placeholder="Password" type="password"/>
             </div>
-            <button class="w-full bg-black text-white py-2 rounded" type="submit">Log In</button>
+            <button class="w-full bg-black text-white p-2 rounded" type="submit">
+                Log In
+            </button>
         </form>
     </div>
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h3 class="text-xl font-bold mb-4">Continue as Guest</h3>
-        <p class="text-gray-600 mb-4">Explore our menu and make reservations without logging in.</p>
-        <button class="w-full border border-black text-black py-2 rounded">Continue as Guest</button>
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-8">
+        <h2 class="text-xl font-bold mb-4">
+            Continue as Guest
+        </h2>
+        <p class="text-gray-600 mb-4">
+            Explore our menu and make reservations without logging in.
+        </p>
+        <button class="w-full border border-black text-black p-2 rounded">
+            Continue as Guest
+        </button>
     </div>
 </main>
-<footer class="bg-gray-300 text-center py-4">
-    <p class="text-gray-700">© 2023 Fog &amp; Flame. All rights reserved.</p>
-</footer>
-</body>
-</html>
