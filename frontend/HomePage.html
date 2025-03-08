@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Fog &amp; Flame</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* Custom animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
+      }
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translate3d(100%, 0, 0);
+        visibility: visible;
+      }
+      to {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        transform: translate3d(-100%, 0, 0);
+        visibility: visible;
+      }
+      to {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    @keyframes rotateIn {
+      from {
+        transform: rotate(-10deg) scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: rotate(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .animate-fadeIn {
+      animation: fadeIn 1s ease;
+    }
+
+    .animate-fadeInUp {
+      animation: fadeInUp 1s ease;
+    }
+
+    .animate-pulse {
+      animation: pulse 2s infinite;
+    }
+
+    .animate-slideInRight {
+      animation: slideInRight 1s ease;
+    }
+
+    .animate-slideInLeft {
+      animation: slideInLeft 1s ease;
+    }
+
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-rotateIn {
+      animation: rotateIn 0.8s ease;
+    }
+
+    .dish-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .dish-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+
+    .nav-item:hover::after {
+      width: 100%;
+    }
+
+    /* Parallax effect for hero image */
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    /* Slideshow fade transition */
+    .slide {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+<!-- Navbar -->
+<nav class="bg-black text-white p-4 flex justify-between items-center fixed w-full z-50 animate-fadeIn">
+  <div class="text-xl font-bold flex items-center">
+    <span class="mr-2 text-2xl animate-pulse">🔥</span>
+    <span class="transform hover:scale-105 transition-transform duration-300">Fog &amp; Flame</span>
+  </div>
+  <div class="space-x-6">
+    <a class="nav-item hover:text-gray-300 transition-colors duration-300" href="HomePage.html">Home</a>
+    <a class="nav-item hover:text-gray-300 transition-colors duration-300" href="reservation.html">Reservations</a>
+    <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="contact-btn" href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<!-- Spacer for fixed navbar -->
+<div class="h-16"></div>
+
+<!-- Hero Section with Slideshow -->
+<section class="relative h-[75vh] overflow-hidden" id="hero-section">
+  <!-- Slideshow container -->
+  <div class="slideshow-container h-full">
+    <img class="slide active" src="https://storage.googleapis.com/a1aa/image/8Qh6eF0osUSoMtVJ832vehzkcUK0wVvbr0k6AD454Ow.jpg" alt="Delicious gourmet dish">
+    <img class="slide" src="https://storage.googleapis.com/a1aa/image/XYDBxClEvyGeiNR_t65-ezqXRxoFA8rpRys_iysdbIM.jpg" alt="Gourmet pasta">
+    <img class="slide" src="https://storage.googleapis.com/a1aa/image/5vY1zE8MlVMnPn76SzDj88C2s46IwiExv4sXc0UsyU4.jpg" alt="Exquisite sushi">
+    <img class="slide" src="https://storage.googleapis.com/a1aa/image/JD5bT1RjOr1bL-ant-njqSRKO1V0HAGvW7_ZPztJjIo.jpg" alt="Decadent dessert">
+  </div>
+  <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-center text-white">
+    <h1 class="text-5xl font-bold mb-4 opacity-0 animate-float" id="hero-title">Welcome to Fog &amp; Flame</h1>
+    <p class="mt-2 text-xl opacity-0" id="hero-subtitle">Reserve your table now for an unforgettable dining experience.</p>
+    <button id="reserve-btn" class="mt-6 bg-black text-white py-3 px-6 rounded-full border-2 border-white hover:bg-white hover:text-black transition-all duration-300 opacity-0 focus:outline-none transform hover:scale-105">
+      Reserve a Table
+    </button>
+  </div>
+</section>
+
+<!-- Featured Dishes Section -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-10 text-center opacity-0" id="dishes-title">Featured Dishes</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 opacity-0" id="dishes-container">
+      <!-- Dish 1 -->
+      <div class="dish-card bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="overflow-hidden h-48">
+          <img alt="A plate of gourmet pasta" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+               src="https://storage.googleapis.com/a1aa/image/XYDBxClEvyGeiNR_t65-ezqXRxoFA8rpRys_iysdbIM.jpg"/>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold">Gourmet Pasta</h3>
+          <p class="mt-3 text-gray-600">A delightful blend of flavors with freshly made pasta and organic ingredients.</p>
+          <button class="mt-4 bg-black text-white py-2 px-4 rounded-full hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">Order Now</button>
+        </div>
+      </div>
+      <!-- Dish 2 -->
+      <div class="dish-card bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="overflow-hidden h-48">
+          <img alt="A variety of exquisite sushi" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+               src="https://storage.googleapis.com/a1aa/image/5vY1zE8MlVMnPn76SzDj88C2s46IwiExv4sXc0UsyU4.jpg"/>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold">Exquisite Sushi</h3>
+          <p class="mt-3 text-gray-600">Experience the finest sushi crafted with precision and passion.</p>
+          <button class="mt-4 bg-black text-white py-2 px-4 rounded-full hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">Order Now</button>
+        </div>
+      </div>
+      <!-- Dish 3 -->
+      <div class="dish-card bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="overflow-hidden h-48">
+          <img alt="A decadent chocolate dessert" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+               src="https://storage.googleapis.com/a1aa/image/JD5bT1RjOr1bL-ant-njqSRKO1V0HAGvW7_ZPztJjIo.jpg"/>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold">Decadent Dessert</h3>
+          <p class="mt-3 text-gray-600">Indulge in a sweet finale with our luxurious chocolate creations.</p>
+          <button class="mt-4 bg-black text-white py-2 px-4 rounded-full hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">Order Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-black text-white py-8">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <p class="mb-4 md:mb-0">© 2023. All rights reserved.</p>
+      <div class="flex space-x-6">
+        <a class="text-2xl hover:text-gray-400 transition-colors duration-300 transform hover:scale-110" href="#"><i class="fab fa-facebook-f"></i></a>
+        <a class="text-2xl hover:text-gray-400 transition-colors duration-300 transform hover:scale-110" href="#"><i class="fab fa-instagram"></i></a>
+        <a class="text-2xl hover:text-gray-400 transition-colors duration-300 transform hover:scale-110" href="#"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JavaScript -->
+<script>
+  // Animation for hero section
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+      document.getElementById('hero-title').classList.add('animate-rotateIn');
+      document.getElementById('hero-title').style.opacity = '1';
+    }, 300);
+
+    setTimeout(() => {
+      document.getElementById('hero-subtitle').classList.add('animate-fadeInUp');
+      document.getElementById('hero-subtitle').style.opacity = '1';
+    }, 800);
+
+    setTimeout(() => {
+      const reserveBtn = document.getElementById('reserve-btn');
+      reserveBtn.classList.add('animate-fadeInUp');
+      reserveBtn.style.opacity = '1';
+
+      // Add pulse effect on hover
+      reserveBtn.addEventListener('mouseenter', function() {
+        this.classList.add('animate-pulse');
+      });
+
+      reserveBtn.addEventListener('mouseleave', function() {
+        this.classList.remove('animate-pulse');
+      });
+    }, 1200);
+
+    // Setup image slideshow
+    setupSlideshow();
+  });
+
+  // Food image slideshow function
+  function setupSlideshow() {
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      // Hide all slides
+      slides.forEach(slide => {
+        slide.classList.remove('active');
+      });
+
+      // Show the current slide
+      slides[index].classList.add('active');
+      slides[index].classList.add('animate-fadeIn');
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    // Change slide every 3 seconds
+    setInterval(nextSlide, 3000);
+  }
+
+  // Animation for dishes section with staggered animation
+  const dishesObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target.id === 'dishes-title') {
+          entry.target.classList.add('animate-fadeInUp');
+          entry.target.style.opacity = '1';
+
+          setTimeout(() => {
+            const dishesContainer = document.getElementById('dishes-container');
+            dishesContainer.style.opacity = '1';
+
+            // Staggered animation for dish cards
+            const dishCards = document.querySelectorAll('.dish-card');
+            dishCards.forEach((card, index) => {
+              setTimeout(() => {
+                card.classList.add('animate-fadeInUp');
+              }, index * 200);
+            });
+          }, 400);
+        }
+        dishesObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  dishesObserver.observe(document.getElementById('dishes-title'));
+
+  // Parallax effect for hero section
+  window.addEventListener('scroll', function() {
+    const scrollPosition = window.pageYOffset;
+    const heroSection = document.getElementById('hero-section');
+    const slides = heroSection.querySelectorAll('.slide');
+
+    slides.forEach(slide => {
+      if (slide.classList.contains('active')) {
+        slide.style.transform = `scale(${1 + scrollPosition * 0.0005}) translateY(${scrollPosition * 0.2}px)`;
+      }
+    });
+  });
+
+  // Redirections
+  document.getElementById("reserve-btn").addEventListener("click", function() {
+    window.location.href = "reservation.html";
+  });
+
+  document.getElementById("contact-btn").addEventListener("click", function(event) {
+    event.preventDefault();
+    window.location.href = "contact.html";
+  });
+</script>
+
+</body>
+</html>
