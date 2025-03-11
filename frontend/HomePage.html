@@ -181,8 +181,8 @@
     <span class="transform hover:scale-105 transition-transform duration-300">Fog &amp; Flame</span>
   </div>
   <div class="space-x-6">
-    <a class="nav-item hover:text-gray-300 transition-colors duration-300" href="HomePage.html">Home</a>
-    <a class="nav-item hover:text-gray-300 transition-colors duration-300" href="reservation.html">Reservations</a>
+    <a class="px-4 py-2 bg-white text-black rounded-full hover:bg-gray-300 transition-colors duration-300" href="#" id="login-btn">Log in</a>
+    <a class="nav-item hover:text-gray-300 transition-colors duration-300" href="reservationPage.html">Reservations</a>
     <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="contact-btn" href="contact.html">Contact</a>
   </div>
 </nav>
@@ -368,13 +368,20 @@
 
   // Redirections.
   document.getElementById("reserve-btn").addEventListener("click", function() {
-    window.location.href = "reservation.html";
+    window.location.href = "reservationPage.html";
   });
 
   document.getElementById("contact-btn").addEventListener("click", function(event) {
     event.preventDefault();
     window.location.href = "contact.html";
   });
+
+  document.getElementById("login-btn").addEventListener("click", function(event) {
+    event.preventDefault();
+    window.location.href = "LoginPage.html";
+  });
+
+
 </script>
 
 </body>

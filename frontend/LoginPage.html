@@ -13,20 +13,10 @@
     <div class="text-xl font-bold">
          Fog &amp; Flame
     </div>
-    <nav>
-        <ul class="flex space-x-4">
-            <li>
-                <a class="hover:underline" href="#">
-                    Home
-                </a>
-            </li>
-            <li>
-                <a class="hover:underline" href="#">
-                    Contact
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="Home-btn" href="contact.html">Home</a>
+    <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="contact-btn" href="contact.html">Contact</a>
+
+
 </header>
 <main class="flex flex-col items-center justify-center min-h-screen">
     <h1 class="text-3xl font-bold mt-8">
@@ -68,4 +58,23 @@
             Continue as Guest
         </button>
     </div>
+
+    <script>
+
+        document.getElementById("reserve-btn").addEventListener("click", function() {
+            window.location.href = "reservationPage.html";
+        });
+
+        document.getElementById("contact-btn").addEventListener("click", function(event) {
+            event.preventDefault();
+            window.location.href = "contact.html";
+        });
+
+        document.getElementById("Home-btn").addEventListener("click", function(event) {
+            event.preventDefault();
+            window.location.href = "HomePage.html";
+        });
+    </script>
 </main>
+
+
