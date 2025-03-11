@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu - Fog &amp; Flame</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
+    <style>
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .menu-item {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .menu-item:hover {
+            background-color: #f8f8f8;
+        }
+        .food-image {
+            height: 160px;
+            object-fit: cover;
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .slide-in {
+            animation: slideIn 0.6s ease-in-out;
+        }
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateX(-30px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .menu-nav-item:hover {
+            transform: translateY(-3px);
+        }
+        .menu-nav-item {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-roboto">
+<header class="bg-black text-white p-4 flex justify-between items-center animate__animated animate__fadeIn">
+    <div class="text-xl font-bold flex items-center">
+        <i class="fas fa-utensils mr-2"></i> Fog &amp; Flame
+    </div>
+    <nav class="flex gap-6">
+        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="home-btn" href="HomePage.html">Home</a>
+        <a class="nav-item hover:text-gray-300 transition-colors duration-300 font-bold" id="menu-btn" href="menu.html">Menu</a>
+        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="contact-btn" href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<main class="flex flex-col items-center justify-center min-h-screen py-8">
+    <h1 class="text-4xl font-bold mt-8 text-center animate__animated animate__fadeInDown">
+        Our Menu
+    </h1>
+    <p class="text-gray-600 mt-2 mb-8 text-center max-w-2xl px-4 animate__animated animate__fadeIn animate__delay-1s">
+        Experience our fusion of traditional recipes and modern culinary innovation. All dishes are prepared with locally-sourced, seasonal ingredients.
+    </p>
+
+    <div class="w-full max-w-5xl px-4">
+        <!-- Menu Navigation -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8 animate__animated animate__fadeIn animate__delay-1s">
+            <a href="#starters" class="menu-nav-item px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors">Starters</a>
+            <a href="#mains" class="menu-nav-item px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors">Main Courses</a>
+            <a href="#seafood" class="menu-nav-item px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors">Seafood</a>
+            <a href="#desserts" class="menu-nav-item px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors">Desserts</a>
+            <a href="#drinks" class="menu-nav-item px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors">Drinks</a>
+        </div>
+
+        <!-- Starters Section -->
+        <section id="starters" class="mb-12 fade-in">
+            <div class="flex items-center mb-6 slide-in">
+                <h2 class="text-2xl font-bold">Starters</h2>
+                <div class="flex-grow border-t border-gray-300 ml-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Truffle Arancini" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Truffle Arancini <span class="ml-2 text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Chef's Choice</span></h3>
+                                <p class="text-gray-600 mt-1">Crispy risotto balls with wild mushroom and truffle oil</p>
+                            </div>
+                            <span class="font-bold text-xl">$14</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Cured Salmon Carpaccio" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Cured Salmon Carpaccio</h3>
+                                <p class="text-gray-600 mt-1">House-cured salmon with pickled fennel, capers and lemon dressing</p>
+                            </div>
+                            <span class="font-bold text-xl">$16</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Charred Artichoke Hearts" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Charred Artichoke Hearts</h3>
+                                <p class="text-gray-600 mt-1">With garlic aioli and crispy sage</p>
+                            </div>
+                            <span class="font-bold text-xl">$12</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Burrata Salad" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Burrata Salad <span class="ml-2 text-sm bg-green-100 text-green-800 px-2 py-1 rounded">Vegetarian</span></h3>
+                                <p class="text-gray-600 mt-1">Fresh burrata, heirloom tomatoes, basil, and aged balsamic</p>
+                            </div>
+                            <span class="font-bold text-xl">$15</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Courses Section -->
+        <section id="mains" class="mb-12 fade-in">
+            <div class="flex items-center mb-6 slide-in">
+                <h2 class="text-2xl font-bold">Main Courses</h2>
+                <div class="flex-grow border-t border-gray-300 ml-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Braised Short Rib" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Braised Short Rib <span class="ml-2 text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Chef's Choice</span></h3>
+                                <p class="text-gray-600 mt-1">48-hour braised beef short rib with celeriac purée and red wine jus</p>
+                            </div>
+                            <span class="font-bold text-xl">$32</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Truffle Tagliatelle" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Truffle Tagliatelle <span class="ml-2 text-sm bg-green-100 text-green-800 px-2 py-1 rounded">Vegetarian</span></h3>
+                                <p class="text-gray-600 mt-1">Handmade pasta with seasonal wild mushrooms, black truffle and aged parmesan</p>
+                            </div>
+                            <span class="font-bold text-xl">$28</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Herb-Crusted Rack of Lamb" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Herb-Crusted Rack of Lamb</h3>
+                                <p class="text-gray-600 mt-1">With rosemary roasted potatoes and mint pesto</p>
+                            </div>
+                            <span class="font-bold text-xl">$36</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Roasted Duck Breast" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Roasted Duck Breast</h3>
+                                <p class="text-gray-600 mt-1">With cherry sauce, crispy polenta and wilted greens</p>
+                            </div>
+                            <span class="font-bold text-xl">$34</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seafood Section -->
+        <section id="seafood" class="mb-12 fade-in">
+            <div class="flex items-center mb-6 slide-in">
+                <h2 class="text-2xl font-bold">Seafood</h2>
+                <div class="flex-grow border-t border-gray-300 ml-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Pan-Seared Scallops" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Pan-Seared Scallops</h3>
+                                <p class="text-gray-600 mt-1">With cauliflower purée, crispy pancetta and herb oil</p>
+                            </div>
+                            <span class="font-bold text-xl">$34</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Grilled Whole Sea Bass" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Grilled Whole Sea Bass <span class="ml-2 text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Chef's Choice</span></h3>
+                                <p class="text-gray-600 mt-1">With lemon, herbs, and Mediterranean vegetables</p>
+                            </div>
+                            <span class="font-bold text-xl">$38</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Signature Sushi Platter" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Signature Sushi Platter</h3>
+                                <p class="text-gray-600 mt-1">Chef's selection of premium nigiri and maki rolls</p>
+                            </div>
+                            <span class="font-bold text-xl">$42</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Lobster Linguine" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Lobster Linguine</h3>
+                                <p class="text-gray-600 mt-1">With cherry tomatoes, white wine, and fresh herbs</p>
+                            </div>
+                            <span class="font-bold text-xl">$40</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Desserts Section -->
+        <section id="desserts" class="mb-12 fade-in">
+            <div class="flex items-center mb-6 slide-in">
+                <h2 class="text-2xl font-bold">Desserts</h2>
+                <div class="flex-grow border-t border-gray-300 ml-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Chocolate Truffle Cake" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Chocolate Truffle Cake <span class="ml-2 text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Chef's Choice</span></h3>
+                                <p class="text-gray-600 mt-1">Rich Belgian chocolate cake with raspberry coulis</p>
+                            </div>
+                            <span class="font-bold text-xl">$12</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Vanilla Bean Crème Brûlée" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Vanilla Bean Crème Brûlée</h3>
+                                <p class="text-gray-600 mt-1">With caramelized sugar crust and seasonal berries</p>
+                            </div>
+                            <span class="font-bold text-xl">$10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Tiramisu" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Tiramisu</h3>
+                                <p class="text-gray-600 mt-1">Classic Italian dessert with espresso and mascarpone</p>
+                            </div>
+                            <span class="font-bold text-xl">$11</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Artisanal Cheese Board" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Artisanal Cheese Board</h3>
+                                <p class="text-gray-600 mt-1">Selection of fine cheeses with artisan crackers and preserves</p>
+                            </div>
+                            <span class="font-bold text-xl">$16</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Drinks Section -->
+        <section id="drinks" class="mb-12 fade-in">
+            <div class="flex items-center mb-6 slide-in">
+                <h2 class="text-2xl font-bold">Drinks</h2>
+                <div class="flex-grow border-t border-gray-300 ml-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Signature Cocktails" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Signature Cocktails</h3>
+                                <ul class="text-gray-600 mt-1 space-y-2">
+                                    <li>Smoky Old Fashioned - Bourbon, bitters, smoked maple - $14</li>
+                                    <li>Elderflower Gin Fizz - Gin, elderflower, lemon, soda - $13</li>
+                                    <li>Fog &amp; Flame Martini - Vodka, blackberry, lemon - $15</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Wine Selection" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Wine Selection</h3>
+                                <p class="text-gray-600 mt-1">Please ask your server for our extensive wine list</p>
+                                <p class="text-gray-600 mt-2">By the glass - from $12</p>
+                                <p class="text-gray-600">By the bottle - from $45</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Craft Beers" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Craft Beers</h3>
+                                <ul class="text-gray-600 mt-1 space-y-2">
+                                    <li>Local IPA - $8</li>
+                                    <li>Seasonal Ale - $8</li>
+                                    <li>Belgian Wheat - $9</li>
+                                    <li>Dark Stout - $8</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md menu-item hover-scale transition-all duration-300">
+                    <img src="/api/placeholder/400/160" alt="Non-Alcoholic Drinks" class="w-full food-image" />
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Non-Alcoholic</h3>
+                                <ul class="text-gray-600 mt-1 space-y-2">
+                                    <li>Specialty Coffee - $5</li>
+                                    <li>Artisanal Tea Selection - $4</li>
+                                    <li>Seasonal Fruit Spritzer - $6</li>
+                                    <li>Fresh-Pressed Juices - $7</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Special Dietary Menu Button -->
+        <div class="flex justify-center my-10">
+            <button class="bg-black text-white px-6 py-3 rounded flex items-center hover:bg-gray-800 transition-colors hover-scale">
+                <i class="fas fa-leaf mr-2"></i> View Special Dietary Menu (Vegan/Gluten-Free)
+            </button>
+        </div>
+
+        <!-- Reservation and Order Section -->
+        <div class="bg-white p-6 rounded-lg shadow-md my-8 hover-scale">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-12">
+                <div class="flex-1 text-center md:text-left">
+                    <h3 class="text-xl font-bold mb-3">Make a Reservation</h3>
+                    <p class="text-gray-600 mb-4">Secure your table for a memorable dining experience.</p>
+                    <button class="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition-colors hover-scale">
+                        <i class="fas fa-calendar-alt mr-2"></i> Reserve a Table
+                    </button>
+                </div>
+                <div class="hidden md:block border-r border-gray-300 h-24"></div>
+                <div class="flex-1 text-center md:text-left">
+                    <h3 class="text-xl font-bold mb-3">Order Takeout</h3>
+                    <p class="text-gray-600 mb-4">Enjoy our cuisine in the comfort of your home.</p>
+                    <button class="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition-colors hover-scale">
+                        <i class="fas fa-shopping-bag mr-2"></i> Order Online
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-black text-white p-6 mt-12">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="text-lg font-bold mb-4 md:mb-0">
+            <i class="fas fa-utensils mr-2"></i> Fog &amp; Flame
+        </div>
+        <div class="flex gap-4">
+            <a href="#" class="hover:text-gray-300 transition-colors"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="hover:text-gray-300 transition-colors"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-300 transition-colors"><i class="fab fa-twitter"></i></a>
+        </div>
+        <div class="mt-4 md:mt-0 text-sm">
+            &copy; 2025 Fog &amp; Flame. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Intersection Observer for scroll animations
+    document.addEventListener("DOMContentLoaded", function() {
+        const sections = document.querySelectorAll("section");
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("fade-in");
+                    entry.target.querySelector(".flex.items-center").classList.add("slide-in");
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    });
+
+    // Navigation button handlers
+    document.getElementById("home-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "HomePage.html";
+    });
+
+    document.getElementById("menu-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "menu.html";
+    });
+
+    document.getElementById("contact-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "contact.html";
+    });
+
+    // Smooth scrolling for menu navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Add animation classes on load
+    window.onload = function() {
+        // Reveal menu items with staggered delay
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add('animate__animated', 'animate__fadeInUp');
+            }, 100 * index);
+        });
+    };
+</script>
+</body>
+</html>
