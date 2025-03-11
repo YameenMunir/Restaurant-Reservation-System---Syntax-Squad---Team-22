@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fog & Flame Restaurant Project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0e0400',
+                        secondary: '#FFB800'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            background-color: #FFFFFF;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="p-8">
+<div class="max-w-[1400px] mx-auto bg-gray-50 rounded-lg shadow-lg p-12">
+    <header class="flex items-center justify-between mb-16">
+        <div class="flex items-center gap-16">
+            <div class="flex items-center gap-6">
+                <i class="ri-fire-line text-6xl text-primary"></i>
+                <h1 class="font-['Pacifico'] text-5xl text-primary">Fog & Flame</h1>
+            </div>
+            <div>
+                <h2 class="text-4xl font-bold text-gray-800">The Project</h2>
+                <p class="text-xl text-gray-600">Restaurant Reservation System Design and Development</p>
+            </div>
+        </div>
+        <img src="https://static.readdy.ai/image/fe2b98367bd2a9125273cc7c93dab5b1/5905972152459377739dab158d37ef9d.png" alt="Fog & Flame Logo" class="h-24 object-contain">
+    </header>
+    <div class="grid grid-cols-12 gap-8">
+        <div class="col-span-3">
+            <h3 class="text-2xl font-bold mb-8 text-primary">Design</h3>
+            <ul class="space-y-4">
+                <li class="flex items-center gap-3">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <i class="ri-layout-2-line text-primary"></i>
+                    </div>
+                    <span>Sitemap</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <i class="ri-layout-masonry-line text-primary"></i>
+                    </div>
+                    <span>Wireframes</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <i class="ri-palette-line text-primary"></i>
+                    </div>
+                    <span>Moodboards</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <i class="ri-smartphone-line text-primary"></i>
+                    </div>
+                    <span>Mockups</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-span-6 relative">
+            <div class="absolute inset-0 bg-secondary/20 rounded-full -z-10"></div>
+            <div class="flex items-center justify-center">
+                <div class="relative w-full">
+                    <img src="https://public.readdy.ai/ai/img_res/35f81d98037205815a0c3a46fd5237f0.jpg"
+                         alt="Background"
+                         class="w-full rounded-lg shadow-lg">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="relative w-[80%] h-[80%] flex items-center justify-center gap-8">
+                            <img src="https://static.readdy.ai/image/fe2b98367bd2a9125273cc7c93dab5b1/4999cda4a75856ab9c04f40116c176f2.png"
+                                 alt="Restaurant Website on Phone"
+                                 class="w-[35%] object-contain rounded-lg shadow-xl">
+                            <img src="https://static.readdy.ai/image/fe2b98367bd2a9125273cc7c93dab5b1/7dd20f9edcb5a39d19bcc475373e1a04.png"
+                                 alt="Restaurant Website on Tablet"
+                                 class="w-[55%] object-contain rounded-lg shadow-xl">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-3">
+            <h3 class="text-2xl font-bold mb-8 text-primary">Development</h3>
+            <ul class="space-y-4">
+                <li class="flex items-center gap-3">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <i class="ri-reactjs-line text-primary"></i>
+                    </div>
+                    <span>React.js</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <i class="ri-database-2-line text-primary"></i>
+                    </div>
+                    <span>MongoDB</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <i class="ri-nodejs-line text-primary"></i>
+                    </div>
+                    <span>Node.js</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="mt-12 bg-white/50 p-6 rounded-lg">
+        <h3 class="text-2xl font-bold mb-6 text-primary">Objectives</h3>
+        <p class="text-gray-700 leading-relaxed">
+            Design and develop a modern restaurant reservation system to enhance customer experience and streamline booking management. The system features real-time availability, automated confirmation emails, and intuitive mobile interface. Integration with POS system allows for efficient table management and customer data analysis.
+        </p>
+    </div>
+    <div class="mt-12 grid grid-cols-3 gap-8">
+        <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
+                <i class="ri-team-line text-4xl text-primary"></i>
+            </div>
+            <h4 class="text-xl font-bold mb-4">Team members</h4>
+            <p class="text-base text-gray-600">
+                Mohammed Ageli<br>
+                Yameen Munir<br>
+                Joey Hall<br>
+                Mohammed
+            </p>
+        </div>
+        <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
+                <i class="ri-user-star-line text-4xl text-primary"></i>
+            </div>
+            <h4 class="text-xl font-bold mb-4">Client</h4>
+            <p class="text-base text-gray-600">
+                Yamin Mehrdad<br>
+                Fog & Flame Owner
+            </p>
+        </div>
+        <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
+                <i class="ri-graduation-cap-line text-4xl text-primary"></i>
+            </div>
+            <h4 class="text-xl font-bold mb-4">Project Lead</h4>
+            <p class="text-base text-gray-600">
+                Yameen Munir<br>
+                Technical Director
+            </p>
+        </div>
+    </div>
+    <footer class="mt-12 pt-8 border-t border-gray-200">
+        <div class="flex justify-between items-center">
+            <div class="text-lg text-gray-500">© 2025 Fog & Flame Restaurant. All rights reserved.</div>
+            <div class="flex gap-6">
+                <i class="ri-award-line text-4xl text-primary"></i>
+                <i class="ri-shield-star-line text-4xl text-primary"></i>
+                <i class="ri-medal-line text-4xl text-primary"></i>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
