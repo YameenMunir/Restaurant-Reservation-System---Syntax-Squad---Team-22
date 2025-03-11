@@ -1,80 +1,161 @@
 <html>
 <head>
-    <title>
-        Fog &amp; Flame
-    </title>
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <title>Fog &amp; Flame</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        .hover-scale:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 font-roboto">
 <header class="bg-black text-white p-4 flex justify-between items-center">
-    <div class="text-xl font-bold">
-         Fog &amp; Flame
+    <div class="text-xl font-bold flex items-center">
+
+        Fog &amp; Flame
     </div>
-    <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="Home-btn" href="contact.html">Home</a>
-    <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="contact-btn" href="contact.html">Contact</a>
-
-
+    <nav class="flex gap-6">
+        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="home-btn" href="HomePage.html">Home</a>
+        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="menu-btn" href="menu.html">Menu</a>
+        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="contact-btn" href="contact.html">Contact</a>
+    </nav>
 </header>
-<main class="flex flex-col items-center justify-center min-h-screen">
-    <h1 class="text-3xl font-bold mt-8">
-        Welcome Back
+
+<main class="flex flex-col items-center justify-center min-h-screen py-8">
+    <h1 class="text-4xl font-bold mt-8 text-center">
+        Welcome to Fog &amp; Flame
     </h1>
-    <p class="text-gray-600 mt-2 mb-8">
-        Indulge in our luxurious chocolate creations, sushi, and pasta dishes.
+    <p class="text-gray-600 mt-2 mb-2 text-center max-w-lg">
+        Where culinary artistry meets comfort. Experience our fusion cuisine, handcrafted chocolates, and signature cocktails.
     </p>
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 class="text-xl font-bold mb-4">
-            Login
-        </h2>
-        <form>
-            <div class="mb-4">
-                <label class="block text-gray-700">
-                    Email
-                </label>
-                <input class="w-full p-2 border rounded" placeholder="Email" type="email"/>
+
+    <div class="flex flex-wrap justify-center gap-6 mt-8 w-full max-w-4xl px-4">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md hover-scale transition-all duration-300">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <i class="fas fa-user-circle mr-2 text-gray-700"></i>
+                Member Login
+            </h2>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">
+                        <i class="fas fa-envelope mr-2"></i>Email
+                    </label>
+                    <input class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your email" type="email" required/>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 mb-2">
+                        <i class="fas fa-lock mr-2"></i>Password
+                    </label>
+                    <input class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your password" type="password" required/>
+                    <a href="#" class="text-sm text-gray-600 hover:text-black mt-2 inline-block">Forgot password?</a>
+                </div>
+                <button class="w-full bg-black text-white p-3 rounded hover:bg-gray-800 transition-colors duration-300 flex justify-center items-center" type="submit">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Log In
+                </button>
+                <p class="text-center mt-4 text-gray-600">
+                    Don't have an account? <a href="#" class="text-black font-bold hover:underline">Sign up</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md hover-scale transition-all duration-300">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <i class="fas fa-utensils mr-2 text-gray-700"></i>
+                Continue as Guest
+            </h2>
+            <p class="text-gray-600 mb-6">
+                Explore our award-winning menu, make reservations, and enjoy our special offers without creating an account.
+            </p>
+            <div class="space-y-4">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    <span>Browse our seasonal menu</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    <span>Place orders for takeout</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    <span>Make table reservations</span>
+                </div>
             </div>
-            <div class="mb-4">
-                <label class="block text-gray-700">
-                    Password
-                </label>
-                <input class="w-full p-2 border rounded" placeholder="Password" type="password"/>
-            </div>
-            <button class="w-full bg-black text-white p-2 rounded" type="submit">
-                Log In
+            <button id="guest-btn" class="w-full border-2 border-black text-black p-3 rounded mt-6 hover:bg-black hover:text-white transition-colors duration-300 flex justify-center items-center">
+                <i class="fas fa-arrow-right mr-2"></i>Continue as Guest
             </button>
-        </form>
-    </div>
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md mt-8">
-        <h2 class="text-xl font-bold mb-4">
-            Continue as Guest
-        </h2>
-        <p class="text-gray-600 mb-4">
-            Explore our menu and make reservations without logging in.
-        </p>
-        <button class="w-full border border-black text-black p-2 rounded">
-            Continue as Guest
-        </button>
+        </div>
     </div>
 
-    <script>
-
-        document.getElementById("reserve-btn").addEventListener("click", function() {
-            window.location.href = "reservationPage.html";
-        });
-
-        document.getElementById("contact-btn").addEventListener("click", function(event) {
-            event.preventDefault();
-            window.location.href = "contact.html";
-        });
-
-        document.getElementById("Home-btn").addEventListener("click", function(event) {
-            event.preventDefault();
-            window.location.href = "HomePage.html";
-        });
-    </script>
+    <div class="mt-12 text-center max-w-lg">
+        <h3 class="text-xl font-bold mb-4">Today's Specials</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+            <div class="bg-white p-4 rounded shadow-sm">
+                <i class="fas fa-cookie text-yellow-600 text-2xl mb-2"></i>
+                <h4 class="font-bold">Chocolate Truffle</h4>
+                <p class="text-sm text-gray-600">Handcrafted with Belgian chocolate</p>
+            </div>
+            <div class="bg-white p-4 rounded shadow-sm">
+                <i class="fas fa-fish text-blue-600 text-2xl mb-2"></i>
+                <h4 class="font-bold">Signature Sushi</h4>
+                <p class="text-sm text-gray-600">Fresh daily seafood selection</p>
+            </div>
+            <div class="bg-white p-4 rounded shadow-sm">
+                <i class="fas fa-pizza-slice text-red-600 text-2xl mb-2"></i>
+                <h4 class="font-bold">Truffle Pasta</h4>
+                <p class="text-sm text-gray-600">With seasonal mushrooms</p>
+            </div>
+        </div>
+    </div>
 </main>
 
+<footer class="bg-black text-white p-6 mt-12">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="text-lg font-bold mb-4 md:mb-0">
+            Fog &amp; Flame
+        </div>
+        <div class="flex gap-4">
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
+        </div>
+        <div class="mt-4 md:mt-0 text-sm">
+            &copy; 2025 Fog &amp; Flame. All rights reserved.
+        </div>
+    </div>
+</footer>
 
+<script>
+    // Navigation button handlers
+    document.getElementById("home-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "HomePage.html";
+    });
+
+    document.getElementById("menu-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "menu.html";
+    });
+
+    document.getElementById("contact-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "contact.html";
+    });
+
+    // Guest button functionality
+    document.getElementById("guest-btn").addEventListener("click", function() {
+        window.location.href = "menu.html";
+    });
+
+
+    // Login form submission
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        alert("Login functionality would connect to your backend service here!");
+        // In a real application, you would handle authentication here
+    });
+</script>
+</body>
+</html>
