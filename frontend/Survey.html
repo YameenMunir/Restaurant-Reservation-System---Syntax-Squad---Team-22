@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Feedback Survey</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #222;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #f8c156;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .survey-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.2s; }
+        .form-group:nth-child(2) { animation-delay: 0.4s; }
+        .form-group:nth-child(3) { animation-delay: 0.6s; }
+        .form-group:nth-child(4) { animation-delay: 0.8s; }
+        .form-group:nth-child(5) { animation-delay: 1s; }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .stars {
+            display: flex;
+        }
+
+        .star {
+            font-size: 1.5rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+            margin: 0 2px;
+        }
+
+        .star:hover {
+            transform: scale(1.2);
+        }
+
+        .star.active {
+            color: #ffca28;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 0.2rem;
+        }
+
+        .slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 10px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            margin: 0.5rem 0;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            background: #388e3c;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+        }
+
+        .radio-option:hover, .checkbox-option:hover {
+            background-color: #f2f2f2;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-height: 150px;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: #222;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .btn:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        footer {
+            background-color: #eee;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.1);
+            background-color: #555;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .thank-you {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .thank-you h2 {
+            margin-bottom: 1rem;
+            color: #4CAF50;
+        }
+
+        .thank-you p {
+            margin-bottom: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav {
+                margin-top: 1rem;
+            }
+
+            nav a {
+                margin: 0 0.5rem;
+            }
+
+            .radio-group, .checkbox-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <i class="fas fa-utensils"></i> &nbsp;Fog & Flame
+    </div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>We Value Your Feedback</h1>
+
+    <div id="survey-form" class="survey-form">
+        <div class="form-group">
+            <label for="overall">Overall Experience</label>
+            <input type="range" id="overall" class="slider" min="1" max="5" value="3">
+            <div class="rating">
+                <span>Very Unsatisfied</span>
+                <div class="stars" id="overall-stars">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <span>Very Satisfied</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Food Quality</label>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="food" value="excellent"> Excellent
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="food" value="good"> Good
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="food" value="average"> Average
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="food" value="poor"> Poor
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Service Quality</label>
+            <div class="checkbox-group">
+                <label class="checkbox-option">
+                    <input type="checkbox" name="service" value="friendly"> Friendly Staff
+                </label>
+                <label class="checkbox-option">
+                    <input type="checkbox" name="service" value="prompt"> Prompt Service
+                </label>
+                <label class="checkbox-option">
+                    <input type="checkbox" name="service" value="knowledgeable"> Knowledgeable
+                </label>
+                <label class="checkbox-option">
+                    <input type="checkbox" name="service" value="attentive"> Attentive
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="recommend">How likely are you to recommend us?</label>
+            <input type="range" id="recommend" class="slider" min="0" max="10" value="7">
+            <div class="range-labels">
+                <span>0</span>
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+                <span>6</span>
+                <span>7</span>
+                <span>8</span>
+                <span>9</span>
+                <span>10</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="comments">Comments</label>
+            <textarea id="comments" placeholder="Your comments..."></textarea>
+        </div>
+
+        <button id="submit-btn" class="btn">Submit Feedback</button>
+    </div>
+
+    <div id="thank-you" class="thank-you">
+        <h2>Thank You For Your Feedback!</h2>
+        <p>We appreciate you taking the time to share your experience with us. Your feedback helps us improve our services.</p>
+        <button id="new-survey-btn" class="btn">Submit Another Response</button>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+    </div>
+
+    <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+
+    <p class="copyright">© 2025 Fog & Flame. All rights reserved.</p>
+</footer>
+
+<!-- Font Awesome for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Star rating functionality
+        const starContainers = document.querySelectorAll('.stars');
+
+        starContainers.forEach(container => {
+            const stars = container.querySelectorAll('.star');
+
+            stars.forEach(star => {
+                star.addEventListener('mouseover', function() {
+                    const value = this.dataset.value;
+
+                    stars.forEach(s => {
+                        s.classList.remove('active');
+                        if (s.dataset.value <= value) {
+                            s.classList.add('active');
+                        }
+                    });
+                });
+
+                star.addEventListener('click', function() {
+                    const value = this.dataset.value;
+                    const sliderId = container.id.replace('-stars', '');
+                    const slider = document.getElementById(sliderId);
+
+                    if (slider) {
+                        slider.value = value;
+                    }
+
+                    stars.forEach(s => {
+                        s.classList.remove('active');
+                        if (s.dataset.value <= value) {
+                            s.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            container.addEventListener('mouseout', function() {
+                const sliderId = container.id.replace('-stars', '');
+                const slider = document.getElementById(sliderId);
+
+                if (slider) {
+                    const value = slider.value;
+
+                    stars.forEach(s => {
+                        s.classList.remove('active');
+                        if (s.dataset.value <= value) {
+                            s.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Sync slider with stars
+        const sliders = document.querySelectorAll('.slider');
+
+        sliders.forEach(slider => {
+            const starsId = slider.id + '-stars';
+            const starsContainer = document.getElementById(starsId);
+
+            if (starsContainer) {
+                const stars = starsContainer.querySelectorAll('.star');
+
+                slider.addEventListener('input', function() {
+                    const value = this.value;
+
+                    stars.forEach(s => {
+                        s.classList.remove('active');
+                        if (s.dataset.value <= value) {
+                            s.classList.add('active');
+                        }
+                    });
+                });
+
+                // Initialize stars based on slider value
+                const initialValue = slider.value;
+                stars.forEach(s => {
+                    if (s.dataset.value <= initialValue) {
+                        s.classList.add('active');
+                    }
+                });
+            }
+        });
+
+        // Radio and checkbox animation
+        const radioOptions = document.querySelectorAll('.radio-option');
+        radioOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                this.style.animation = 'pulse 0.3s';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 300);
+            });
+        });
+
+        const checkboxOptions = document.querySelectorAll('.checkbox-option');
+        checkboxOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                this.style.animation = 'pulse 0.3s';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 300);
+            });
+        });
+
+        // Form submission
+        const surveyForm = document.getElementById('survey-form');
+        const thankYou = document.getElementById('thank-you');
+        const submitBtn = document.getElementById('submit-btn');
+        const newSurveyBtn = document.getElementById('new-survey-btn');
+
+        submitBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Add button animation
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 100);
+
+            // Validate form (add your validation logic here)
+            const valid = true; // Simplified for demo
+
+            if (valid) {
+                // Simple animation to show thank you message
+                surveyForm.style.animation = 'fadeIn 0.5s reverse forwards';
+                setTimeout(() => {
+                    surveyForm.style.display = 'none';
+                    thankYou.style.display = 'block';
+                }, 500);
+            }
+        });
+
+        newSurveyBtn.addEventListener('click', function() {
+            // Reset form
+            const radioInputs = document.querySelectorAll('input[type="radio"]');
+            radioInputs.forEach(input => {
+                input.checked = false;
+            });
+
+            const checkboxInputs = document.querySelectorAll('input[type="checkbox"]');
+            checkboxInputs.forEach(input => {
+                input.checked = false;
+            });
+
+            const sliders = document.querySelectorAll('.slider');
+            sliders.forEach(slider => {
+                if (slider.id === 'overall') {
+                    slider.value = 3;
+                } else if (slider.id === 'recommend') {
+                    slider.value = 7;
+                }
+
+                // Update stars
+                const starsId = slider.id + '-stars';
+                const starsContainer = document.getElementById(starsId);
+                if (starsContainer) {
+                    const stars = starsContainer.querySelectorAll('.star');
+                    stars.forEach(s => {
+                        s.classList.remove('active');
+                        if (s.dataset.value <= slider.value) {
+                            s.classList.add('active');
+                        }
+                    });
+                }
+            });
+
+            document.getElementById('comments').value = '';
+
+            // Show form again
+            thankYou.style.display = 'none';
+            surveyForm.style.display = 'block';
+            surveyForm.style.animation = 'slideUp 0.8s ease-out';
+
+            // Re-animate form groups
+            const formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach((group, index) => {
+                group.style.animation = 'none';
+                setTimeout(() => {
+                    group.style.animation = `fadeIn 0.5s ease-in forwards ${index * 0.2}s`;
+                }, 10);
+            });
+        });
+    });
+</script>
+</body>
+</html>
