@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Fog &amp; Flame</title>
@@ -14,12 +15,11 @@
 <body class="bg-gray-100 font-roboto">
 <header class="bg-black text-white p-4 flex justify-between items-center">
     <div class="text-xl font-bold flex items-center">
-
         Fog &amp; Flame
     </div>
     <nav class="flex gap-6">
         <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="home-btn" href="HomePage.html">Home</a>
-        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="menu-btn" href="menu.html">Menu</a>
+        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="menu-btn" href="MenuPage.html">Menu</a>
         <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="contact-btn" href="contact.html">Contact</a>
     </nav>
 </header>
@@ -136,7 +136,7 @@
 
     document.getElementById("menu-btn").addEventListener("click", function(event) {
         event.preventDefault();
-        window.location.href = "menu.html";
+        window.location.href = "MenuPage.html"; // Redirect to MenuPage.html
     });
 
     document.getElementById("contact-btn").addEventListener("click", function(event) {
@@ -148,7 +148,6 @@
     document.getElementById("guest-btn").addEventListener("click", function() {
         window.location.href = "menu.html";
     });
-
 
     // Login form submission
     document.getElementById("login-form").addEventListener("submit", function(event) {
