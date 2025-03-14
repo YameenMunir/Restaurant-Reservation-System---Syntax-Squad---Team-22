@@ -367,7 +367,6 @@
                 specialRequests: reservationData.get("specialRequests"),
             };
             try {
-                // Since we can't actually send emails in this demo, we'll simulate a successful response
                 const response = {
                     ok: true,
                 };
@@ -382,7 +381,7 @@
       <p class="text-gray-600 mb-4 text-center">Your reservation has been successfully confirmed. A confirmation email has been sent to ${emailData.email}. We look forward to serving you!</p>
       <div class="space-y-3">
       <button class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" onclick="this.closest('.fixed').remove()">Close</button>
-      <a href="/" class="block w-full text-center bg-secondary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors">Back to Home</a>
+      <a href="HomePage.html" class="block w-full text-center bg-secondary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors">Back to Home</a>
       </div>
       </div>
       `;
@@ -405,23 +404,6 @@
             }
         });
     });
-
-
-    document.getElementById("reserve-btn").addEventListener("click", function() {
-        window.location.href = "reservationPage.html";
-    });
-
-    document.getElementById("contact-btn").addEventListener("click", function(event) {
-        event.preventDefault();
-        window.location.href = "contact.html";
-    });
-
-
-
-
-
-
 </script>
 </body>
 </html>
-
