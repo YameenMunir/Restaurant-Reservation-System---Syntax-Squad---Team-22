@@ -281,6 +281,92 @@
             margin-bottom: 2rem;
         }
 
+        /* Dancing Character Animation */
+        .character-container {
+            margin: 2rem auto;
+            text-align: center;
+            height: 200px;
+            position: relative;
+        }
+
+        .character {
+            position: relative;
+            display: inline-block;
+            font-size: 120px;
+            animation: dance 2s infinite;
+            margin: 0 auto;
+        }
+
+        .speech-bubble {
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            border: 2px solid #4CAF50;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #4CAF50;
+            white-space: nowrap;
+            animation: bobbing 2s infinite ease-in-out;
+        }
+
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #4CAF50;
+        }
+
+        @keyframes dance {
+            0% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(-5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        @keyframes bobbing {
+            0% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+            100% { transform: translateX(-50%) translateY(0); }
+        }
+
+        /* Confetti Animation */
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f8c156;
+            opacity: 0.7;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -322,6 +408,16 @@
             .radio-group, .checkbox-group {
                 flex-direction: column;
                 gap: 0.5rem;
+            }
+
+            .character {
+                font-size: 80px;
+            }
+
+            .speech-bubble {
+                font-size: 14px;
+                padding: 8px 15px;
+                top: -60px;
             }
         }
     </style>
@@ -424,6 +520,13 @@
     <div id="thank-you" class="thank-you">
         <h2>Thank You For Your Feedback!</h2>
         <p>We appreciate you taking the time to share your experience with us. Your feedback helps us improve our services.</p>
+
+        <div class="character-container">
+            <div class="confetti-container" id="confetti-container"></div>
+            <div class="character" id="dancing-character">🧑‍🍳</div>
+            <div class="speech-bubble">Thank you for your feedback!</div>
+        </div>
+
         <button id="new-survey-btn" class="btn">Submit Another Response</button>
     </div>
 </div>
@@ -554,11 +657,53 @@
             });
         });
 
+        // Confetti animation function
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confetti-container');
+            const colors = ['#f8c156', '#4CAF50', '#ff7675', '#74b9ff', '#a29bfe', '#fd79a8'];
+            const confettiCount = 150;
+
+            confettiContainer.innerHTML = '';
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+
+                // Random properties
+                const size = Math.random() * 10 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const left = Math.random() * 100;
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 2;
+
+                // Apply styles
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.backgroundColor = color;
+                confetti.style.left = `${left}%`;
+                confetti.style.animationDuration = `${duration}s`;
+                confetti.style.animationDelay = `${delay}s`;
+
+                // Random shape
+                if (Math.random() > 0.5) {
+                    confetti.style.borderRadius = '50%';
+                } else {
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                }
+
+                confettiContainer.appendChild(confetti);
+            }
+        }
+
+        // Dancing character options
+        const characters = ['🧑‍🍳', '👨‍🍳', '👩‍🍳', '🍽️', '🥂', '👍', '🎉'];
+
         // Form submission
         const surveyForm = document.getElementById('survey-form');
         const thankYou = document.getElementById('thank-you');
         const submitBtn = document.getElementById('submit-btn');
         const newSurveyBtn = document.getElementById('new-survey-btn');
+        const dancingCharacter = document.getElementById('dancing-character');
 
         submitBtn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -578,6 +723,12 @@
                 setTimeout(() => {
                     surveyForm.style.display = 'none';
                     thankYou.style.display = 'block';
+
+                    // Choose random character
+                    dancingCharacter.textContent = characters[Math.floor(Math.random() * characters.length)];
+
+                    // Create confetti
+                    createConfetti();
                 }, 500);
             }
         });
