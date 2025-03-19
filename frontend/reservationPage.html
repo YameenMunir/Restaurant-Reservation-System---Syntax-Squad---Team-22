@@ -9,9 +9,6 @@
             type="text/javascript"
             src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
     ></script>
-    <script type="text/javascript">
-        // Remove EmailJS initialization since we're simulating the email sending..........
-    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -49,47 +46,43 @@
     </script>
     <style>
         :where([class^="ri-"])::before { content: "\f3c2"; }
-        .table-available {
-            background-color: #4CAF50;
+        .table {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: #6B7280; /* Neutral gray color */
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+            flex-direction: column;
+            line-height: 1.2;
             position: relative;
         }
-        .table-available::after {
-            content: 'Available';
+        .table::after {
+            content: 'Table';
             position: absolute;
             bottom: -25px;
             left: 50%;
             transform: translateX(-50%);
             font-size: 12px;
-            color: #4CAF50;
+            color: #6B7280;
             white-space: nowrap;
         }
-        .table-reserved {
-            background-color: #F44336;
-            position: relative;
-        }
-        .table-reserved::after {
-            content: 'Reserved';
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-            color: #F44336;
-            white-space: nowrap;
+        .table:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
         }
         .table-selected {
             background-color: #2196F3;
-            position: relative;
         }
         .table-selected::after {
             content: 'Selected';
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
             color: #2196F3;
-            white-space: nowrap;
         }
         .floor-plan-container {
             position: relative;
@@ -99,24 +92,38 @@
             overflow: hidden;
             background-color: rgba(255, 255, 255, 0.9);
         }
-        .table {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+        .time-slot {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
+        }
+        .time-slot.available {
+            background-color: #4CAF50;
             color: white;
-            font-weight: bold;
+        }
+        .time-slot.unavailable {
+            background-color: #F44336;
+            color: white;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .time-slot.selected {
+            background-color: #2196F3;
+            color: white;
+            transform: scale(1.05);
+        }
+        .time-slot-modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0,0,0,0.7);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 10px;
-            flex-direction: column;
-            line-height: 1.2;
-        }
-        .table:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            z-index: 50;
+            overflow-y: auto;
         }
     </style>
 </head>
@@ -142,14 +149,22 @@
             Make a Reservation
         </h1>
         <p class="text-gray-600">
-            Select your preferred table and time for an unforgettable dining
-            experience.
+            Select a table from the floor plan and choose an available time for your reservation.
         </p>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2">
             <div class="bg-white rounded-lg shadow p-6">
                 <h2 class="text-xl font-semibold mb-4">Floor Plan</h2>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Select Date</label>
+                    <input
+                            type="date"
+                            id="dateSelector"
+                            class="px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                            required
+                    />
+                </div>
                 <div
                         class="floor-plan-container"
                         id="floorPlan"
@@ -165,21 +180,27 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
                         <input
                                 type="date"
+                                id="reservationDate"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                 required
+                                disabled
                         />
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Time</label>
                         <input
-                                type="time"
+                                type="text"
+                                id="reservationTime"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                 required
+                                readonly
+                                placeholder="Select a time slot"
                         />
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Number of Guests</label>
                         <select
+                                id="guestsNumber"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                 required
                         >
@@ -206,6 +227,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Special Requests</label>
                         <textarea
+                                id="specialRequests"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                 rows="3"
                         ></textarea>
@@ -246,154 +268,346 @@
         </div>
     </div>
 </footer>
+
+<!-- Time Slot Modal Template (hidden by default) -->
+<div id="timeSlotModal" class="time-slot-modal hidden">
+    <div class="bg-white p-6 rounded-lg max-w-lg w-full mx-4">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-semibold" id="modalTableTitle">Table Availability</h3>
+            <button class="text-gray-500 hover:text-gray-700" id="closeModal">
+                <i class="ri-close-line ri-2x"></i>
+            </button>
+        </div>
+        <p class="text-gray-600 mb-4" id="modalTableInfo">Please select an available time slot for your reservation.</p>
+
+        <div class="mb-4">
+            <h4 class="font-medium text-gray-700 mb-2">Available Time Slots:</h4>
+            <div id="timeSlotContainer" class="grid grid-cols-2 gap-2"></div>
+        </div>
+
+        <div class="flex justify-end mt-6">
+            <button class="bg-gray-200 text-gray-700 py-2 px-4 rounded-button hover:bg-gray-300 transition-colors mr-3" id="cancelTimeSelection">
+                Cancel
+            </button>
+            <button class="bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" id="confirmTimeSelection" disabled>
+                Confirm Selection
+            </button>
+        </div>
+    </div>
+</div>
+
 <script>
     const tables = [
         // Window tables (4 seats)
-        { id: 1, x: 150, y: 100, status: "available", seats: 4 },
-        { id: 2, x: 300, y: 100, status: "reserved", seats: 4 },
-        { id: 3, x: 450, y: 100, status: "available", seats: 4 },
+        { id: 1, x: 150, y: 100, seats: 4 },
+        { id: 2, x: 300, y: 100, seats: 4 },
+        { id: 3, x: 450, y: 100, seats: 4 },
         // Center tables (4 seats)
-        { id: 4, x: 150, y: 250, status: "reserved", seats: 4 },
-        { id: 5, x: 300, y: 250, status: "available", seats: 4 },
-        { id: 6, x: 450, y: 250, status: "available", seats: 4 },
-        // Back tables (4 seats)
-        { id: 7, x: 200, y: 400, status: "available", seats: 2 },
-        { id: 8, x: 400, y: 400, status: "reserved", seats: 2 },
-        { id: 11, x: 600, y: 400, status: "available", seats: 2 },
+        { id: 4, x: 150, y: 250, seats: 4 },
+        { id: 5, x: 300, y: 250, seats: 4 },
+        { id: 6, x: 450, y: 250, seats: 4 },
+        // Back tables (2 seats)
+        { id: 7, x: 200, y: 400, seats: 2 },
+        { id: 8, x: 400, y: 400, seats: 2 },
+        { id: 11, x: 600, y: 400, seats: 2 },
         // Bar seats (2 seats)
-        { id: 9, x: 200, y: 500, status: "available", seats: 2 },
-        { id: 10, x: 400, y: 500, status: "reserved", seats: 2 },
-        { id: 12, x: 600, y: 500, status: "available", seats: 2 },
+        { id: 9, x: 200, y: 500, seats: 2 },
+        { id: 10, x: 400, y: 500, seats: 2 },
+        { id: 12, x: 600, y: 500, seats: 2 },
     ];
+
+    // Generate time slots from opening to closing time
+    const generateTimeSlots = () => {
+        const slots = [];
+        const openTime = new Date();
+        openTime.setHours(11, 0, 0); // 11:00 AM
+        const closeTime = new Date();
+        closeTime.setHours(22, 0, 0); // 10:00 PM
+
+        let currentTime = new Date(openTime);
+
+        while (currentTime <= closeTime) {
+            const hour = currentTime.getHours();
+            const minute = currentTime.getMinutes();
+            const formattedHour = hour % 12 || 12;
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const timeString = `${formattedHour}:${minute.toString().padStart(2, '0')} ${ampm}`;
+
+            slots.push(timeString);
+
+            // Add 30 minutes for the next slot
+            currentTime = new Date(currentTime.getTime() + 30 * 60000);
+        }
+
+        return slots;
+    };
+
+    // Mock reservation data - in a real app, this would come from a database
+    const mockReservations = {
+        "2025-03-19": {
+            "1": ["11:00 AM", "11:30 AM", "12:00 PM", "7:00 PM", "7:30 PM"],
+            "2": ["12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "8:00 PM"],
+            "5": ["6:00 PM", "6:30 PM", "7:00 PM"],
+            "8": ["5:00 PM", "5:30 PM", "6:00 PM", "8:30 PM"]
+        },
+        "2025-03-20": {
+            "3": ["1:00 PM", "1:30 PM", "7:00 PM"],
+            "4": ["12:30 PM", "1:00 PM", "7:30 PM"],
+            "6": ["6:30 PM", "7:00 PM", "8:00 PM"]
+        }
+    };
+
+    const timeSlots = generateTimeSlots();
     const floorPlan = document.getElementById("floorPlan");
+    const timeSlotModal = document.getElementById("timeSlotModal");
+    const closeModal = document.getElementById("closeModal");
+    const cancelTimeSelection = document.getElementById("cancelTimeSelection");
+    const confirmTimeSelection = document.getElementById("confirmTimeSelection");
+    const timeSlotContainer = document.getElementById("timeSlotContainer");
+    const modalTableTitle = document.getElementById("modalTableTitle");
+    const modalTableInfo = document.getElementById("modalTableInfo");
+    const dateSelector = document.getElementById("dateSelector");
+    const reservationDate = document.getElementById("reservationDate");
+
+    let selectedTable = null;
     let selectedTableElement = null;
-    tables.forEach((table) => {
-        const tableContainer = document.createElement("div");
-        tableContainer.style.position = "absolute";
-        tableContainer.style.left = `${table.x}px`;
-        tableContainer.style.top = `${table.y}px`;
-        tableContainer.style.textAlign = "center";
-        const tableElement = document.createElement("div");
-        tableElement.className = `table table-${table.status}`;
-        tableElement.innerHTML = `<span class="text-white font-bold">${table.id}</span>`;
-        tableElement.style.display = "flex";
-        tableElement.style.alignItems = "center";
-        tableElement.style.justifyContent = "center";
-        tableElement.dataset.tableId = table.id;
-        tableElement.addEventListener("click", () => {
-            if (table.status === "available") {
+    let selectedTimeSlot = null;
+    let selectedTimeElement = null;
+
+    // Set today's date as default
+    const today = new Date().toISOString().split('T')[0];
+    dateSelector.value = today;
+    reservationDate.value = today;
+
+    // Sync date selectors
+    dateSelector.addEventListener("change", (e) => {
+        reservationDate.value = e.target.value;
+        renderTables();
+    });
+
+    // Render tables on the floor plan
+    const renderTables = () => {
+        // Clear existing tables
+        while (floorPlan.firstChild) {
+            floorPlan.removeChild(floorPlan.firstChild);
+        }
+
+        // Reset selections
+        selectedTable = null;
+        selectedTableElement = null;
+        document.getElementById("selectedTable").value = "";
+        document.getElementById("reservationTime").value = "";
+
+        tables.forEach((table) => {
+            const tableContainer = document.createElement("div");
+            tableContainer.style.position = "absolute";
+            tableContainer.style.left = `${table.x}px`;
+            tableContainer.style.top = `${table.y}px`;
+            tableContainer.style.textAlign = "center";
+
+            const tableElement = document.createElement("div");
+            tableElement.className = "table";
+            tableElement.innerHTML = `<span class="text-white font-bold">${table.id}</span>`;
+            tableElement.dataset.tableId = table.id;
+
+            tableElement.addEventListener("click", () => {
+                // Reset previously selected table
                 if (selectedTableElement) {
                     selectedTableElement.classList.remove("table-selected");
-                    selectedTableElement.classList.add(
-                        `table-${tables.find((t) => t.id === parseInt(selectedTableElement.dataset.tableId)).status}`,
-                    );
                 }
-                tableElement.classList.remove("table-available");
-                tableElement.classList.add("table-selected");
+
+                // Update selected table
+                selectedTable = table;
                 selectedTableElement = tableElement;
-                document.getElementById("selectedTable").value =
-                    `Table ${table.id} (${table.seats} seats)`;
-            }
+                tableElement.classList.add("table-selected");
+
+                // Update selected table display
+                document.getElementById("selectedTable").value = `Table ${table.id} (${table.seats} seats)`;
+
+                // Show time slot modal
+                showTimeSlotModal(table);
+            });
+
+            tableContainer.appendChild(tableElement);
+            floorPlan.appendChild(tableContainer);
         });
-        tableContainer.appendChild(tableElement);
-        floorPlan.appendChild(tableContainer);
+    };
+
+    // Display time slot modal with available/unavailable times
+    const showTimeSlotModal = (table) => {
+        modalTableTitle.textContent = `Table ${table.id} - ${table.seats} Seats`;
+        modalTableInfo.textContent = `Please select an available time slot for your reservation on ${dateSelector.value}`;
+
+        // Clear previous time slots
+        timeSlotContainer.innerHTML = "";
+        selectedTimeSlot = null;
+        selectedTimeElement = null;
+        confirmTimeSelection.disabled = true;
+
+        // Get reserved times for this table on selected date
+        const date = dateSelector.value;
+        const reservedTimes = (mockReservations[date] && mockReservations[date][table.id.toString()]) || [];
+
+        // Create time slot elements
+        timeSlots.forEach(time => {
+            const isAvailable = !reservedTimes.includes(time);
+            const timeElement = document.createElement("div");
+            timeElement.className = `time-slot ${isAvailable ? 'available' : 'unavailable'}`;
+            timeElement.textContent = time;
+
+            if (isAvailable) {
+                timeElement.addEventListener("click", () => {
+                    // Reset previously selected time
+                    if (selectedTimeElement) {
+                        selectedTimeElement.classList.remove("selected");
+                    }
+
+                    // Update selected time
+                    selectedTimeSlot = time;
+                    selectedTimeElement = timeElement;
+                    timeElement.classList.add("selected");
+
+                    // Enable confirm button
+                    confirmTimeSelection.disabled = false;
+                });
+            }
+
+            timeSlotContainer.appendChild(timeElement);
+        });
+
+        // Show modal
+        timeSlotModal.classList.remove("hidden");
+    };
+
+    // Close modal event handlers
+    closeModal.addEventListener("click", () => {
+        timeSlotModal.classList.add("hidden");
     });
+
+    cancelTimeSelection.addEventListener("click", () => {
+        timeSlotModal.classList.add("hidden");
+    });
+
+    confirmTimeSelection.addEventListener("click", () => {
+        if (selectedTimeSlot) {
+            document.getElementById("reservationTime").value = selectedTimeSlot;
+            timeSlotModal.classList.add("hidden");
+        }
+    });
+
+    // Handle reservation form submission
     document.getElementById("reservationForm").addEventListener("submit", (e) => {
         e.preventDefault();
+
+        // Check if table and time are selected
+        if (!selectedTable || !selectedTimeSlot) {
+            alert("Please select a table and time for your reservation.");
+            return;
+        }
+
         const modal = document.createElement("div");
-        modal.className =
-            "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center";
+        modal.className = "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center";
         modal.innerHTML = `
       <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
-      <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
-      <p class="text-gray-600 mb-4">Please provide your contact details to receive confirmation via SMS and email.</p>
-      <form id="contactForm" class="space-y-4">
-      <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-      <input type="text" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
-      </div>
-      <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-      <input type="tel" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
-      </div>
-      <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-      <input type="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
-      </div>
-      <div class="flex space-x-4">
-      <button type="button" class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-button hover:bg-gray-300 transition-colors" onclick="this.closest('.fixed').remove()">Cancel</button>
-      <button type="submit" class="flex-1 bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors">Confirm</button>
-      </div>
-      </form>
+        <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
+        <p class="text-gray-600 mb-4">Please provide your contact details to receive confirmation via SMS and email.</p>
+        <form id="contactForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+            <input type="text" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+            <input type="tel" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+            <input type="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+          </div>
+          <div class="flex space-x-4">
+            <button type="button" class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-button hover:bg-gray-300 transition-colors" onclick="this.closest('.fixed').remove()">Cancel</button>
+            <button type="submit" class="flex-1 bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors">Confirm</button>
+          </div>
+        </form>
       </div>
       `;
+
         document.body.appendChild(modal);
+
         const contactForm = document.getElementById("contactForm");
         contactForm.addEventListener("submit", async (event) => {
             event.preventDefault();
             const formData = new FormData(contactForm);
-            const reservationData = new FormData(
-                document.getElementById("reservationForm"),
-            );
-            const selectedTable = document.getElementById("selectedTable").value;
-            const emailData = {
+
+            const reservationDetails = {
                 name: formData.get("name"),
                 email: formData.get("email"),
                 phone: formData.get("phone"),
-                date: reservationData.get("date"),
-                time: reservationData.get("time"),
-                guests: reservationData.get("guests"),
-                table: selectedTable,
-                specialRequests: reservationData.get("specialRequests"),
+                date: dateSelector.value,
+                time: selectedTimeSlot,
+                guests: document.getElementById("guestsNumber").value,
+                table: `Table ${selectedTable.id} (${selectedTable.seats} seats)`,
+                specialRequests: document.getElementById("specialRequests").value,
             };
+
             try {
-                // Since we can't actually send emails in this demo, we'll simulate a successful response
-                const response = {
-                    ok: true,
-                };
-                await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate network delay
-                if (response.ok) {
-                    modal.innerHTML = `
-      <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
-      <div class="text-center mb-4">
-      <i class="ri-check-line ri-3x text-green-500"></i>
-      </div>
-      <h3 class="text-xl font-semibold mb-4 text-center">Reservation Confirmed!</h3>
-      <p class="text-gray-600 mb-4 text-center">Your reservation has been successfully confirmed. A confirmation email has been sent to ${emailData.email}. We look forward to serving you!</p>
-      <div class="space-y-3">
-      <button class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" onclick="this.closest('.fixed').remove()">Close</button>
-      <a href="HomePage.html" class="block w-full text-center bg-secondary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors">Back to Home</a>
-      </div>
-      </div>
-      `;
-                } else {
-                    throw new Error("Failed to send email");
+                // Simulate successful response
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+
+                // Show success message
+                modal.innerHTML = `
+                <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+                  <div class="text-center mb-4">
+                    <i class="ri-check-line ri-3x text-green-500"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-4 text-center">Reservation Confirmed!</h3>
+                  <p class="text-gray-600 mb-4 text-center">Your reservation has been successfully confirmed for Table ${selectedTable.id} on ${reservationDetails.date} at ${reservationDetails.time}. A confirmation email has been sent to ${reservationDetails.email}.</p>
+                  <div class="space-y-3">
+                    <button class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" onclick="this.closest('.fixed').remove()">Close</button>
+                    <a href="HomePage.html" class="block w-full text-center bg-secondary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors">Back to Home</a>
+                  </div>
+                </div>
+              `;
+
+                // Add this reservation to the mock data (for demonstration purposes)
+                if (!mockReservations[reservationDetails.date]) {
+                    mockReservations[reservationDetails.date] = {};
                 }
+                if (!mockReservations[reservationDetails.date][selectedTable.id]) {
+                    mockReservations[reservationDetails.date][selectedTable.id] = [];
+                }
+                mockReservations[reservationDetails.date][selectedTable.id].push(reservationDetails.time);
+
+                // Reset the form
+                document.getElementById("reservationForm").reset();
+                document.getElementById("selectedTable").value = "";
+                reservationDate.value = dateSelector.value;
+                selectedTable = null;
+                selectedTimeSlot = null;
+                if (selectedTableElement) {
+                    selectedTableElement.classList.remove("table-selected");
+                    selectedTableElement = null;
+                }
+
             } catch (error) {
                 modal.innerHTML = `
-      <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
-      <div class="text-center mb-4">
-      <i class="ri-error-warning-line ri-3x text-red-500"></i>
-      </div>
-      <h3 class="text-xl font-semibold mb-4 text-center">Oops! Something went wrong</h3>
-      <p class="text-gray-600 mb-4 text-center">We couldn't send your confirmation email. Please try again or contact us directly.</p>
-      <div class="space-y-3">
-      <button class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" onclick="this.closest('.fixed').remove()">Close</button>
-      </div>
-      </div>
-      `;
+                <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+                  <div class="text-center mb-4">
+                    <i class="ri-error-warning-line ri-3x text-red-500"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-4 text-center">Oops! Something went wrong</h3>
+                  <p class="text-gray-600 mb-4 text-center">We couldn't process your reservation. Please try again or contact us directly.</p>
+                  <div class="space-y-3">
+                    <button class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" onclick="this.closest('.fixed').remove()">Close</button>
+                  </div>
+                </div>
+              `;
             }
         });
     });
 
-    document.getElementById("reserve-btn").addEventListener("click", function() {
-        window.location.href = "reservationPage.html";
-    });
-
-    document.getElementById("contact-btn").addEventListener("click", function(event) {
-        event.preventDefault();
-        window.location.href = "contact.html";
-    });
+    // Initialize the floor plan
+    renderTables();
 </script>
 </body>
 </html>
