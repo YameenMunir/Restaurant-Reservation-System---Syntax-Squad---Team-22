@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Fog & Flame</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <style>
+        .hover-scale:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+    </style>
+    <script>
+        const supabaseUrl = 'https://your-supabase-url.supabase.co'; // Replace with your Supabase URL
+        const supabaseKey = 'your-anon-key'; // Replace with your Supabase anon key
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function signUp() {
+            const username = document.getElementById('full-name').value; // Using full name as username
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            const { data, error } = await supabase
+                .from('users')
+                .insert([{ username, email, password }]);
+
+            if (error) {
+                alert('Error signing up: ' + error.message);
+            } else {
+                alert('User  created successfully!');
+                window.location.href = 'LoginPage.html'; // Redirect to login page
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const confirmPasswordField = document.getElementById('confirm-password');
+            const passwordToggle = document.getElementById('show-password');
+
+            if (passwordToggle.checked) {
+                passwordField.type = 'text';
+                confirmPasswordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+                confirmPasswordField.type = 'password';
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-roboto">
+<header class="bg-black text-white p-4 flex justify-between items-center">
+    <div class="text-xl font-bold flex items-center">
+        Fog & Flame
+    </div>
+    <nav class="flex gap-6">
+        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="home-btn" href="HomePage.html">Home</a>
+        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="menu-btn" href="MenuPage.html">Menu</a>
+        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="contact-btn" href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<main class="flex flex-col items-center justify-center min-h-screen py-8">
+    <h1 class="text-4xl font-bold mt-8 text-center">
+        Welcome to Fog & Flame
+    </h1>
+    <p class="text-gray-600 mt-2 mb-2 text-center max-w-lg">
+        Where culinary artistry meets comfort. Experience our fusion cuisine, handcrafted chocolates, and signature cocktails.
+    </p>
+
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md hover-scale transition-all duration-300">
+        <h2 class="text-2xl font-bold mb-4 flex items-center">
+            <i class="fas fa-user-circle mr-2 text-gray-700"></i>
+            Create an Account
+        </h2>
+        <form id="signup-form" onsubmit="event.preventDefault(); signUp();">
+            <div class="mb-4">
+                <label for="full-name" class="block text-gray-700 mb-2">
+                    <i class="fas fa-user mr-2"></i>Full Name
+                </label>
+                <input id="full-name" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your full name" type="text" required/>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 mb-2">
+                    <i class="fas fa-envelope mr-2"></i>Email
+                </label>
+                <input id="email" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your email" type="email" required/>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 mb-2">
+                    <i class="fas fa-lock mr-2"></i>Password
+                </label>
+                <input id="password" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your password" type="password" required/>
+            </div>
+            <div class="mb-4">
+                <label for="confirm-password" class="block text-gray-700 mb-2">
+                    <i class="fas fa-lock mr-2"></i>Confirm Password
+                </label>
+                <input id="confirm-password" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-black" placeholder="Confirm your password" type="password" required/>
+            </div>
+            <div class="mb-4 flex items-center">
+                <input type="checkbox" id="show-password" class="mr-2" onclick="togglePasswordVisibility()"/>
+                <label for="show-password" class="text-gray-700">Show Password</label>
+            </div>
+            <button class="w-full bg-black text-white p-3 rounded hover:bg-gray-800 transition-colors duration-300 flex justify-center items-center" type="submit">
+                <i class="fas fa-user-plus mr-2"></i>Sign Up
+            </button>
+            <p class="text-center mt-4 text-gray-600">
+                Already have an account? <a href="LoginPage.html" class="text-black font-bold hover:underline">Log in</a>
+            </p>
+        </form>
+    </div>
+
+    <div class="mt-12 text-center max-w-lg">
+        <h3 class="text-xl font-bold mb-4">Today's Specials</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+            <div class="bg-white p-4 rounded shadow-sm">
+                <i class="fas fa-cookie text-yellow-600 text-2xl mb-2"></i>
+                <h4 class="font-bold">Chocolate Truffle</h4>
+                <p class="text-sm text-gray-600">Handcrafted with Belgian chocolate</p>
+            </div>
+            <div class="bg-white p-4 rounded shadow-sm">
+                <i class="fas fa-fish text-blue-600 text-2xl mb-2"></i>
+                <h4 class="font-bold">Signature Sushi</h4>
+                <p class="text-sm text-gray-600">Fresh daily seafood selection</p>
+            </div>
+            <div class="bg-white p-4 rounded shadow-sm">
+                <i class="fas fa-pizza-slice text-red-600 text-2xl mb-2"></i>
+                <h4 class="font-bold">Truffle Pasta</h4>
+                <p class="text-sm text-gray-600">With seasonal mushrooms</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-black text-white p-6 mt-12">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="text-lg font-bold mb-4 md:mb-0">
+            Fog & Flame
+        </div>
+        <div class="flex gap-4">
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
+        </div>
+        <div class="mt-4 md:mt-0 text-sm">
+            &copy; 2025 Fog & Flame. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Navigation button handlers
+    document.getElementById("home-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "HomePage.html";
+    });
+
+    document.getElementById("menu-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "MenuPage.html"; // Redirect to MenuPage.html
+    });
+
+    document.getElementById("contact-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "contact.html";
+    });
+
+</script>
+</body>
+</html>

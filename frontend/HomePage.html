@@ -184,7 +184,7 @@
     <a class="px-4 py-2 bg-white text-black rounded-full hover:bg-gray-300 transition-colors duration-300" href="#" id="login-btn">Log in</a>
     <a class="nav-item hover:text-gray-300 transition-colors duration-300" href="reservationPage.html">Reservations</a>
     <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="contact-btn" href="contact.html">Contact</a>
-    <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="menu-btn" href="menu.html">Menu</a>
+    <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="menu-btn" href="MenuPage.html">Menu</a>
   </div>
 </nav>
 
@@ -367,7 +367,7 @@
     });
   });
 
-  // Redirections.
+  // Redirections
   document.getElementById("reserve-btn").addEventListener("click", function() {
     window.location.href = "reservationPage.html";
   });
@@ -382,9 +382,10 @@
     window.location.href = "LoginPage.html";
   });
 
-
-
-
+  document.getElementById("menu-btn").addEventListener("click", function(event) {
+    event.preventDefault();
+    window.location.href = "MenuPage.html";
+  });
 </script>
 
 </body>

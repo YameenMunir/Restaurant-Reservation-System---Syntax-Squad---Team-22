@@ -125,23 +125,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex items-center">
-            <span class="font-['Pacifico'] text-2xl text-white"
-            >Fog & Flame</span
-            >
+                <span class="font-['Pacifico'] text-2xl text-white">Fog & Flame</span>
             </div>
             <div class="flex items-center space-x-8">
-                <a href="#" class="text-white hover:text-black text-sm font-medium"
-                >Home</a
-                >
-                <a href="#" class="text-white hover:text-black text-sm font-medium"
-                >Menu</a
-                >
-                <a href="#" class="text-white hover:text-black text-sm font-medium"
-                >About</a
-                >
-                <a href="#" class="text-white hover:text-black text-sm font-medium"
-                >Contact</a
-                >
+                <a href="HomePage.html" class="text-white hover:text-black text-sm font-medium">Home</a>
+                <a href="MenuPage.html" class="text-white hover:text-black text-sm font-medium">Menu</a>
+                <a href="#" class="text-white hover:text-black text-sm font-medium">About</a>
+                <a href="contact.html" class="text-white hover:text-black text-sm font-medium">Contact</a>
             </div>
         </div>
     </div>
@@ -172,9 +162,7 @@
                 <h2 class="text-xl font-semibold mb-4">Reservation Details</h2>
                 <form id="reservationForm" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1"
-                        >Date</label
-                        >
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
                         <input
                                 type="date"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -182,9 +170,7 @@
                         />
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1"
-                        >Time</label
-                        >
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Time</label>
                         <input
                                 type="time"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -192,9 +178,7 @@
                         />
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1"
-                        >Number of Guests</label
-                        >
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Number of Guests</label>
                         <select
                                 class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                 required
@@ -210,9 +194,7 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1"
-                        >Selected Table</label
-                        >
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Selected Table</label>
                         <input
                                 type="text"
                                 id="selectedTable"
@@ -222,9 +204,7 @@
                         />
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1"
-                        >Special Requests</label
-                        >
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Special Requests</label>
                         <textarea
                                 class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                                 rows="3"
@@ -382,7 +362,7 @@
       <p class="text-gray-600 mb-4 text-center">Your reservation has been successfully confirmed. A confirmation email has been sent to ${emailData.email}. We look forward to serving you!</p>
       <div class="space-y-3">
       <button class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" onclick="this.closest('.fixed').remove()">Close</button>
-      <a href="/" class="block w-full text-center bg-secondary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors">Back to Home</a>
+      <a href="HomePage.html" class="block w-full text-center bg-secondary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors">Back to Home</a>
       </div>
       </div>
       `;
@@ -406,7 +386,6 @@
         });
     });
 
-
     document.getElementById("reserve-btn").addEventListener("click", function() {
         window.location.href = "reservationPage.html";
     });
@@ -415,13 +394,6 @@
         event.preventDefault();
         window.location.href = "contact.html";
     });
-
-
-
-
-
-
 </script>
 </body>
 </html>
-
