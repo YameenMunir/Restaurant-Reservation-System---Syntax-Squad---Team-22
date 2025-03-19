@@ -175,29 +175,37 @@
             <div class="grid grid-cols-1 md:grid-cols-2">
                 <div class="p-8 md:p-12">
                     <h2 class="heading text-2xl font-semibold mb-8">Send Us a Message</h2>
-                    <form id="contactForm">
+                    <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                        <!-- Web3Forms Access Key -->
+                        <input type="hidden" name="access_key" value="1eda9ba9-2c08-4abf-8464-3a1c0406f7d5">
+                        <!-- Optional Hidden Fields -->
+                        <input type="hidden" name="subject" value="New Message from Fog & Flame Contact Form">
+                        <input type="hidden" name="from_name" value="Fog & Flame Contact Form">
+                        <input type="checkbox" name="botcheck" style="display: none;">
+
+                        <!-- Form Fields -->
                         <div class="input-effect">
-                            <input type="text" id="name" required>
+                            <input type="text" id="name" name="name" required>
                             <label>Full Name</label>
                         </div>
 
                         <div class="input-effect">
-                            <input type="email" id="email" required>
+                            <input type="email" id="email" name="email" required>
                             <label>Email Address</label>
                         </div>
 
                         <div class="input-effect">
-                            <input type="tel" id="phone">
+                            <input type="tel" id="phone" name="phone">
                             <label>Phone Number (Optional)</label>
                         </div>
 
                         <div class="input-effect">
-                            <textarea id="message" rows="4" required></textarea>
+                            <textarea id="message" name="message" rows="4" required></textarea>
                             <label>Your Message</label>
                         </div>
 
                         <div class="flex items-center mb-8">
-                            <input type="checkbox" id="newsletter" class="mr-2">
+                            <input type="checkbox" id="newsletter" name="newsletter" class="mr-2">
                             <label for="newsletter" class="text-gray-600 text-sm">Subscribe to our newsletter for special offers</label>
                         </div>
 
@@ -379,16 +387,47 @@
 
     document.getElementById("contactForm").addEventListener("submit", function(e) {
         e.preventDefault();
-        document.getElementById("successModal").classList.remove("hidden");
-        this.reset();
 
-        // Reset form labels
-        const labels = document.querySelectorAll('.input-effect label');
-        labels.forEach(label => {
-            label.style.top = '10px';
-            label.style.fontSize = '16px';
-            label.style.color = '#999';
-        });
+        // Show loading state
+        const submitButton = this.querySelector("button[type='submit']");
+        submitButton.disabled = true;
+        submitButton.innerHTML = "Sending...";
+
+        // Submit the form to Web3Forms
+        const formData = new FormData(this);
+        fetch(this.action, {
+            method: "POST",
+            body: formData,
+            headers: {
+                Accept: "application/json",
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show success modal
+                    document.getElementById("successModal").classList.remove("hidden");
+                    this.reset();
+
+                    // Reset form labels
+                    const labels = document.querySelectorAll('.input-effect label');
+                    labels.forEach(label => {
+                        label.style.top = '10px';
+                        label.style.fontSize = '16px';
+                        label.style.color = '#999';
+                    });
+                } else {
+                    alert("There was an error submitting the form. Please try again.");
+                }
+            })
+            .catch(error => {
+                alert("There was an error submitting the form. Please try again.");
+            })
+            .finally(() => {
+                // Reset button state
+                submitButton.disabled = false;
+                submitButton.innerHTML = "Send Message";
+            });
     });
 
     // Handle input focus for floating labels
@@ -415,15 +454,6 @@
             input.nextElementSibling.style.color = '#000';
         }
     });
-
-
-
-
 </script>
 </body>
 </html>
-
-
-
-
-
