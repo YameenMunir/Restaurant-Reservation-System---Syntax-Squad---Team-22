@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiting List - Fog & Flame</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#050a0e",
+                        secondary: "#050a0e"
+                    },
+                    fontFamily: {
+                        'pacifico': ['Pacifico', 'cursive'],
+                        'playfair': ['Playfair Display', 'serif'],
+                        'sans': ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .7; }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+<header class="bg-black text-white sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <a href="HomePage.html" class="flex items-center">
+                <span class="text-2xl font-pacifico">Fog & Flame</span>
+            </a>
+            <nav class="flex items-center space-x-8">
+                <a href="HomePage.html" class="text-white hover:text-gray-300 transition-colors duration-300">Home</a>
+                <a href="MenuPage.html" class="text-white hover:text-gray-300 transition-colors duration-300">Menu</a>
+                <a href="reservationPage.html" class="text-white hover:text-gray-300 transition-colors duration-300">Reservations</a>
+                <a href="contact.html" class="text-white hover:text-gray-300 transition-colors duration-300">Contact</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Hero Section -->
+    <div class="relative py-16 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://public.readdy.ai/gen_page/restaurant_background_dimmed_1280x720.png" alt="Restaurant background" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-white font-playfair animate-float">Join Our Waiting List</h1>
+            <p class="mt-4 text-xl text-gray-200 max-w-3xl mx-auto">No reservations available? No problem. Add your name to our waiting list and we'll notify you when a table becomes available.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Waiting List Form -->
+            <div class="bg-white rounded-lg shadow-lg p-8 animate-slide-in">
+                <h2 class="text-2xl font-bold mb-6 font-playfair">Add Your Name to the List</h2>
+                <form id="waitingListForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                        </div>
+
+                        <div>
+                            <label for="phoneNumber" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" id="phoneNumber" name="phoneNumber" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                        </div>
+
+                        <div>
+                            <label for="partySize" class="block text-sm font-medium text-gray-700 mb-1">Party Size</label>
+                            <select id="partySize" name="partySize" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                <option value="">Select size</option>
+                                <option value="1">1 person</option>
+                                <option value="2">2 people</option>
+                                <option value="3">3 people</option>
+                                <option value="4">4 people</option>
+                                <option value="5">5 people</option>
+                                <option value="6">6 people</option>
+                                <option value="7">7 people</option>
+                                <option value="8">8 people</option>
+                                <option value="9+">9+ people</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Desired Date</label>
+                        <input type="date" id="date" name="date" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="timeSlot" class="block text-sm font-medium text-gray-700 mb-1">Preferred Time Slot</label>
+                            <select id="timeSlot" name="timeSlot" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                <option value="">Select time</option>
+                                <option value="lunch">Lunch (11:00 AM - 2:00 PM)</option>
+                                <option value="afternoon">Afternoon (2:00 PM - 5:00 PM)</option>
+                                <option value="dinner-early">Early Dinner (5:00 PM - 7:00 PM)</option>
+                                <option value="dinner-late">Late Dinner (7:00 PM - 10:00 PM)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="flexibility" class="block text-sm font-medium text-gray-700 mb-1">Time Flexibility</label>
+                            <select id="flexibility" name="flexibility" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                <option value="">Select flexibility</option>
+                                <option value="exact">Exact time only (±15 min)</option>
+                                <option value="flexible-30">Somewhat flexible (±30 min)</option>
+                                <option value="flexible-60">Flexible (±1 hour)</option>
+                                <option value="any">Any time in selected period</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="specialRequests" class="block text-sm font-medium text-gray-700 mb-1">Special Requests (Optional)</label>
+                        <textarea id="specialRequests" name="specialRequests" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"></textarea>
+                    </div>
+
+                    <div class="flex items-start">
+                        <input id="notifications" name="notifications" type="checkbox" class="h-4 w-4 mt-1 text-black border-gray-300 rounded focus:ring-black">
+                        <label for="notifications" class="ml-2 block text-sm text-gray-700">
+                            I agree to receive text and email notifications about my place in the waiting list
+                        </label>
+                    </div>
+
+                    <button type="submit" class="w-full bg-black text-white py-3 px-4 rounded-md hover:bg-gray-800 transition-colors duration-300 flex items-center justify-center font-medium">
+                        <i class="ri-user-add-line mr-2"></i>
+                        Join Waiting List
+                    </button>
+                </form>
+            </div>
+
+            <!-- Info Section -->
+            <div class="space-y-8">
+                <!-- How It Works -->
+                <div class="bg-white rounded-lg shadow-lg p-8 animate-slide-in" style="animation-delay: 0.2s">
+                    <h2 class="text-2xl font-bold mb-6 font-playfair flex items-center">
+                        <i class="ri-information-line text-black mr-2"></i>
+                        How It Works
+                    </h2>
+                    <ol class="space-y-4">
+                        <li class="flex">
+                            <span class="flex-shrink-0 flex items-center justify-center w-8 h-8 bg-black text-white rounded-full mr-3 font-bold">1</span>
+                            <p class="mt-1">Fill out the waiting list form with your contact information and party details.</p>
+                        </li>
+                        <li class="flex">
+                            <span class="flex-shrink-0 flex items-center justify-center w-8 h-8 bg-black text-white rounded-full mr-3 font-bold">2</span>
+                            <p class="mt-1">We'll send you a confirmation that you've been added to our waiting list.</p>
+                        </li>
+                        <li class="flex">
+                            <span class="flex-shrink-0 flex items-center justify-center w-8 h-8 bg-black text-white rounded-full mr-3 font-bold">3</span>
+                            <p class="mt-1">When a table matching your criteria becomes available, we'll notify you via text or email.</p>
+                        </li>
+                        <li class="flex">
+                            <span class="flex-shrink-0 flex items-center justify-center w-8 h-8 bg-black text-white rounded-full mr-3 font-bold">4</span>
+                            <p class="mt-1">You'll have 15 minutes to confirm your interest before we move to the next person on the list.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Current Wait Times -->
+                <div class="bg-white rounded-lg shadow-lg p-8 animate-slide-in" style="animation-delay: 0.4s">
+                    <h2 class="text-2xl font-bold mb-6 font-playfair flex items-center">
+                        <i class="ri-time-line text-black mr-2"></i>
+                        Current Estimated Wait Times
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-gray-200 pb-3">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                                <span class="font-medium">1-2 People</span>
+                            </div>
+                            <span class="font-medium text-green-600">15-25 minutes</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-200 pb-3">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                                <span class="font-medium">3-4 People</span>
+                            </div>
+                            <span class="font-medium text-yellow-600">30-45 minutes</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-gray-200 pb-3">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 rounded-full bg-orange-500 mr-2"></div>
+                                <span class="font-medium">5-6 People</span>
+                            </div>
+                            <span class="font-medium text-orange-600">45-60 minutes</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                                <span class="font-medium">7+ People</span>
+                            </div>
+                            <span class="font-medium text-red-600">60+ minutes</span>
+                        </div>
+                        <p class="text-sm text-gray-500 italic mt-4">* Wait times are approximate and based on current demand.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="mt-16 bg-white rounded-lg shadow-lg p-8 animate-slide-in" style="animation-delay: 0.6s">
+            <h2 class="text-2xl font-bold mb-8 font-playfair text-center">Frequently Asked Questions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                    <h3 class="font-bold text-lg">How long is the average wait time?</h3>
+                    <p class="text-gray-600">Wait times vary based on party size, day of the week, and time of day. Current estimated wait times are displayed above and are updated in real-time.</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="font-bold text-lg">Can I specify seating preferences?</h3>
+                    <p class="text-gray-600">Yes, you can mention your seating preferences in the "Special Requests" field, and we'll do our best to accommodate them based on availability.</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="font-bold text-lg">How will I be notified when a table is ready?</h3>
+                    <p class="text-gray-600">You'll receive a text message and/or email notification when your table is ready or about to become available.</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="font-bold text-lg">What if I can't respond right away?</h3>
+                    <p class="text-gray-600">We hold your spot for 15 minutes after notification. If you need more time, please contact us directly at (555) 123-4567.</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="font-bold text-lg">Can I join the waiting list for a future date?</h3>
+                    <p class="text-gray-600">Yes, you can join our waiting list up to 7 days in advance. We recommend trying our reservation system first for future dates.</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="font-bold text-lg">Is there a fee to join the waiting list?</h3>
+                    <p class="text-gray-600">No, joining our waiting list is completely free of charge.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4 font-playfair">Prefer a Guaranteed Reservation?</h2>
+            <p class="text-xl mb-6 max-w-2xl mx-auto">If you have a specific date and time in mind, we recommend making a reservation in advance.</p>
+            <a href="reservationPage.html" class="inline-block bg-white text-black font-medium py-3 px-8 rounded-md hover:bg-gray-200 transition-colors duration-300">Make a Reservation</a>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-black text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Logo and Description -->
+            <div class="col-span-1 md:col-span-1">
+                <h3 class="text-2xl font-pacifico mb-4">Fog & Flame</h3>
+                <p class="text-gray-400">Experience exceptional dining in an unforgettable atmosphere.</p>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-span-1 md:col-span-1">
+                <h4 class="text-lg font-bold mb-4">Contact</h4>
+                <div class="space-y-2 text-gray-400">
+                    <p class="flex items-center"><i class="ri-map-pin-line mr-2"></i> 123 Restaurant Street</p>
+                    <p class="flex items-center"><i class="ri-map-pin-line mr-2"></i> London, United Kingdom</p>
+                    <p class="flex items-center"><i class="ri-phone-line mr-2"></i> +44 20 7123 4567</p>
+                    <p class="flex items-center"><i class="ri-mail-line mr-2"></i> info@fogandflame.com</p>
+                </div>
+            </div>
+
+            <!-- Opening Hours -->
+            <div class="col-span-1 md:col-span-1">
+                <h4 class="text-lg font-bold mb-4">Hours</h4>
+                <div class="space-y-2 text-gray-400">
+                    <p>Monday: Closed</p>
+                    <p>Tuesday - Friday: 11:00 AM - 10:00 PM</p>
+                    <p>Saturday: 10:00 AM - 11:00 PM</p>
+                    <p>Sunday: 10:00 AM - 9:00 PM</p>
+                </div>
+            </div>
+
+            <!-- Links -->
+            <div class="col-span-1 md:col-span-1">
+                <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="HomePage.html" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                    <li><a href="MenuPage.html" class="text-gray-400 hover:text-white transition-colors duration-300">Menu</a></li>
+                    <li><a href="reservationPage.html" class="text-gray-400 hover:text-white transition-colors duration-300">Reservations</a></li>
+                    <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Waiting List</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-400">© 2025 Fog & Flame. All rights reserved.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="ri-facebook-fill text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="ri-instagram-line text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="ri-twitter-fill text-xl"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Success Modal (hidden by default) -->
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white p-8 rounded-lg max-w-md w-full mx-4 animate-slide-in">
+        <div class="text-center mb-6">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 mb-4">
+                <i class="ri-check-line text-4xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">You're on the List!</h3>
+            <p class="text-gray-600">Your request has been added to our waiting list. We'll notify you when a table matching your criteria becomes available.</p>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-md mb-6">
+            <h4 class="font-medium text-gray-900 mb-2">Your Waiting List Details:</h4>
+            <div id="confirmationDetails" class="text-gray-600 text-sm space-y-1">
+                <!-- Details will be filled dynamically -->
+            </div>
+        </div>
+        <div class="text-center">
+            <button id="closeModalBtn" class="bg-black text-white py-2 px-6 rounded-md hover:bg-gray-800 transition-colors duration-300">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Set minimum date to today
+    const dateInput = document.getElementById('date');
+    const today = new Date();
+    const formattedToday = today.toISOString().split('T')[0];
+    dateInput.min = formattedToday;
+    dateInput.value = formattedToday;
+
+    // Handle form submission
+    document.getElementById('waitingListForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get form data
+        const formData = new FormData(this);
+        const formDataObj = {};
+        formData.forEach((value, key) => {
+            formDataObj[key] = value;
+        });
+
+        // Simulate form submission
+        setTimeout(() => {
+            // Display confirmation modal
+            const confirmationDetails = document.getElementById('confirmationDetails');
+            confirmationDetails.innerHTML = `
+                    <p><strong>Name:</strong> ${formDataObj.fullName}</p>
+                    <p><strong>Party Size:</strong> ${formDataObj.partySize} people</p>
+                    <p><strong>Date:</strong> ${formatDate(formDataObj.date)}</p>
+                    <p><strong>Time:</strong> ${formatTimeSlot(formDataObj.timeSlot)}</p>
+                    <p><strong>Reference #:</strong> WL-${generateReferenceNumber()}</p>
+                `;
+
+            // Show modal
+            document.getElementById('successModal').classList.remove('hidden');
+
+            // Reset form
+            document.getElementById('waitingListForm').reset();
+            dateInput.value = formattedToday;
+        }, 1000);
+    });
+
+    // Close modal button
+    document.getElementById('closeModalBtn').addEventListener('click', function() {
+        document.getElementById('successModal').classList.add('hidden');
+    });
+
+    // Format date for display
+    function formatDate(dateString) {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    }
+
+    // Format time slot for display
+    function formatTimeSlot(slot) {
+        const slots = {
+            'lunch': 'Lunch (11:00 AM - 2:00 PM)',
+            'afternoon': 'Afternoon (2:00 PM - 5:00 PM)',
+            'dinner-early': 'Early Dinner (5:00 PM - 7:00 PM)',
+            'dinner-late': 'Late Dinner (7:00 PM - 10:00 PM)'
+        };
+        return slots[slot] || slot;
+    }
+
+    // Generate random reference number
+    function generateReferenceNumber() {
+        return Math.floor(100000 + Math.random() * 900000);
+    }
+</script>
+</body>
+</html>
