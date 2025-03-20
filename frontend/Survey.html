@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Feedback Survey</title>
     <style>
+        /* Your existing CSS styles go here */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -295,7 +296,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Dancing Character Animation */
         .character-container {
             margin: 2rem auto;
             text-align: center;
@@ -354,7 +354,6 @@
             100% { transform: translateX(-50%) translateY(0); }
         }
 
-        /* Confetti Animation */
         .confetti-container {
             position: absolute;
             top: 0;
@@ -381,7 +380,6 @@
             }
         }
 
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -404,7 +402,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Responsive design */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -440,6 +437,8 @@
             }
         }
     </style>
+    <!-- Web3Forms Script -->
+    <script src="https://web3forms.com/client/script.js" async defer></script>
 </head>
 <body>
 <header>
@@ -457,23 +456,30 @@
 <div class="container">
     <h1>We Value Your Feedback</h1>
 
-    <div id="survey-form" class="survey-form">
+    <!-- Web3Forms Integration -->
+    <form id="survey-form" class="survey-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="1eda9ba9-2c08-4abf-8464-3a1c0406f7d5">
+        <input type="hidden" name="subject" value="New Feedback Submission">
+        <input type="hidden" name="redirect" value="https://yourwebsite.com/thank-you">
+        <input type="hidden" name="from_name" value="Fog & Flame Feedback Form">
+        <input type="checkbox" name="botcheck" style="display: none;">
+
         <div class="form-group">
             <div class="contact-info">
                 <div>
                     <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="your.email@example.com" required>
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
                 </div>
                 <div>
                     <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" placeholder="(123) 456-7890">
+                    <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890">
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <label for="overall">Overall Experience</label>
-            <input type="range" id="overall" class="slider" min="1" max="5" value="3">
+            <input type="range" id="overall" class="slider" name="overall_experience" min="1" max="5" value="3">
             <div class="rating">
                 <span>Very Unsatisfied</span>
                 <div class="stars" id="overall-stars">
@@ -491,16 +497,16 @@
             <label>Food Quality</label>
             <div class="radio-group">
                 <label class="radio-option">
-                    <input type="radio" name="food" value="excellent"> Excellent
+                    <input type="radio" name="food_quality" value="excellent"> Excellent
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="food" value="good"> Good
+                    <input type="radio" name="food_quality" value="good"> Good
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="food" value="average"> Average
+                    <input type="radio" name="food_quality" value="average"> Average
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="food" value="poor"> Poor
+                    <input type="radio" name="food_quality" value="poor"> Poor
                 </label>
             </div>
         </div>
@@ -509,23 +515,23 @@
             <label>Service Quality</label>
             <div class="checkbox-group">
                 <label class="checkbox-option">
-                    <input type="checkbox" name="service" value="friendly"> Friendly Staff
+                    <input type="checkbox" name="service_quality[]" value="friendly"> Friendly Staff
                 </label>
                 <label class="checkbox-option">
-                    <input type="checkbox" name="service" value="prompt"> Prompt Service
+                    <input type="checkbox" name="service_quality[]" value="prompt"> Prompt Service
                 </label>
                 <label class="checkbox-option">
-                    <input type="checkbox" name="service" value="knowledgeable"> Knowledgeable
+                    <input type="checkbox" name="service_quality[]" value="knowledgeable"> Knowledgeable
                 </label>
                 <label class="checkbox-option">
-                    <input type="checkbox" name="service" value="attentive"> Attentive
+                    <input type="checkbox" name="service_quality[]" value="attentive"> Attentive
                 </label>
             </div>
         </div>
 
         <div class="form-group">
             <label for="recommend">How likely are you to recommend us?</label>
-            <input type="range" id="recommend" class="slider" min="0" max="10" value="7">
+            <input type="range" id="recommend" class="slider" name="recommendation_score" min="0" max="10" value="7">
             <div class="range-labels">
                 <span>0</span>
                 <span>1</span>
@@ -543,11 +549,11 @@
 
         <div class="form-group">
             <label for="comments">Comments</label>
-            <textarea id="comments" placeholder="Your comments..."></textarea>
+            <textarea id="comments" name="comments" placeholder="Your comments..."></textarea>
         </div>
 
-        <button id="submit-btn" class="btn">Submit Feedback</button>
-    </div>
+        <button type="submit" id="submit-btn" class="btn">Submit Feedback</button>
+    </form>
 
     <div id="thank-you" class="thank-you">
         <h2>Thank You For Your Feedback!</h2>
@@ -746,7 +752,7 @@
                 this.style.transform = '';
             }, 100);
 
-            // Validate form (add your validation logic here)
+            // Validate form
             const emailInput = document.getElementById('email');
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             let valid = true;
@@ -759,18 +765,40 @@
             }
 
             if (valid) {
-                // Simple animation to show thank you message
-                surveyForm.style.animation = 'fadeIn 0.5s reverse forwards';
-                setTimeout(() => {
-                    surveyForm.style.display = 'none';
-                    thankYou.style.display = 'block';
+                // Submit the form using Web3Forms
+                const form = document.getElementById('survey-form');
+                const formData = new FormData(form);
 
-                    // Choose random character
-                    dancingCharacter.textContent = characters[Math.floor(Math.random() * characters.length)];
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show thank-you message
+                            surveyForm.style.animation = 'fadeIn 0.5s reverse forwards';
+                            setTimeout(() => {
+                                surveyForm.style.display = 'none';
+                                thankYou.style.display = 'block';
 
-                    // Create confetti
-                    createConfetti();
-                }, 500);
+                                // Choose random character
+                                dancingCharacter.textContent = characters[Math.floor(Math.random() * characters.length)];
+
+                                // Create confetti
+                                createConfetti();
+                            }, 500);
+                        } else {
+                            alert('There was an error submitting the form. Please try again.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('There was an error submitting the form. Please try again.');
+                    });
             }
         });
 
