@@ -259,7 +259,43 @@
             </div>
         </div>
     </div>
-</main>
+</main> <div class="mt-8 bg-white rounded-lg shadow p-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <!-- Left side content - now empty -->
+        <div class="hidden md:block flex-1"></div>
+
+        <!-- Center content -->
+        <div class="flex-2 text-center">
+            <h2 class="text-xl font-semibold mb-3">No Tables Available?</h2>
+            <p class="text-gray-600 mb-4">Join our waiting list and we'll notify you when a table becomes available.</p>
+            <a href="WaitingListPage.html" class="inline-block bg-black text-white py-2 px-6 rounded-button hover:bg-gray-800 transition-colors">
+                <i class="ri-user-add-line mr-2"></i> Join Waiting List
+            </a>
+        </div>
+
+        <!-- Right side content - now empty -->
+        <div class="hidden md:block flex-1"></div>
+    </div>
+
+    <!-- Benefits section moved below -->
+    <div class="mt-6 pt-6 border-t border-gray-200">
+        <h3 class="text-lg font-medium mb-2 text-center">Benefits of Joining:</h3>
+        <div class="flex flex-wrap justify-center gap-8 mt-4">
+            <div class="flex items-center">
+                <i class="ri-reserved-line text-black mr-2"></i>
+                <span class="text-gray-600">Priority seating</span>
+            </div>
+            <div class="flex items-center">
+                <i class="ri-notification-3-line text-black mr-2"></i>
+                <span class="text-gray-600">SMS & email notifications</span>
+            </div>
+            <div class="flex items-center">
+                <i class="ri-checkbox-circle-line text-black mr-2"></i>
+                <span class="text-gray-600">No obligation to accept</span>
+            </div>
+        </div>
+    </div>
+</div>
 <footer class="bg-black text-white mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -650,11 +686,15 @@
                 </div>
               `;
             }
+
+
         });
     });
 
     // Initialize the floor plan
     renderTables();
+
+
 </script>
 </body>
 </html>
