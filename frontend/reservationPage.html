@@ -47,42 +47,59 @@
     <style>
         :where([class^="ri-"])::before { content: "\f3c2"; }
         .table {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s;
-            background-color: #6B7280; /* Neutral gray color */
+            background-color: #6B7280;
             color: white;
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 10px;
-            flex-direction: column;
-            line-height: 1.2;
             position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
         }
+
+        .table.large {
+            width: 60px;
+            height: 60px;
+        }
+
+        .table.small {
+            width: 45px;
+            height: 45px;
+        }
+
         .table::after {
             content: 'Table';
             position: absolute;
-            bottom: -25px;
+            bottom: -20px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 12px;
-            color: #6B7280;
+            font-size: 10px;
+            color: #374151;
             white-space: nowrap;
         }
+
         .table:hover {
             transform: scale(1.1);
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            border-color: #2196F3;
         }
+
         .table-selected {
             background-color: #2196F3;
+            border-color: #0d6efd;
+            box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
         }
+
         .table-selected::after {
             content: 'Selected';
             color: #2196F3;
+            font-weight: bold;
         }
         .floor-plan-container {
             position: relative;
@@ -374,14 +391,31 @@
     let selectedTimeSlot = null;
     let selectedTimeElement = null;
 
-    // Set today's date as default
-    const today = new Date().toISOString().split('T')[0];
-    dateSelector.value = today;
-    reservationDate.value = today;
+    // Set minimum date to today
+    const today = new Date();
+    const todayFormatted = today.toISOString().split('T')[0];
+    dateSelector.min = todayFormatted;
+    reservationDate.min = todayFormatted;
 
-    // Sync date selectors
+    // Set today's date as default
+    dateSelector.value = todayFormatted;
+    reservationDate.value = todayFormatted;
+
+    // Sync date selectors and validate past dates
     dateSelector.addEventListener("change", (e) => {
-        reservationDate.value = e.target.value;
+        const selectedDate = new Date(e.target.value);
+        const currentDate = new Date();
+
+        // Reset time to midnight for proper date comparison
+        selectedDate.setHours(0, 0, 0, 0);
+        currentDate.setHours(0, 0, 0, 0);
+
+        if (selectedDate < currentDate) {
+            alert("Please select today or a future date for your reservation.");
+            dateSelector.value = todayFormatted;
+        }
+
+        reservationDate.value = dateSelector.value;
         renderTables();
     });
 
@@ -406,27 +440,40 @@
             tableContainer.style.textAlign = "center";
 
             const tableElement = document.createElement("div");
-            tableElement.className = "table";
+
+            // Apply the appropriate size class based on seat count
+            tableElement.className = table.seats > 2 ? "table large" : "table small";
             tableElement.innerHTML = `<span class="text-white font-bold">${table.id}</span>`;
             tableElement.dataset.tableId = table.id;
 
-            tableElement.addEventListener("click", () => {
-                // Reset previously selected table
-                if (selectedTableElement) {
-                    selectedTableElement.classList.remove("table-selected");
-                }
+            // Check if table is available on selected date
+            const date = dateSelector.value;
+            const reservedTimes = (mockReservations[date] && mockReservations[date][table.id.toString()]) || [];
 
-                // Update selected table
-                selectedTable = table;
-                selectedTableElement = tableElement;
-                tableElement.classList.add("table-selected");
+            // If all time slots are reserved, make the table appear unavailable
+            if (reservedTimes.length >= timeSlots.length) {
+                tableElement.style.opacity = "0.5";
+                tableElement.style.cursor = "not-allowed";
+                tableElement.title = "Fully booked for this date";
+            } else {
+                tableElement.addEventListener("click", () => {
+                    // Reset previously selected table
+                    if (selectedTableElement) {
+                        selectedTableElement.classList.remove("table-selected");
+                    }
 
-                // Update selected table display
-                document.getElementById("selectedTable").value = `Table ${table.id} (${table.seats} seats)`;
+                    // Update selected table
+                    selectedTable = table;
+                    selectedTableElement = tableElement;
+                    tableElement.classList.add("table-selected");
 
-                // Show time slot modal
-                showTimeSlotModal(table);
-            });
+                    // Update selected table display
+                    document.getElementById("selectedTable").value = `Table ${table.id} (${table.seats} seats)`;
+
+                    // Show time slot modal
+                    showTimeSlotModal(table);
+                });
+            }
 
             tableContainer.appendChild(tableElement);
             floorPlan.appendChild(tableContainer);
@@ -506,7 +553,7 @@
         }
 
         const modal = document.createElement("div");
-        modal.className = "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center";
+        modal.className = "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
         modal.innerHTML = `
       <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
         <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
