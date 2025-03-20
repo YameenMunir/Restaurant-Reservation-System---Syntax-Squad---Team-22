@@ -76,6 +76,8 @@
         .form-group:nth-child(3) { animation-delay: 0.6s; }
         .form-group:nth-child(4) { animation-delay: 0.8s; }
         .form-group:nth-child(5) { animation-delay: 1s; }
+        .form-group:nth-child(6) { animation-delay: 1.2s; }
+        .form-group:nth-child(7) { animation-delay: 1.4s; }
 
         label {
             display: block;
@@ -176,19 +178,31 @@
             cursor: pointer;
         }
 
-        textarea {
+        input[type="email"], input[type="tel"], textarea {
             width: 100%;
             padding: 1rem;
             border: 1px solid #ddd;
             border-radius: 5px;
-            min-height: 150px;
-            resize: vertical;
             transition: border-color 0.3s ease;
         }
 
-        textarea:focus {
+        input[type="email"]:focus, input[type="tel"]:focus, textarea:focus {
             border-color: #4CAF50;
             outline: none;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .contact-info > div {
+            flex: 1;
         }
 
         .btn {
@@ -419,6 +433,11 @@
                 padding: 8px 15px;
                 top: -60px;
             }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -439,6 +458,19 @@
     <h1>We Value Your Feedback</h1>
 
     <div id="survey-form" class="survey-form">
+        <div class="form-group">
+            <div class="contact-info">
+                <div>
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="your.email@example.com" required>
+                </div>
+                <div>
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="(123) 456-7890">
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
             <label for="overall">Overall Experience</label>
             <input type="range" id="overall" class="slider" min="1" max="5" value="3">
@@ -657,7 +689,7 @@
             });
         });
 
-        // Confetti animation functionn
+        // Confetti animation function
         function createConfetti() {
             const confettiContainer = document.getElementById('confetti-container');
             const colors = ['#f8c156', '#4CAF50', '#ff7675', '#74b9ff', '#a29bfe', '#fd79a8'];
@@ -715,7 +747,16 @@
             }, 100);
 
             // Validate form (add your validation logic here)
-            const valid = true; // Simplified for demo
+            const emailInput = document.getElementById('email');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let valid = true;
+
+            if (!emailInput.value || !emailPattern.test(emailInput.value)) {
+                emailInput.style.borderColor = 'red';
+                valid = false;
+            } else {
+                emailInput.style.borderColor = '#ddd';
+            }
 
             if (valid) {
                 // Simple animation to show thank you message
@@ -735,6 +776,9 @@
 
         newSurveyBtn.addEventListener('click', function() {
             // Reset form
+            document.getElementById('email').value = '';
+            document.getElementById('phone').value = '';
+
             const radioInputs = document.querySelectorAll('input[type="radio"]');
             radioInputs.forEach(input => {
                 input.checked = false;
