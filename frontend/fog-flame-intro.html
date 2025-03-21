@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fog & Flame Intro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            background-color: #000;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Intro container */
+        .intro-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            background-color: #000;
+            perspective: 1000px;
+        }
+
+        /* Vignette effect */
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 200px rgba(0,0,0,0.9);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Intro logo */
+        .logo-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 500px;
+            height: 300px;
+            opacity: 0;
+            transform: scale(0.5) rotateX(-30deg);
+            transform-origin: center center;
+            animation: logoReveal 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards,
+            logoFloat 4s ease-in-out 2s forwards,
+            logoFadeOut 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) 6s forwards;
+        }
+
+        .logo-text {
+            position: relative;
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+            z-index: 10;
+            letter-spacing: 5px;
+            transform: translateZ(50px);
+        }
+
+        .logo-ampersand {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #ff5722;
+            margin: 0 10px;
+            position: relative;
+            animation: ampersandPulse 2s ease-in-out infinite;
+            display: inline-block;
+            text-shadow: 0 0 20px rgba(255, 87, 34, 0.8);
+        }
+
+        /* Fire effect base */
+        .fire-container {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            transform-origin: center;
+            transform: translateZ(0);
+            animation: fireGrow 3s ease-out 1s forwards;
+        }
+
+        .flames-wrapper {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 140px;
+            z-index: 1;
+        }
+
+        /* Main flames */
+        .flames {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .flame {
+            position: absolute;
+            bottom: 0;
+            border-radius: 50% 50% 30% 30% / 50% 50% 50% 50%;
+            transform-origin: center bottom;
+            filter: blur(1px);
+        }
+
+        .flame-big {
+            width: 140px;
+            height: 180px;
+            background: linear-gradient(to top, #ff5722 10%, #ff9800 60%, #ffca28 100%);
+            left: calc(50% - 70px);
+            animation: flameFlicker 1.5s ease-in-out infinite alternate,
+            flameRise 1.2s ease-in-out forwards;
+            box-shadow: 0 0 60px 10px rgba(255, 87, 34, 0.6),
+            0 0 100px 20px rgba(255, 152, 0, 0.4);
+            z-index: 1;
+        }
+
+        .flame-medium {
+            width: 100px;
+            height: 140px;
+            background: linear-gradient(to top, #ff9800 10%, #ffca28 60%, #ffeb3b 100%);
+            left: calc(50% - 50px);
+            animation: flameFlicker 1.2s ease-in-out infinite alternate,
+            flameRise 1s ease-in-out forwards;
+            animation-delay: 0.15s;
+            box-shadow: 0 0 40px 10px rgba(255, 152, 0, 0.6),
+            0 0 80px 20px rgba(255, 235, 59, 0.4);
+            z-index: 2;
+        }
+
+        .flame-small {
+            width: 65px;
+            height: 100px;
+            background: linear-gradient(to top, #ffca28 10%, #ffeb3b 60%, #fff 100%);
+            left: calc(50% - 32.5px);
+            animation: flameFlicker 0.9s ease-in-out infinite alternate,
+            flameRise 0.8s ease-in-out forwards;
+            animation-delay: 0.3s;
+            box-shadow: 0 0 30px 5px rgba(255, 235, 59, 0.7),
+            0 0 50px 10px rgba(255, 255, 255, 0.5);
+            z-index: 3;
+        }
+
+        .flame-core {
+            width: 40px;
+            height: 60px;
+            background: linear-gradient(to top, #ffeb3b 10%, #fff 90%);
+            left: calc(50% - 20px);
+            animation: flameFlicker 0.5s ease-in-out infinite alternate,
+            flameRise 0.6s ease-in-out forwards;
+            animation-delay: 0.4s;
+            box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.7),
+            0 0 40px 10px rgba(255, 255, 255, 0.5);
+            z-index: 4;
+        }
+
+        /* Fog effect */
+        .fog {
+            position: absolute;
+            bottom: -120px;
+            width: 200%;
+            height: 200px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, rgba(200,200,200,0.2) 40%, transparent 70%);
+            filter: blur(30px);
+            opacity: 0;
+            animation: fogReveal 2s ease-out 2s forwards, fogMove 15s linear infinite;
+            z-index: 0;
+            transform-style: preserve-3d;
+            transform: translateZ(-20px);
+        }
+
+        .fog-2 {
+            animation: fogReveal 2.5s ease-out 2.5s forwards, fogMove 18s linear infinite;
+            animation-delay: 0.2s;
+            bottom: -150px;
+            opacity: 0;
+            filter: blur(40px);
+        }
+
+        /* Spark particles */
+        .spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            filter: blur(1px);
+            box-shadow: 0 0 10px 2px rgba(255, 235, 59, 0.8);
+        }
+
+        /* Tagline */
+        .tagline {
+            position: absolute;
+            bottom: 25%;
+            text-align: center;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(20px) translateZ(0);
+            animation: taglineReveal 1.5s ease-out 3.5s forwards,
+            taglineFadeOut 1s ease-out 6s forwards;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Background gradient */
+        .bg-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 70%);
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        /* Outro and transition */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10000;
+            animation: fadeToMain 1.5s ease-in 6.5s forwards;
+        }
+
+        /* Background particle effect */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+        }
+
+        /* Animations */
+        @keyframes logoReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotateX(-30deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateX(0deg);
+            }
+        }
+
+        @keyframes logoFloat {
+            0% {
+                transform: translateY(0) scale(1) rotateX(0deg);
+            }
+            50% {
+                transform: translateY(-15px) scale(1.05) rotateX(5deg);
+            }
+            100% {
+                transform: translateY(0) scale(1) rotateX(0deg);
+            }
+        }
+
+        @keyframes logoFadeOut {
+            0% {
+                opacity: 1;
+                transform: scale(1) rotateX(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.3) rotateX(20deg);
+            }
+        }
+
+        @keyframes flameFlicker {
+            0%, 100% {
+                transform: scale(0.95) rotate(-1deg);
+                border-radius: 50% 50% 30% 35% / 60% 60% 40% 40%;
+                opacity: 0.95;
+            }
+            25% {
+                transform: scale(1) rotate(1deg);
+                border-radius: 50% 45% 40% 50% / 60% 65% 40% 35%;
+                opacity: 1;
+            }
+            50% {
+                transform: scale(0.92) rotate(-0.5deg);
+                border-radius: 45% 50% 35% 45% / 55% 60% 45% 40%;
+                opacity: 0.9;
+            }
+            75% {
+                transform: scale(1.05) rotate(1.5deg);
+                border-radius: 50% 55% 45% 40% / 65% 60% 35% 40%;
+                opacity: 1;
+            }
+        }
+
+        @keyframes flameRise {
+            0% {
+                transform: scale(0.8) translateY(40px);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fireGrow {
+            0% {
+                transform: scale(0.7);
+                opacity: 0.7;
+            }
+            70% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes sparkFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fogReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) translateZ(-20px);
+            }
+            100% {
+                opacity: 0.7;
+                transform: translateY(0) translateZ(-20px);
+            }
+        }
+
+        @keyframes fogMove {
+            0% {
+                transform: translateX(-25%) translateZ(-20px);
+            }
+            100% {
+                transform: translateX(25%) translateZ(-20px);
+            }
+        }
+
+        @keyframes taglineReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) translateZ(0);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) translateZ(0);
+            }
+        }
+
+        @keyframes taglineFadeOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0) translateZ(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-30px) translateZ(0);
+            }
+        }
+
+        @keyframes fadeToMain {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes ampersandPulse {
+            0%, 100% {
+                text-shadow: 0 0 15px rgba(255, 87, 34, 0.7), 0 0 30px rgba(255, 87, 34, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 0 0 25px rgba(255, 87, 34, 0.9),
+                0 0 50px rgba(255, 152, 0, 0.6);
+                transform: scale(1.15);
+            }
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: var(--opacity);
+            }
+            100% {
+                transform: translateY(var(--ty)) translateX(var(--tx));
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Intro animation container -->
+<div class="intro-container">
+    <!-- Background elements -->
+    <div class="bg-gradient"></div>
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Vignette effect -->
+    <div class="vignette"></div>
+
+    <!-- Logo with fire effect -->
+    <div class="logo-container">
+        <div class="fire-container">
+            <div class="flames-wrapper">
+                <div class="flames">
+                    <div class="flame flame-big"></div>
+                    <div class="flame flame-medium"></div>
+                    <div class="flame flame-small"></div>
+                    <div class="flame flame-core"></div>
+                </div>
+            </div>
+            <div class="fog"></div>
+            <div class="fog fog-2"></div>
+        </div>
+        <h1 class="logo-text">Fog <span class="logo-ampersand">&</span> Flame</h1>
+    </div>
+    <div class="tagline">An Unforgettable Culinary Journey</div>
+</div>
+
+<!-- Transition overlay -->
+<div class="transition-overlay"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Create spark particles
+        const fireContainer = document.querySelector('.fire-container');
+
+        function createSparks() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const spark = document.createElement('div');
+                    spark.className = 'spark';
+
+                    // Random position near the flame
+                    const leftPos = 250 + (Math.random() * 50 - 25);
+                    const bottomPos = 100 + (Math.random() * 80);
+
+                    spark.style.left = `${leftPos}px`;
+                    spark.style.bottom = `${bottomPos}px`;
+
+                    // Random size for variety
+                    const size = 2 + Math.random() * 4;
+                    spark.style.width = `${size}px`;
+                    spark.style.height = `${size}px`;
+
+                    // Random movement
+                    const tx = (Math.random() * (i % 2 === 0 ? 120 : -120)) + 'px';
+                    const ty = (Math.random() * -150 - 50) + 'px';
+                    const rot = (Math.random() * 360) + 'deg';
+                    spark.style.setProperty('--tx', tx);
+                    spark.style.setProperty('--ty', ty);
+                    spark.style.setProperty('--rot', rot);
+
+                    // Random color
+                    const hue = 40 + Math.floor(Math.random() * 20);
+                    const lightness = 70 + Math.floor(Math.random() * 30);
+                    spark.style.backgroundColor = `hsl(${hue}, 100%, ${lightness}%)`;
+                    spark.style.boxShadow = `0 0 ${6 + Math.random() * 8}px ${3 + Math.random() * 2}px hsl(${hue}, 100%, ${lightness}%)`;
+
+                    // Random animation duration
+                    const duration = 1.2 + Math.random() * 2.8;
+                    spark.style.animation = `sparkFloat ${duration}s ease-out forwards`;
+
+                    fireContainer.appendChild(spark);
+
+                    // Remove the spark after animation
+                    setTimeout(() => {
+                        spark.remove();
+                    }, duration * 1000);
+                }, i * 150 + Math.random() * 800);
+            }
+        }
+
+        // Create background particles
+        function createBackgroundParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                particle.style.left = `${x}%`;
+                particle.style.top = `${y}%`;
+
+                // Random size
+                const size = 1 + Math.random() * 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                // Random opacity
+                const opacity = 0.1 + Math.random() * 0.3;
+                particle.style.setProperty('--opacity', opacity);
+
+                // Random movement
+                const tx = (Math.random() * 200 - 100) + 'px';
+                const ty = (Math.random() * -200 - 50) + 'px';
+                particle.style.setProperty('--tx', tx);
+                particle.style.setProperty('--ty', ty);
+
+                // Animation
+                const duration = 8 + Math.random() * 15;
+                particle.style.animation = `floatParticle ${duration}s ease-in-out infinite`;
+                particle.style.animationDelay = `${Math.random() * duration}s`;
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Generate sparks periodically
+        createSparks();
+        createBackgroundParticles();
+        const sparkInterval = setInterval(createSparks, 1200);
+
+        // Redirect to main page after animation completes
+        setTimeout(() => {
+            clearInterval(sparkInterval);
+            setTimeout(() => {
+                window.location.href = 'HomePage.html';
+            }, 1500);
+        }, 7000);
+    });
+</script>
+</body>
+</html>

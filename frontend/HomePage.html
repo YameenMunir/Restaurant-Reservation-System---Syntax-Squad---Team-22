@@ -9,10 +9,76 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
   <style>
+
+
     body {
       font-family: 'Roboto', sans-serif;
     }
+    /* Add these styles to your existing CSS */
 
+    .flame-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .flame-base {
+      position: absolute;
+      bottom: 0;
+      width: 16px;
+      height: 20px;
+      background: #ff5722;
+      border-radius: 50% 50% 35% 35% / 50% 50% 50% 50%;
+      box-shadow: 0 0 10px #ff5722, 0 0 20px #ff5722;
+      animation: flicker 0.8s ease-in-out infinite alternate;
+      z-index: 2;
+    }
+
+    .flame-middle {
+      position: absolute;
+      bottom: 2px;
+      width: 14px;
+      height: 18px;
+      background: #ff9800;
+      border-radius: 50% 50% 35% 35% / 50% 50% 50% 50%;
+      box-shadow: 0 0 10px #ff9800, 0 0 20px #ff9800;
+      animation: flicker 0.9s ease-in-out infinite alternate;
+      animation-delay: 0.1s;
+      z-index: 3;
+    }
+
+    .flame-top {
+      position: absolute;
+      bottom: 10px;
+      width: 10px;
+      height: 12px;
+      background: #ffeb3b;
+      border-radius: 50% 50% 35% 35% / 50% 50% 50% 50%;
+      box-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffeb3b;
+      animation: flicker 0.6s ease-in-out infinite alternate;
+      animation-delay: 0.2s;
+      z-index: 4;
+    }
+
+    @keyframes flicker {
+      0%, 100% {
+        transform: scale(1) rotate(-2deg);
+        opacity: 0.9;
+      }
+      25% {
+        transform: scale(1.05) rotate(1deg);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(0.95) rotate(-1deg);
+        opacity: 0.85;
+      }
+      75% {
+        transform: scale(1.05) rotate(2deg);
+        opacity: 1;
+      }
+    }
     /* Custom animations */
     @keyframes fadeInUp {
       from {
@@ -177,7 +243,11 @@
 <!-- Navbar -->
 <nav class="bg-black text-white p-4 flex justify-between items-center fixed w-full z-50 animate-fadeIn">
   <div class="text-xl font-bold flex items-center">
-    <span class="mr-2 text-2xl animate-pulse">🔥</span>
+    <div class="flame-container mr-2 h-8 w-8 relative">
+      <div class="flame-base"></div>
+      <div class="flame-middle"></div>
+      <div class="flame-top"></div>
+    </div>
     <span class="transform hover:scale-105 transition-transform duration-300">Fog &amp; Flame</span>
   </div>
   <div class="space-x-6">
@@ -188,6 +258,8 @@
     <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="menu-btn" href="MenuPage.html">Menu</a>
   </div>
 </nav>
+
+
 
 <!-- Spacer for fixed navbar -->
 <div class="h-16"></div>
@@ -367,6 +439,8 @@
       }
     });
   });
+
+
 
   // Redirections
   document.getElementById("reserve-btn").addEventListener("click", function() {
@@ -1020,9 +1094,68 @@
       }
     }, 15000);
   });
+
+
 </script>
 
+
+// Add this code right before the closing </body> tag in your HomePage.html file
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if user has seen the intro already
+    const hasSeenIntro = localStorage.getItem('fogFlameIntroSeen');
+
+    if (!hasSeenIntro) {
+      // Create a temporary intro container
+      const introFrame = document.createElement('iframe');
+      introFrame.style.position = 'fixed';
+      introFrame.style.top = '0';
+      introFrame.style.left = '0';
+      introFrame.style.width = '100vw';
+      introFrame.style.height = '100vh';
+      introFrame.style.border = 'none';
+      introFrame.style.zIndex = '9999';
+      introFrame.src = 'fog-flame-intro.html'; // Path to the intro HTML file
+
+      // Prevent scrolling while intro is playing
+      document.body.style.overflow = 'hidden';
+
+      // Add the intro frame to the document
+      document.body.appendChild(introFrame);
+
+      // Set the cookie to remember that user has seen the intro
+      localStorage.setItem('fogFlameIntroSeen', 'true');
+
+      // Remove the intro after it completes
+      setTimeout(() => {
+        introFrame.remove();
+        document.body.style.overflow = '';
+      }, 8500); // Slightly longer than the animation to ensure smooth transition
+    }
+
+    // Add a button to watch the intro again (optional)
+    const footer = document.querySelector('footer');
+    if (footer) {
+      const watchIntroAgain = document.createElement('a');
+      watchIntroAgain.href = '#';
+      watchIntroAgain.style.color = '#fff';
+      watchIntroAgain.style.marginLeft = '15px';
+      watchIntroAgain.style.fontSize = '0.9rem';
+      watchIntroAgain.textContent = 'Watch Intro';
+
+      watchIntroAgain.addEventListener('click', function(e) {
+        e.preventDefault();
+        localStorage.removeItem('fogFlameIntroSeen');
+        window.location.reload();
+      });
+
+      footer.querySelector('.container').appendChild(watchIntroAgain);
+    }
+  });
+</script>
 </body>
 
 </html>
+
+
 
