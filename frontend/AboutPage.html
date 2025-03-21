@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Fog & Flame</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Pacifico&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .logo {
+            font-family: 'Pacifico', cursive;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .animate-slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .animate-slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-30px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(30px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .team-member {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://public.readdy.ai/ai/img_res/fd404799a24fa3757f864b9d52a746c4.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+        }
+
+        .timeline-connector {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #e5e7eb;
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 1.5rem;
+            height: 1.5rem;
+            width: 1.5rem;
+            background-color: black;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .testimonial-card {
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+<!-- Navbar -->
+<header class="bg-black text-white sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <a href="HomePage.html" class="flex items-center">
+                <span class="logo text-2xl">Fog & Flame</span>
+            </a>
+            <nav class="flex items-center space-x-8">
+                <a href="HomePage.html" class="text-white hover:text-gray-300 transition-colors duration-300">Home</a>
+                <a href="MenuPage.html" class="text-white hover:text-gray-300 transition-colors duration-300">Menu</a>
+                <a href="#" class="text-white border-b-2 border-white pb-1">About</a>
+                <a href="reservationPage.html" class="text-white hover:text-gray-300 transition-colors duration-300">Reservations</a>
+                <a href="contact.html" class="text-white hover:text-gray-300 transition-colors duration-300">Contact</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-image w-full flex items-center justify-center">
+    <div class="text-center">
+        <h1 class="heading text-white text-4xl md:text-5xl font-bold animate-fade-in">Our Story</h1>
+        <p class="text-gray-200 mt-4 max-w-2xl mx-auto px-4 animate-slide-up">
+            Discover the journey, passion, and people behind Fog & Flame's culinary excellence
+        </p>
+    </div>
+</section>
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <!-- Our Story Section -->
+    <section class="mb-20">
+        <div class="max-w-3xl mx-auto text-center mb-12">
+            <h2 class="heading text-3xl font-bold mb-6">A Culinary Journey</h2>
+            <p class="text-gray-600 leading-relaxed">
+                Fog & Flame was born from a passion for creating memorable dining experiences that blend traditional cooking methods with modern culinary innovation. Our restaurant began as a small family venture in 2018 and has evolved into one of London's most beloved dining destinations.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="animate-slide-in-left">
+                <img src="https://public.readdy.ai/ai/img_res/20d1d9bccc92cf95a3f2ea3de2a5c80c.jpg" alt="Chef preparing food" class="rounded-lg shadow-lg w-full h-auto">
+            </div>
+            <div class="animate-slide-in-right">
+                <h3 class="heading text-2xl font-semibold mb-4">Our Philosophy</h3>
+                <p class="text-gray-600 mb-6">
+                    At Fog & Flame, we believe that exceptional food comes from exceptional ingredients. We source locally whenever possible, building relationships with farmers, fishermen, and artisanal producers who share our commitment to quality and sustainability.
+                </p>
+                <p class="text-gray-600">
+                    Our name "Fog & Flame" represents our two culinary foundations: the subtle, mysterious elements of flavor that develop slowly (the fog), and the intense, transformative power of fire and passion in cooking (the flame).
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="mb-20">
+        <h2 class="heading text-3xl font-bold text-center mb-12">Our Journey</h2>
+        <div class="relative max-w-4xl mx-auto">
+            <div class="timeline-connector"></div>
+
+            <!-- Timeline Item 1 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="md:w-1/2 md:pr-12 md:text-right">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="heading text-xl font-semibold mb-2">2018</h3>
+                        <p class="text-gray-600">Fog & Flame opens its doors in London with just 10 tables and a small team of passionate culinary enthusiasts.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 2 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="md:w-1/2 md:ml-auto md:pl-12">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="heading text-xl font-semibold mb-2">2019</h3>
+                        <p class="text-gray-600">Named "Best New Restaurant" by London Food Critics Association and expanded our seating capacity.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 3 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="md:w-1/2 md:pr-12 md:text-right">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="heading text-xl font-semibold mb-2">2021</h3>
+                        <p class="text-gray-600">Launched our seasonal tasting menus and farm-to-table initiative, partnering with local organic farms.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 4 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="md:w-1/2 md:ml-auto md:pl-12">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="heading text-xl font-semibold mb-2">2022</h3>
+                        <p class="text-gray-600">Awarded our first Michelin star, recognizing our commitment to culinary excellence and innovation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 5 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="md:w-1/2 md:pr-12 md:text-right">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="heading text-xl font-semibold mb-2">2023</h3>
+                        <p class="text-gray-600">Expanded our wine collection to over 200 curated selections and launched our chef's table experience.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 6 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="md:w-1/2 md:ml-auto md:pl-12">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="heading text-xl font-semibold mb-2">2025</h3>
+                        <p class="text-gray-600">Today, Fog & Flame continues to evolve while staying true to our founding principles of quality, innovation, and exceptional dining experiences.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet the Team Section -->
+    <section class="mb-20">
+        <h2 class="heading text-3xl font-bold text-center mb-12">Meet Our Team</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Team Member 1 -->
+            <div class="team-member bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://public.readdy.ai/ai/img_res/3fb1dcbecfea1329c5e86a4ad3d10fa9.jpg" alt="Chef Yamin Mehrdad" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="heading text-xl font-semibold mb-1">Yamin Mehrdad</h3>
+                    <p class="text-gray-500 italic mb-4">Executive Chef & Owner</p>
+                    <p class="text-gray-600">With over 15 years of culinary experience across three continents, Chef Yamin brings a global perspective to every dish, infusing traditional techniques with modern innovation.</p>
+                </div>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="team-member bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://public.readdy.ai/ai/img_res/d88fd9b5a3a2b6ab49613c9b371a0ede.jpg" alt="Sophia Martinez" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="heading text-xl font-semibold mb-1">Sophia Martinez</h3>
+                    <p class="text-gray-500 italic mb-4">Head Chef</p>
+                    <p class="text-gray-600">A master of flavor combinations, Sophia leads our kitchen with creative vision and meticulous attention to detail, ensuring every plate meets our exacting standards.</p>
+                </div>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="team-member bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://public.readdy.ai/ai/img_res/36a232c1e37c01ea71daed8b5f6a3a71.jpg" alt="James Chen" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="heading text-xl font-semibold mb-1">James Chen</h3>
+                    <p class="text-gray-500 italic mb-4">Pastry Chef</p>
+                    <p class="text-gray-600">Trained in Paris, James brings artistic precision to our dessert menu, creating memorable sweet finales that balance tradition with unexpected twists.</p>
+                </div>
+            </div>
+
+            <!-- Team Member 4 -->
+            <div class="team-member bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://public.readdy.ai/ai/img_res/fafb7b6dc55d34dbd9b3d3c0c2e0b5fb.jpg" alt="Olivia Thompson" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="heading text-xl font-semibold mb-1">Olivia Thompson</h3>
+                    <p class="text-gray-500 italic mb-4">Sommelier</p>
+                    <p class="text-gray-600">With a background in viticulture and a passion for wine pairing, Olivia curates our wine collection and helps guests discover perfect pairings for their meal.</p>
+                </div>
+            </div>
+
+            <!-- Team Member 5 -->
+            <div class="team-member bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://public.readdy.ai/ai/img_res/3fb0bb1ef22ab55b9a49c2d7c18db98a.jpg" alt="Marcus Williams" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="heading text-xl font-semibold mb-1">Marcus Williams</h3>
+                    <p class="text-gray-500 italic mb-4">Restaurant Manager</p>
+                    <p class="text-gray-600">With an eye for detail and a warm approach to hospitality, Marcus ensures that every guest enjoys impeccable service from the moment they arrive.</p>
+                </div>
+            </div>
+
+            <!-- Team Member 6 -->
+            <div class="team-member bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://public.readdy.ai/ai/img_res/c3a3d1c6d4dbe4a6a53c9d7efae9d1e4.jpg" alt="Elena Rossi" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <h3 class="heading text-xl font-semibold mb-1">Elena Rossi</h3>
+                    <p class="text-gray-500 italic mb-4">Bar Director</p>
+                    <p class="text-gray-600">An award-winning mixologist, Elena crafts our signature cocktails with house-made ingredients and a creative approach that complements our culinary philosophy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="mb-20">
+        <h2 class="heading text-3xl font-bold text-center mb-12">What Our Guests Say</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card bg-white p-6 rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="text-yellow-400 text-2xl mr-2">★★★★★</div>
+                    <div class="text-gray-500">The Guardian</div>
+                </div>
+                <p class="text-gray-600 italic mb-4">"Fog & Flame delivers an extraordinary dining experience that combines technical excellence with soulful cooking. Each dish tells a story of tradition, innovation, and meticulous attention to detail."</p>
+                <p class="font-medium">- Richard Walker, Food Critic</p>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card bg-white p-6 rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="text-yellow-400 text-2xl mr-2">★★★★★</div>
+                    <div class="text-gray-500">London Food Guide</div>
+                </div>
+                <p class="text-gray-600 italic mb-4">"From the moment you enter, there's a sense of occasion at Fog & Flame. The service is impeccable, the ambiance enchanting, and the food is nothing short of spectacular."</p>
+                <p class="font-medium">- Sarah James, Editor</p>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card bg-white p-6 rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="text-yellow-400 text-2xl mr-2">★★★★★</div>
+                    <div class="text-gray-500">Verified Customer</div>
+                </div>
+                <p class="text-gray-600 italic mb-4">"We celebrated our anniversary at Fog & Flame, and it exceeded all expectations. The tasting menu was a journey of flavors, and the staff made us feel like the only guests in the restaurant."</p>
+                <p class="font-medium">- Michael & Jennifer Thompson</p>
+            </div>
+
+            <!-- Testimonial 4 -->
+            <div class="testimonial-card bg-white p-6 rounded-lg shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="text-yellow-400 text-2xl mr-2">★★★★★</div>
+                    <div class="text-gray-500">Culinary Magazine</div>
+                </div>
+                <p class="text-gray-600 italic mb-4">"Chef Yamin's commitment to sourcing exceptional ingredients and transforming them with both classic and innovative techniques results in dishes that are both intellectually interesting and deeply satisfying."</p>
+                <p class="font-medium">- David Chen, Food Writer</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards & Recognition -->
+    <section class="mb-20">
+        <h2 class="heading text-3xl font-bold text-center mb-12">Awards & Recognition</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <i class="ri-award-line text-4xl text-yellow-600 mb-4"></i>
+                <h3 class="heading text-lg font-semibold mb-2">Michelin Star</h3>
+                <p class="text-gray-600">2022-2025</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <i class="ri-trophy-line text-4xl text-yellow-600 mb-4"></i>
+                <h3 class="heading text-lg font-semibold mb-2">Best Fine Dining</h3>
+                <p class="text-gray-600">London Restaurant Awards</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <i class="ri-star-line text-4xl text-yellow-600 mb-4"></i>
+                <h3 class="heading text-lg font-semibold mb-2">Chef of the Year</h3>
+                <p class="text-gray-600">Culinary Excellence Awards</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <i class="ri-customer-service-2-line text-4xl text-yellow-600 mb-4"></i>
+                <h3 class="heading text-lg font-semibold mb-2">Outstanding Service</h3>
+                <p class="text-gray-600">Hospitality Excellence</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-black text-white p-12 rounded-lg text-center">
+        <h2 class="heading text-3xl font-bold mb-6">Experience Fog & Flame</h2>
+        <p class="text-gray-300 max-w-2xl mx-auto mb-8">Join us for an unforgettable culinary journey that celebrates exceptional ingredients, masterful techniques, and warm hospitality.</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="reservationPage.html" class="bg-white text-black py-3 px-6 rounded-full font-medium hover:bg-gray-200 transition-colors">
+                Make a Reservation
+            </a>
+            <a href="MenuPage.html" class="border-2 border-white text-white py-3 px-6 rounded-full font-medium hover:bg-white hover:text-black transition-colors">
+                View Our Menu
+            </a>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-black text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Logo and Description -->
+            <div class="col-span-1 md:col-span-1">
+                <h3 class="logo text-2xl mb-4">Fog & Flame</h3>
+                <p class="text-gray-400">Experience exceptional dining in an unforgettable atmosphere.</p>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-span-1 md:col-span-1">
+                <h4 class="text-lg font-bold mb-4">Contact</h4>
+                <div class="space-y-2 text-gray-400">
+                    <p class="flex items-center"><i class="ri-map-pin-line mr-2"></i> 123 Gourmet Street, London, UK</p>
+                    <p class="flex items-center"><i class="ri-phone-line mr-2"></i> +44 20 7123 4567</p>
+                    <p class="flex items-center"><i class="ri-mail-line mr-2"></i> info@fogandflame.com</p>
+                </div>
+            </div>
+
+            <!-- Opening Hours -->
+            <div class="col-span-1 md:col-span-1">
+                <h4 class="text-lg font-bold mb-4">Hours</h4>
+                <div class="space-y-2 text-gray-400">
+                    <p>Monday: Closed</p>
+                    <p>Tuesday - Friday: 11:00 AM - 10:00 PM</p>
+                    <p>Saturday: 10:00 AM - 11:00 PM</p>
+                    <p>Sunday: 10:00 AM - 9:00 PM</p>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-span-1 md:col-span-1">
+                <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="HomePage.html" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                    <li><a href="MenuPage.html" class="text-gray-400 hover:text-white transition-colors duration-300">Menu</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About</a></li>
+                    <li><a href="reservationPage.html" class="text-gray-400 hover:text-white transition-colors duration-300">Reservations</a></li>
+                    <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                    <li><a href="WaitingListPage.html" class="text-gray-400 hover:text-white transition-colors duration-300">Waiting List</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-400">© 2025 Fog & Flame. All rights reserved.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Animate elements when they become visible
+    document.addEventListener('DOMContentLoaded', function() {
+        const animateElements = document.querySelectorAll('.animate-slide-in-left, .animate-slide-in-right');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animateElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = element.classList.contains('animate-slide-in-left') ?
+                'translateX(-30px)' : 'translateX(30px)';
+            observer.observe(element);
+        });
+
+        // Additional animations for timeline items
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        timelineItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            }, 300 + (index * 150));
+        });
+    });
+</script>
+</body>
+</html>
