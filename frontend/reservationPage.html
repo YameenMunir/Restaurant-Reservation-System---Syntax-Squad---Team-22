@@ -46,61 +46,101 @@
     </script>
     <style>
         :where([class^="ri-"])::before { content: "\f3c2"; }
+
+        /* IMPROVED TABLE STYLES */
         .table {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s;
-            background-color: #6B7280;
+            background-color: rgba(80, 90, 107, 0.85);
             color: white;
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border: 2px solid transparent;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            border: 3px solid transparent;
+            z-index: 10;
+        }
+
+        .table-number {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .table.large {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
+            background-color: rgba(69, 90, 124, 0.9);
         }
 
         .table.small {
-            width: 45px;
-            height: 45px;
+            width: 55px;
+            height: 55px;
+            background-color: rgba(94, 114, 145, 0.9);
         }
 
         .table::after {
-            content: 'Table';
+            content: attr(data-label);
             position: absolute;
-            bottom: -20px;
+            bottom: -25px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 10px;
+            font-size: 12px;
+            font-weight: 500;
             color: #374151;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2px 6px;
+            border-radius: 3px;
             white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .table:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            transform: scale(1.08);
+            box-shadow: 0 0 15px rgba(33, 150, 243, 0.6);
             border-color: #2196F3;
+            z-index: 20;
         }
 
         .table-selected {
             background-color: #2196F3;
-            border-color: #0d6efd;
-            box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+            border-color: #1976D2;
+            box-shadow: 0 0 18px rgba(33, 150, 243, 0.7);
+            transform: scale(1.05);
         }
 
         .table-selected::after {
             content: 'Selected';
-            color: #2196F3;
+            color: #fff;
+            background-color: #1976D2;
             font-weight: bold;
         }
+
+        /* Unavailable table styling */
+        .table-unavailable {
+            opacity: 0.6;
+            background-color: #9e9e9e;
+            cursor: not-allowed;
+        }
+
+        .table-unavailable:hover {
+            transform: none;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            border-color: transparent;
+        }
+
+        .table-unavailable::after {
+            content: 'Unavailable';
+            color: #616161;
+            background-color: rgba(245, 245, 245, 0.9);
+        }
+
+        /* OTHER ORIGINAL STYLES */
         .floor-plan-container {
             position: relative;
             width: 100%;
@@ -455,7 +495,7 @@
         renderTables();
     });
 
-    // Render tables on the floor plan
+    // IMPROVED RENDER TABLES FUNCTION
     const renderTables = () => {
         // Clear existing tables
         while (floorPlan.firstChild) {
@@ -479,7 +519,15 @@
 
             // Apply the appropriate size class based on seat count
             tableElement.className = table.seats > 2 ? "table large" : "table small";
-            tableElement.innerHTML = `<span class="text-white font-bold">${table.id}</span>`;
+
+            // Add table number with dedicated element for better styling
+            const tableNumber = document.createElement("span");
+            tableNumber.className = "table-number";
+            tableNumber.textContent = table.id;
+            tableElement.appendChild(tableNumber);
+
+            // Set a custom data attribute for the label (shown after the element)
+            tableElement.dataset.label = `Table ${table.id} (${table.seats} seats)`;
             tableElement.dataset.tableId = table.id;
 
             // Check if table is available on selected date
@@ -488,8 +536,7 @@
 
             // If all time slots are reserved, make the table appear unavailable
             if (reservedTimes.length >= timeSlots.length) {
-                tableElement.style.opacity = "0.5";
-                tableElement.style.cursor = "not-allowed";
+                tableElement.classList.add("table-unavailable");
                 tableElement.title = "Fully booked for this date";
             } else {
                 tableElement.addEventListener("click", () => {
@@ -614,7 +661,6 @@
         </form>
       </div>
       `;
-
         document.body.appendChild(modal);
 
         const contactForm = document.getElementById("contactForm");
