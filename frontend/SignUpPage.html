@@ -35,8 +35,41 @@
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
 
+            // Check if passwords match
             if (password !== confirmPassword) {
-                alert('Passwords do not match!');
+                alert('Passwords do not match. Please try again.');
+                return;
+            }
+
+            // Check if username already exists
+            const { data: usernameData, error: usernameError } = await supabase
+                .from('users')
+                .select('username')
+                .eq('username', username);
+
+            if (usernameError) {
+                alert('Something went wrong while checking your username. Please try again later.');
+                return;
+            }
+
+            if (usernameData.length > 0) {
+                alert('This username is already taken. Please choose a different username.');
+                return;
+            }
+
+            // Check if email already exists
+            const { data: emailData, error: emailError } = await supabase
+                .from('users')
+                .select('email')
+                .eq('email', email);
+
+            if (emailError) {
+                alert('Something went wrong while checking your email. Please try again later.');
+                return;
+            }
+
+            if (emailData.length > 0) {
+                alert('An account with this email address already exists. Please use a different email or log in instead.');
                 return;
             }
 
@@ -49,9 +82,20 @@
                 .insert([{ username, email, password_hash: hashedPassword }]);
 
             if (error) {
-                alert('Error signing up: ' + error.message);
+                // Customize the error message for duplicate username or email
+                if (error.code === '23505') { // PostgreSQL error code for unique constraint violation
+                    if (error.message.includes('username')) {
+                        alert('This username is already taken. Please choose a different username.');
+                    } else if (error.message.includes('email')) {
+                        alert('An account with this email address already exists. Please use a different email or log in instead.');
+                    } else {
+                        alert('Something went wrong. Please try again.');
+                    }
+                } else {
+                    alert('Something went wrong. Please try again.');
+                }
             } else {
-                alert('User created successfully!');
+                alert('Your account has been created successfully! Redirecting you to the login page...');
                 window.location.href = 'LoginPage.html'; // Redirect to login page
             }
         }
