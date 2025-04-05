@@ -10,8 +10,10 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#0e0400',
-                        secondary: '#FFB800'
+                        primary: '#5a4a42',
+                        secondary: 'rgba(188,200,236,0.3)',
+                        cream: '#f5f1e4',
+                        gold: '#6d72ed'
                     },
                     borderRadius: {
                         'none': '0px',
@@ -31,152 +33,237 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
         :where([class^="ri-"])::before { content: "\f3c2"; }
         body {
-            background-color: #FFFFFF;
+            background-color: #3a3a3a;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .poster-container {
+            background-color: #f5f1e4;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4b96e' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            max-width: 1200px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 2px solid #4d5161;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: #5a4a42;
+            border-bottom: 2px solid #100c53;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        .device-container {
+            position: relative;
+            z-index: 1;
+        }
+        .device-container::before {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background-color: #d4b96e;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0.3;
         }
     </style>
 </head>
-<body class="p-8">
-<div class="max-w-[1400px] mx-auto bg-gray-50 rounded-lg shadow-lg p-12">
-    <header class="flex items-center justify-between mb-16">
-        <div class="flex items-center gap-16">
-            <div class="flex items-center gap-6">
-                <i class="ri-fire-line text-6xl text-primary"></i>
-                <h1 class="font-['Pacifico'] text-5xl text-primary">Fog & Flame</h1>
+<body>
+<div class="poster-container p-8 rounded-lg">
+    <!-- Header Section -->
+    <header class="border-b border-gold pb-4 mb-8">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <i class="ri-fire-line text-4xl text-primary"></i>
+                <h1 class="font-['Pacifico'] text-4xl text-primary">Fog & Flame</h1>
             </div>
             <div>
-                <h2 class="text-4xl font-bold text-gray-800">The Project</h2>
-                <p class="text-xl text-gray-600">Restaurant Reservation System Design and Development</p>
+                <h2 class="text-3xl font-bold text-primary font-['Playfair_Display']">The Project</h2>
+                <p class="text-xl text-gray-700">Restaurant Reservation System Design and Development</p>
             </div>
         </div>
-        <img src="https://static.readdy.ai/image/fe2b98367bd2a9125273cc7c93dab5b1/5905972152459377739dab158d37ef9d.png" alt="Fog & Flame Logo" class="h-24 object-contain">
     </header>
+
+    <!-- Main Content Grid -->
     <div class="grid grid-cols-12 gap-8">
+        <!-- Design Section -->
         <div class="col-span-3">
-            <h3 class="text-2xl font-bold mb-8 text-primary">Design</h3>
-            <ul class="space-y-4">
+            <h3 class="section-title text-2xl font-bold">Design</h3>
+            <ul class="space-y-4 mt-6">
                 <li class="flex items-center gap-3">
-                    <div class="w-12 h-12 flex items-center justify-center">
+                    <div class="w-10 h-10 flex items-center justify-center bg-gold/20 rounded-md">
                         <i class="ri-layout-2-line text-primary"></i>
                     </div>
-                    <span>Sitemap</span>
+                    <span class="text-gray-800">Sitemap</span>
                 </li>
                 <li class="flex items-center gap-3">
-                    <div class="w-12 h-12 flex items-center justify-center">
+                    <div class="w-10 h-10 flex items-center justify-center bg-gold/20 rounded-md">
                         <i class="ri-layout-masonry-line text-primary"></i>
                     </div>
-                    <span>Wireframes</span>
+                    <span class="text-gray-800">Wireframes</span>
                 </li>
                 <li class="flex items-center gap-3">
-                    <div class="w-12 h-12 flex items-center justify-center">
+                    <div class="w-10 h-10 flex items-center justify-center bg-gold/20 rounded-md">
                         <i class="ri-palette-line text-primary"></i>
                     </div>
-                    <span>Moodboards</span>
+                    <span class="text-gray-800">Moodboards</span>
                 </li>
                 <li class="flex items-center gap-3">
-                    <div class="w-12 h-12 flex items-center justify-center">
+                    <div class="w-10 h-10 flex items-center justify-center bg-gold/20 rounded-md">
                         <i class="ri-smartphone-line text-primary"></i>
                     </div>
-                    <span>Mockups</span>
+                    <span class="text-gray-800">Mockups</span>
                 </li>
             </ul>
         </div>
-        <div class="col-span-6 relative">
-            <div class="absolute inset-0 bg-secondary/20 rounded-full -z-10"></div>
-            <div class="flex items-center justify-center">
-                <div class="relative w-full">
-                    <img src="https://public.readdy.ai/ai/img_res/35f81d98037205815a0c3a46fd5237f0.jpg"
-                         alt="Background"
-                         class="w-full rounded-lg shadow-lg">
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="relative w-[80%] h-[80%] flex items-center justify-center gap-8">
-                            <img src="https://static.readdy.ai/image/fe2b98367bd2a9125273cc7c93dab5b1/4999cda4a75856ab9c04f40116c176f2.png"
-                                 alt="Restaurant Website on Phone"
-                                 class="w-[35%] object-contain rounded-lg shadow-xl">
-                            <img src="https://static.readdy.ai/image/fe2b98367bd2a9125273cc7c93dab5b1/7dd20f9edcb5a39d19bcc475373e1a04.png"
-                                 alt="Restaurant Website on Tablet"
-                                 class="w-[55%] object-contain rounded-lg shadow-xl">
-                        </div>
+
+        <!-- Central Image Section -->
+        <div class="col-span-6">
+            <div class="device-container flex items-center justify-center py-4">
+                <div class="relative w-full grid grid-cols-12 gap-4">
+                    <!-- Tablet -->
+                    <div class="col-span-8 col-start-3">
+                        <img src="https://static.readdy.ai/image/fe2b98367bd2a9125273cc7c93dab5b1/7dd20f9edcb5a39d19bcc475373e1a04.png"
+                             alt="Restaurant Website on Tablet"
+                             class="w-full object-contain rounded-lg shadow-xl border-4 border-white">
+                    </div>
+                    <!-- Phone Left -->
+                    <div class="col-span-4 col-start-2 row-start-2">
+                        <img src="https://static.readdy.ai/image/fe2b98367bd2a9125273cc7c93dab5b1/4999cda4a75856ab9c04f40116c176f2.png"
+                             alt="Restaurant Website on Phone"
+                             class="w-full object-contain rounded-lg shadow-xl border-4 border-white">
+                    </div>
+                    <!-- Phone Right -->
+                    <div class="col-span-4 col-start-8 row-start-2">
+                        <img src="https://static.readdy.ai/image/fe2b98367bd2a9125273cc7c93dab5b1/4999cda4a75856ab9c04f40116c176f2.png"
+                             alt="Restaurant Website on Phone"
+                             class="w-full object-contain rounded-lg shadow-xl border-4 border-white">
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Development Section -->
         <div class="col-span-3">
-            <h3 class="text-2xl font-bold mb-8 text-primary">Development</h3>
-            <ul class="space-y-4">
+            <h3 class="section-title text-2xl font-bold">Development</h3>
+            <ul class="space-y-4 mt-6">
                 <li class="flex items-center gap-3">
-                    <div class="w-12 h-12 flex items-center justify-center">
+                    <div class="w-10 h-10 flex items-center justify-center bg-gold/20 rounded-md">
                         <i class="ri-reactjs-line text-primary"></i>
                     </div>
-                    <span>React.js</span>
+                    <span class="text-gray-800">React.js</span>
                 </li>
                 <li class="flex items-center gap-3">
-                    <div class="w-12 h-12 flex items-center justify-center">
+                    <div class="w-10 h-10 flex items-center justify-center bg-gold/20 rounded-md">
                         <i class="ri-database-2-line text-primary"></i>
                     </div>
-                    <span>MongoDB</span>
+                    <span class="text-gray-800">MongoDB</span>
                 </li>
                 <li class="flex items-center gap-3">
-                    <div class="w-12 h-12 flex items-center justify-center">
+                    <div class="w-10 h-10 flex items-center justify-center bg-gold/20 rounded-md">
                         <i class="ri-nodejs-line text-primary"></i>
                     </div>
-                    <span>Node.js</span>
+                    <span class="text-gray-800">Node.js</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <div class="w-10 h-10 flex items-center justify-center bg-gold/20 rounded-md">
+                        <i class="ri-code-s-slash-line text-primary"></i>
+                    </div>
+                    <span class="text-gray-800">Express.js</span>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="mt-12 bg-white/50 p-6 rounded-lg">
-        <h3 class="text-2xl font-bold mb-6 text-primary">Objectives</h3>
+
+    <!-- Objectives Section -->
+    <div class="mt-10 p-6 bg-gold/10 rounded-lg border border-gold/30">
+        <h3 class="section-title text-2xl font-bold">Objectives</h3>
         <p class="text-gray-700 leading-relaxed">
-            Design and develop a modern restaurant reservation system to enhance customer experience and streamline booking management. The system features real-time availability, automated confirmation emails, and intuitive mobile interface. Integration with POS system allows for efficient table management and customer data analysis.
+            Design and develop a modern restaurant reservation system to enhance customer experience and streamline booking management.
+            The system features real-time availability, automated confirmation emails, and intuitive mobile interface.
+            Integration with POS system allows for efficient table management and customer data analysis.
+            The new site uses an efficient content management system to allow easy updates by the client.
         </p>
     </div>
-    <div class="mt-12 grid grid-cols-3 gap-8">
-        <div class="text-center">
-            <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
-                <i class="ri-team-line text-4xl text-primary"></i>
+
+    <!-- Team Section -->
+    <div class="mt-10 grid grid-cols-3 gap-8">
+        <div class="relative">
+            <div class="absolute w-20 h-20 bg-gold/30 rounded-full top-0 left-8 -z-10"></div>
+            <div class="flex items-center">
+                <div class="bg-primary/10 p-3 rounded-full">
+                    <i class="ri-team-line text-3xl text-primary"></i>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-lg font-bold text-primary">Team members:</h4>
+                    <p class="text-sm text-gray-700 mt-1">
+                        Mohammed Ageli<br>
+                        Yameen Munir<br>
+                        Joey Hall<br>
+                        Param
+                    </p>
+                </div>
             </div>
-            <h4 class="text-xl font-bold mb-4">Team members</h4>
-            <p class="text-base text-gray-600">
-                Mohammed Ageli<br>
-                Yameen Munir<br>
-                Joey Hall<br>
-                Mohammed
-            </p>
         </div>
-        <div class="text-center">
-            <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
-                <i class="ri-user-star-line text-4xl text-primary"></i>
+        <div class="relative">
+            <div class="absolute w-20 h-20 bg-gold/30 rounded-full top-0 left-8 -z-10"></div>
+            <div class="flex items-center">
+                <div class="bg-primary/10 p-3 rounded-full">
+                    <i class="ri-user-star-line text-3xl text-primary"></i>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-lg font-bold text-primary">Client:</h4>
+                    <p class="text-sm text-gray-700 mt-1">
+                        Yamin Mehrdad<br>
+                        Fog & Flame Owner
+                    </p>
+                </div>
             </div>
-            <h4 class="text-xl font-bold mb-4">Client</h4>
-            <p class="text-base text-gray-600">
-                Yamin Mehrdad<br>
-                Fog & Flame Owner
-            </p>
         </div>
-        <div class="text-center">
-            <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center">
-                <i class="ri-graduation-cap-line text-4xl text-primary"></i>
+        <div class="relative">
+            <div class="absolute w-20 h-20 bg-gold/30 rounded-full top-0 left-8 -z-10"></div>
+            <div class="flex items-center">
+                <div class="bg-primary/10 p-3 rounded-full">
+                    <i class="ri-graduation-cap-line text-3xl text-primary"></i>
+                </div>
+                <div class="ml-4">
+                    <h4 class="text-lg font-bold text-primary">Project Lead:</h4>
+                    <p class="text-sm text-gray-700 mt-1">
+                        Yameen Munir<br>
+                        Technical Director
+                    </p>
+                </div>
             </div>
-            <h4 class="text-xl font-bold mb-4">Project Lead</h4>
-            <p class="text-base text-gray-600">
-                Yameen Munir<br>
-                Technical Director
-            </p>
         </div>
     </div>
-    <footer class="mt-12 pt-8 border-t border-gray-200">
-        <div class="flex justify-between items-center">
-            <div class="text-lg text-gray-500">© 2025 Fog & Flame Restaurant. All rights reserved.</div>
-            <div class="flex gap-6">
-                <i class="ri-award-line text-4xl text-primary"></i>
-                <i class="ri-shield-star-line text-4xl text-primary"></i>
-                <i class="ri-medal-line text-4xl text-primary"></i>
+
+    <!-- Footer -->
+    <footer class="mt-10 pt-6 border-t border-gold/50 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <img src="https://static.readdy.ai/image/fe2b98367bd2a9125273cc7c93dab5b1/5905972152459377739dab158d37ef9d.png" alt="Fog & Flame Logo" class="h-12 object-contain">
+            <div class="text-sm text-gray-600">© 2025 Fog & Flame Restaurant</div>
+        </div>
+        <div class="flex gap-4">
+            <div class="bg-gold/20 p-2 rounded-full">
+                <i class="ri-award-line text-primary"></i>
+            </div>
+            <div class="bg-gold/20 p-2 rounded-full">
+                <i class="ri-shield-star-line text-primary"></i>
+            </div>
+            <div class="bg-gold/20 p-2 rounded-full">
+                <i class="ri-medal-line text-primary"></i>
             </div>
         </div>
     </footer>
