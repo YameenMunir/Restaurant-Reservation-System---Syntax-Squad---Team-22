@@ -5,9 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fog & Flame - Restaurant Reservation</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="./src/supabaseClient.js"></script>
+
+
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+
+    <script src="config.js"></script>
+
+
     <script>
-            type="text/javascript"
-            src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+        (function(){
+            emailjs.init("7CQHXp502_e6kFQcb"); // Your public key
+        })();
+    </script>
+
+    <script src="script.js"></script>
+
+    <script>
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -750,8 +768,96 @@
         }
     });
 
-    // Handle reservation form submission
-    document.getElementById("reservationForm").addEventListener("submit", (e) => {
+    // Enhanced sendConfirmationEmail function that tries both methods
+    async function sendConfirmationEmail(reservationDetails) {
+        try {
+            // Remove the Edge Function code entirely and only use EmailJS
+            // Gather parameters for EmailJS
+            let params = {
+                name: reservationDetails.name,
+                email: reservationDetails.email,
+                subject: "Fog & Flame Reservation Confirmation",
+                message: `Reservation Details:
+            Date: ${reservationDetails.reservation_date}
+            Time: ${reservationDetails.reservation_time}
+            Table: Table ${reservationDetails.table_number} (${reservationDetails.table_seats} seats)
+            Guests: ${reservationDetails.number_of_guests}
+            Special Requests: ${reservationDetails.special_requests || 'None'}`
+            };
+
+            console.log("Sending email with params:", params);
+
+            // Send email using EmailJS with your service ID
+            const response = await emailjs.send("service_jp4g5l", "template_2pz1h3y", params);
+            console.log('Email sent successfully:', response);
+            return { success: true, method: 'emailjs' };
+        } catch (error) {
+            console.error('Email sending failed:', error);
+            return { success: false, error: error.message };
+        }
+    }
+
+
+    // Validation function for reservation details
+    function validateReservationDetails(details) {
+        const requiredFields = [
+            'email', 'name', 'reservation_date',
+            'reservation_time', 'table_number',
+            'number_of_guests'
+        ];
+
+        // Check for required fields
+        for (const field of requiredFields) {
+            if (!details[field]) {
+                console.error(`Missing required field: ${field}`);
+                return false;
+            }
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(details.email)) {
+            console.error('Invalid email format');
+            return false;
+        }
+
+        // Date validation
+        const selectedDate = new Date(details.reservation_date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate < today) {
+            console.error('Reservation date cannot be in the past');
+            return false;
+        }
+
+        // Additional validations can be added here
+        return true;
+    }
+
+    // Notification helper function
+    function showNotification(message, type = 'info') {
+        // Create a notification element
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg
+    ${type === 'success' ? 'bg-green-500 text-white' :
+            type === 'error' ? 'bg-red-500 text-white' :
+                type === 'warning' ? 'bg-yellow-500 text-black' :
+                    'bg-blue-500 text-white'}
+  `;
+        notification.textContent = message;
+
+        // Add to document
+        document.body.appendChild(notification);
+
+        // Remove after 5 seconds
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 5000);
+    }
+
+    // In the reservation form submission handler
+    document.getElementById("reservationForm").addEventListener("submit", async (e) => {
         e.preventDefault();
 
         // Check if table and time are selected
@@ -760,110 +866,41 @@
             return;
         }
 
+        // Create and show modal
         const modal = document.createElement("div");
         modal.className = "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
         modal.innerHTML = `
-      <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+    <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
         <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
         <p class="text-gray-600 mb-4">Please provide your contact details to receive confirmation via SMS and email.</p>
         <form id="contactForm" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-            <input type="text" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-            <input type="tel" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-            <input type="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
-          </div>
-          <div class="flex space-x-4">
-            <button type="button" class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-button hover:bg-gray-300 transition-colors" onclick="this.closest('.fixed').remove()">Cancel</button>
-            <button type="submit" class="flex-1 bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors">Confirm</button>
-          </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <input type="text" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                <input type="tel" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <input type="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" required>
+            </div>
+            <div class="flex space-x-4">
+                <button type="button" class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-button hover:bg-gray-300 transition-colors" id="cancelReservation">Cancel</button>
+                <button type="button" class="btn flex-1 bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" onclick="SendMail(event)" id="confirmReservation">Confirm</button>
+            </div>
         </form>
-      </div>
-      `;
-
-
-
+    </div>
+    `;
         document.body.appendChild(modal);
 
-        const contactForm = document.getElementById("contactForm");
-        contactForm.addEventListener("submit", async (event) => {
-            event.preventDefault();
-            const formData = new FormData(contactForm);
-
-            const reservationDetails = {
-                name: formData.get("name"),
-                email: formData.get("email"),
-                phone: formData.get("phone"),
-                date: dateSelector.value,
-                time: selectedTimeSlot,
-                guests: document.getElementById("guestsNumber").value,
-                table: `Table ${selectedTable.id} (${selectedTable.seats} seats)`,
-                specialRequests: document.getElementById("specialRequests").value,
-            };
-
-            try {
-                // Simulate successful response
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-
-                // Show success message
-                modal.innerHTML = `
-                <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
-                  <div class="text-center mb-4">
-                    <i class="ri-check-line ri-3x text-green-500"></i>
-                  </div>
-                  <h3 class="text-xl font-semibold mb-4 text-center">Reservation Confirmed!</h3>
-                  <p class="text-gray-600 mb-4 text-center">Your reservation has been successfully confirmed for Table ${selectedTable.id} on ${reservationDetails.date} at ${reservationDetails.time}. A confirmation email has been sent to ${reservationDetails.email}.</p>
-                  <div class="space-y-3">
-                    <button class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" onclick="this.closest('.fixed').remove()">Close</button>
-                    <a href="HomePage.html" class="block w-full text-center bg-secondary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors">Back to Home</a>
-                  </div>
-                </div>
-              `;
-
-                // Add this reservation to the mock data (for demonstration purposes)
-                if (!mockReservations[reservationDetails.date]) {
-                    mockReservations[reservationDetails.date] = {};
-                }
-                if (!mockReservations[reservationDetails.date][selectedTable.id]) {
-                    mockReservations[reservationDetails.date][selectedTable.id] = [];
-                }
-                mockReservations[reservationDetails.date][selectedTable.id].push(reservationDetails.time);
-
-                // Reset the form
-                document.getElementById("reservationForm").reset();
-                document.getElementById("selectedTable").value = "";
-                reservationDate.value = dateSelector.value;
-                selectedTable = null;
-                selectedTimeSlot = null;
-                if (selectedTableElement) {
-                    selectedTableElement.classList.remove("table-selected");
-                    selectedTableElement = null;
-                }
-
-            } catch (error) {
-                modal.innerHTML = `
-                <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
-                  <div class="text-center mb-4">
-                    <i class="ri-error-warning-line ri-3x text-red-500"></i>
-                  </div>
-                  <h3 class="text-xl font-semibold mb-4 text-center">Oops! Something went wrong</h3>
-                  <p class="text-gray-600 mb-4 text-center">We couldn't process your reservation. Please try again or contact us directly.</p>
-                  <div class="space-y-3">
-                    <button class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" onclick="this.closest('.fixed').remove()">Close</button>
-                  </div>
-                </div>
-              `;
-            }
-
-
+        // Handle cancel button
+        document.getElementById("cancelReservation").addEventListener("click", function() {
+            modal.remove();
         });
     });
+
 
     // Initialize the floor plan
     renderTables();
@@ -1499,6 +1536,195 @@
             }
         }, 15000);
     });
+
+
+</script>
+<script type="text/javascript">
+
+    // Modified SendMail function to update reservations
+    function SendMail(event) {
+        event.preventDefault();
+
+        // Get form elements
+        const contactForm = document.getElementById("contactForm");
+        const confirmBtn = document.getElementById('confirmReservation');
+
+        // Basic validation
+        const nameInput = contactForm.querySelector('input[name="name"]');
+        const emailInput = contactForm.querySelector('input[name="email"]');
+        const phoneInput = contactForm.querySelector('input[name="phone"]');
+
+        if (!nameInput || !emailInput || !phoneInput) {
+            alert("Please fill in all contact information.");
+            return;
+        }
+
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const date = document.getElementById('reservationDate').value;
+        const time = document.getElementById('reservationTime').value;
+        const tableId = selectedTable.id; // Get the selected table ID
+        const table = document.getElementById('selectedTable').value;
+        const guests = document.getElementById('guestsNumber').value;
+        const requests = document.getElementById('specialRequests').value || 'None';
+
+        if (!name || !email || !phone || !date || !time || !table || !guests) {
+            alert("Please complete all fields.");
+            return;
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+
+        // Show loading state
+        confirmBtn.disabled = true;
+        confirmBtn.innerHTML = '<i class="ri-loader-4-line animate-spin"></i> Processing...';
+
+        // Check if the time slot is still available
+        const reservedTimes = (mockReservations[date] && mockReservations[date][tableId]) || [];
+        if (reservedTimes.includes(time)) {
+            // Time slot was already booked by someone else
+            const modal = contactForm.closest('.fixed');
+            modal.innerHTML = `
+        <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+            <div class="text-center mb-4">
+                <i class="ri-error-warning-line ri-3x text-red-500"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-4 text-center">Time Slot Unavailable</h3>
+            <p class="text-gray-600 mb-4 text-center">The selected time slot has just been booked by another guest. Please select a different time.</p>
+            <div class="space-y-3">
+                <button class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" onclick="this.closest('.fixed').remove()">Close</button>
+            </div>
+        </div>
+        `;
+            confirmBtn.disabled = false; // Re-enable the button
+            return;
+        }
+
+        // Extract table number from the string (e.g., "Table 3 (4 seats)" -> "3")
+        const tableNumber = table.replace('Table ', '').split(' ')[0];
+
+        // Prepare email parameters with properly named fields
+        const templateParams = {
+            to_name: name,
+            restaurant_name: "Fog & Flame",
+            reservation_date: formatDate(date),
+            reservation_time: time,
+            table_number: tableNumber,
+            number_of_guests: guests,
+            special_requests: requests,
+            restaurant_phone: '+44 20 7123 4567',
+            restaurant_address: '123 Restaurant Street, London, United Kingdom',
+            email: email,
+            phone: phone
+        };
+
+        console.log("Email template parameters:", templateParams);
+
+        // Send email
+        emailjs.send('service_9rrhczs', 'template_2pz1h3y', templateParams)
+            .then(function(response) {
+                console.log('SUCCESS!', response);
+
+                // Update mock reservations data
+                if (!mockReservations[date]) {
+                    mockReservations[date] = {};
+                }
+                if (!mockReservations[date][tableId]) {
+                    mockReservations[date][tableId] = [];
+                }
+                mockReservations[date][tableId].push(time); // Add the booked time
+
+                // Show success message
+                const modal = contactForm.closest('.fixed');
+                if (modal) {
+                    modal.innerHTML = `
+                <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+                    <div class="text-center mb-4">
+                        <i class="ri-check-line ri-3x text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-center">Reservation Confirmed!</h3>
+                    <p class="text-gray-600 mb-4 text-center">
+                        Your reservation has been successfully confirmed for ${table} on ${formatDate(date)} at ${time}.
+                        A confirmation email has been sent to ${email}.
+                    </p>
+                    <div class="space-y-3">
+                        <button class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors"
+                                onclick="this.closest('.fixed').remove()">
+                            Close
+                        </button>
+                        <a href="HomePage.html" class="block w-full text-center bg-secondary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors">
+                            Back to Home
+                        </a>
+                    </div>
+                </div>
+                `;
+                }
+
+                // Reset form and selections
+                document.getElementById("reservationForm").reset();
+                document.getElementById("selectedTable").value = "";
+                document.getElementById("reservationTime").value = "";
+                reservationDate.value = dateSelector.value;
+
+                // Refresh tables to show updated availability
+                renderTables();
+
+                // Clear selections
+                selectedTable = null;
+                selectedTimeSlot = null;
+                if (selectedTableElement) {
+                    selectedTableElement.classList.remove("table-selected");
+                    selectedTableElement = null;
+                }
+            })
+            .catch(function(error) {
+                console.error('FAILED...', error);
+                const modal = contactForm.closest('.fixed');
+                modal.innerHTML = `
+            <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+                <div class="text-center mb-4">
+                    <i class="ri-error-warning-line ri-3x text-red-500"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4 text-center">Reservation Failed</h3>
+                <p class="text-gray-600 mb-4 text-center">We couldn't process your reservation. Please try again or contact us directly.</p>
+                <div class="space-y-3">
+                    <button class="w-full bg-primary text-white py-2 px-4 rounded-button hover:bg-opacity-90 transition-colors" onclick="this.closest('.fixed').remove()">Close</button>
+                </div>
+            </div>
+            `;
+                confirmBtn.disabled = false; // Re-enable the button
+            });
+    }
+
+    // Helper function to format dates nicely
+    function formatDate(dateString) {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    }
+
+    // Helper function to ensure consistent time format
+    function formatTime(timeString) {
+        // If timeString is already in 12-hour format with AM/PM (e.g., "7:30 PM")
+        if (timeString.includes('AM') || timeString.includes('PM')) {
+            return timeString;
+        }
+
+        // If timeString is in 24-hour format (e.g., "19:30")
+        const [hours, minutes] = timeString.split(':');
+        const date = new Date();
+        date.setHours(parseInt(hours), parseInt(minutes));
+        return date.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
+    }
 
 </script>
 </body>
