@@ -100,7 +100,12 @@
             <!-- Waiting List Form -->
             <div class="bg-white rounded-lg shadow-lg p-8 animate-slide-in">
                 <h2 class="text-2xl font-bold mb-6 font-playfair">Add Your Name to the List</h2>
-                <form id="waitingListForm" class="space-y-6">
+                <form id="waitingListForm" class="space-y-6" action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="1eda9ba9-2c08-4abf-8464-3a1c0406f7d5">
+                    <input type="hidden" name="subject" value="New Waiting List Request - Fog & Flame">
+                    <input type="hidden" name="redirect" value="https://web3forms.com/success">
+                    <input type="checkbox" name="botcheck" id="" style="display: none;">
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
@@ -176,6 +181,8 @@
                             I agree to receive text and email notifications about my place in the waiting list
                         </label>
                     </div>
+
+                    <div class="h-captcha" data-captcha="true"></div>
 
                     <button type="submit" class="w-full bg-black text-white py-3 px-4 rounded-md hover:bg-gray-800 transition-colors duration-300 flex items-center justify-center font-medium">
                         <i class="ri-user-add-line mr-2"></i>
@@ -392,25 +399,43 @@
             formDataObj[key] = value;
         });
 
-        // Simulate form submission
-        setTimeout(() => {
-            // Display confirmation modal
-            const confirmationDetails = document.getElementById('confirmationDetails');
-            confirmationDetails.innerHTML = `
-                    <p><strong>Name:</strong> ${formDataObj.fullName}</p>
-                    <p><strong>Party Size:</strong> ${formDataObj.partySize} people</p>
-                    <p><strong>Date:</strong> ${formatDate(formDataObj.date)}</p>
-                    <p><strong>Time:</strong> ${formatTimeSlot(formDataObj.timeSlot)}</p>
-                    <p><strong>Reference #:</strong> WL-${generateReferenceNumber()}</p>
-                `;
+        // Display confirmation modal before submitting
+        const confirmationDetails = document.getElementById('confirmationDetails');
+        confirmationDetails.innerHTML = `
+            <p><strong>Name:</strong> ${formDataObj.fullName}</p>
+            <p><strong>Party Size:</strong> ${formDataObj.partySize} people</p>
+            <p><strong>Date:</strong> ${formatDate(formDataObj.date)}</p>
+            <p><strong>Time:</strong> ${formatTimeSlot(formDataObj.timeSlot)}</p>
+            <p><strong>Reference #:</strong> WL-${generateReferenceNumber()}</p>
+        `;
 
-            // Show modal
-            document.getElementById('successModal').classList.remove('hidden');
+        // Show modal
+        document.getElementById('successModal').classList.remove('hidden');
 
-            // Reset form
-            document.getElementById('waitingListForm').reset();
-            dateInput.value = formattedToday;
-        }, 1000);
+        // Now submit the form to Web3Forms
+        const form = e.target;
+        const formAction = form.getAttribute('action');
+        const formMethod = form.getAttribute('method');
+
+        fetch(formAction, {
+            method: formMethod,
+            body: new FormData(form)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Form submitted successfully to Web3Forms');
+                } else {
+                    console.error('Form submission error:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+            });
+
+        // Reset form
+        form.reset();
+        dateInput.value = formattedToday;
     });
 
     // Close modal button
@@ -439,9 +464,7 @@
     function generateReferenceNumber() {
         return Math.floor(100000 + Math.random() * 900000);
     }
-
-
-
 </script>
+
 </body>
 </html>
