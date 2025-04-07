@@ -43,18 +43,13 @@
                     <label class="block text-gray-700 mb-2">
                         <i class="fas fa-envelope mr-2"></i>Email
                     </label>
-                    <input id="login-email" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your email" type="email" required/>
+                    <input class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your email" type="email" required/>
                 </div>
                 <div class="mb-6">
                     <label class="block text-gray-700 mb-2">
                         <i class="fas fa-lock mr-2"></i>Password
                     </label>
-                    <div class="relative">
-                        <input id="login-password" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your password" type="password" required/>
-                        <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
+                    <input class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-black" placeholder="Enter your password" type="password" required/>
                     <a href="#" class="text-sm text-gray-600 hover:text-black mt-2 inline-block">Forgot password?</a>
                 </div>
                 <button class="w-full bg-black text-white p-3 rounded hover:bg-gray-800 transition-colors duration-300 flex justify-center items-center" type="submit">
@@ -124,7 +119,7 @@
         <div class="flex gap-4">
             <a href="#" class="hover:text-gray-300"><i class="fab fa-facebook"></i></a>
             <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
+
         </div>
         <div class="mt-4 md:mt-0 text-sm">
             &copy; 2025 Fog &amp; Flame. All rights reserved.
@@ -132,69 +127,666 @@
     </div>
 </footer>
 
-<script type="module">
-    // Import Supabase client
-    import { supabase } from './src/supabaseClient.js';
-
-    // Password hashing function (same as in signup)
-    async function hashPassword(password) {
-        const encoder = new TextEncoder();
-        const data = encoder.encode(password);
-        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-        return hashHex;
-    }
-
-    // Login form submission
-    document.getElementById('login-form').addEventListener('submit', async function(event) {
+<script>
+    // Navigation button handlers
+    document.getElementById("home-btn").addEventListener("click", function(event) {
         event.preventDefault();
-
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-
-        // Validate email and password
-        if (!email || !password) {
-            alert('Please enter both email and password.');
-            return;
-        }
-
-        // Check if the user exists in the database
-        const { data: userData, error: userError } = await supabase
-            .from('users')
-            .select('*')
-            .eq('email', email)
-            .single();
-
-        if (userError || !userData) {
-            alert('No account found with this email. Please sign up.');
-            return;
-        }
-
-        // Verify the password
-        const hashedPassword = await hashPassword(password);
-        if (hashedPassword !== userData.password_hash) {
-            alert('Incorrect password. Please try again.');
-            return;
-        }
-
-        // If credentials are valid, log the user in
-        alert('Login successful! Redirecting to the home page...');
-        window.location.href = 'HomePage.html'; // Redirect to the home page
+        window.location.href = "HomePage.html";
     });
 
-    // Toggle password visibility
-    document.getElementById('toggle-password').addEventListener('click', function() {
-        const passwordInput = document.getElementById('login-password');
-        const toggleButton = document.getElementById('toggle-password');
+    document.getElementById("menu-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "MenuPage.html"; // Redirect to MenuPage.html
+    });
 
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            toggleButton.innerHTML = '<i class="fas fa-eye-slash"></i>';
-        } else {
-            passwordInput.type = 'password';
-            toggleButton.innerHTML = '<i class="fas fa-eye"></i>';
+    document.getElementById("contact-btn").addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "contact.html";
+    });
+
+    // Guest button functionality
+    document.getElementById("guest-btn").addEventListener("click", function() {
+        window.location.href = "menu.html";
+    });
+
+    // Login form submission
+    document.getElementById("login-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        alert("Login functionality would connect to your backend service here!");
+        // In a real application, you would handle authentication here
+    });
+
+
+
+    // Replace the existing AI Assistant Chat Implementation section with this code
+    // AI Assistant Chat Implementation with Fixed Robot - Ageli
+    document.addEventListener('DOMContentLoaded', function() {
+        // Create the chat container
+        const chatContainer = document.createElement('div');
+        chatContainer.id = 'restaurant-assistant';
+        chatContainer.className = 'fixed right-0 bottom-0 z-50 mr-4 mb-4';
+        document.body.appendChild(chatContainer);
+
+        // Create Ageli container with fixed positioning
+        const ageli = document.createElement('div');
+        ageli.id = 'ageli-robot';
+        ageli.style.position = 'fixed';
+        ageli.style.right = '20px';
+        ageli.style.bottom = '20px';
+        ageli.style.zIndex = '1000';
+        ageli.style.width = '90px';
+        ageli.style.cursor = 'pointer';
+        document.body.appendChild(ageli);
+
+        // Initial state
+        let isOpen = false;
+        let messages = [
+            { id: 1, text: "Hello! I'm Ageli, your personal Fog & Flame assistant. How may I be of service today?", isBot: true }
+        ];
+        let isTyping = false;
+        let speechBubbleVisible = false;
+        let permanentCaptionVisible = true; // New state for permanent caption
+        let speechTimeout = null;
+
+        // Quick questions
+        const quickQuestions = [
+            "What are your hours?",
+            "How can I make a reservation?",
+            "Tell me about your menu",
+            "Where are you located?"
+        ];
+
+        // Add styles for Ageli
+        const style = document.createElement('style');
+        style.textContent = `
+  @keyframes eyeGlow {
+    0%, 100% { box-shadow: 0 0 5px #00b7ff, 0 0 10px #00b7ff; opacity: 0.8; }
+    50% { box-shadow: 0 0 10px #00b7ff, 0 0 20px #00b7ff; opacity: 1; }
+  }
+
+  @keyframes chestGlow {
+    0%, 100% { box-shadow: 0 0 5px #00b7ff, 0 0 10px #00b7ff; opacity: 0.8; }
+    50% { box-shadow: 0 0 10px #00b7ff, 0 0 15px #00b7ff; opacity: 1; }
+  }
+
+  #ageli-robot {
+    transition: transform 0.3s ease;
+  }
+
+  #ageli-robot:hover {
+    transform: scale(1.05);
+  }
+
+  .ageli-speech-bubble {
+    position: absolute;
+    top: -80px;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 16px;
+    font-size: 14px;
+    width: max-content;
+    max-width: 220px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 183, 255, 0.5);
+    z-index: 1010;
+    animation: bubblePulse 2s infinite;
+  }
+
+  @keyframes bubblePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
+
+  .ageli-speech-bubble:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 20px;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.7) transparent;
+  }
+
+  .ageli-permanent-caption {
+    position: absolute;
+    top: -70px;
+    left: -150px; /* Changed from 5% to -150px to move it far left */
+    transform: translateX(0); /* Removed the -50% transformation */
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 16px;
+    font-size: 14px;
+    width: max-content;
+    max-width: 200px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 183, 255, 0.5);
+    z-index: 1010;
+    text-align: left;
+    animation: bubblePulse 2s infinite;
+  }
+
+  .ageli-permanent-caption:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 90%; /* Changed from 30% to 90% to position the pointer near the right */
+    transform: translateX(-50%);
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.7) transparent;
+  }
+
+  .robot-head {
+    background: linear-gradient(135deg, #ffffff, #f5f5f5);
+    border: 1px solid #e0e0e0;
+    border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    overflow: hidden;
+    box-shadow: inset 0 -2px 6px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+  }
+
+  #ageli-robot:hover .robot-head {
+    transform: scale(1.05);
+  }
+
+  .robot-face {
+    position: absolute;
+    background: #111;
+    width: 55px;
+    height: 40px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 70% 70% 60% 60% / 80% 80% 40% 40%;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+  }
+
+  .robot-eyes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .robot-eye {
+    width: 20px;
+    height: 20px;
+    margin: 0 4px;
+    background: #00b7ff;
+    border-radius: 50%;
+    animation: eyeGlow 3s infinite;
+    box-shadow: 0 0 15px rgba(0, 183, 255, 0.8);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .robot-eye::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 7px;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+  }
+
+  .robot-body {
+    background: linear-gradient(135deg, #ffffff, #f5f5f5);
+    border: 1px solid #e0e0e0;
+    border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+    width: 65px;
+    height: 80px;
+    margin: -5px auto 0;
+    position: relative;
+    box-shadow: inset 0 -5px 10px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.15);
+    z-index: 1010;
+  }
+
+  .robot-chest-light {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #00b7ff;
+    border-radius: 50%;
+    left: 50%;
+    top: 33%;
+    transform: translate(-50%, -50%);
+    animation: chestGlow 2s infinite;
+    box-shadow: 0 0 15px rgba(0, 183, 255, 0.8);
+  }
+
+  .robot-detail {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #d0d0d0;
+    border-radius: 50%;
+    border: 1px solid #c0c0c0;
+  }
+
+  .detail-left {
+    left: 25%;
+    top: 50%;
+  }
+
+  .detail-right {
+    right: 25%;
+    top: 50%;
+  }
+
+  .detail-bottom {
+    width: 16px;
+    height: 2px;
+    left: 50%;
+    bottom: 25%;
+    transform: translateX(-50%);
+  }
+
+  /* Robot arms and hands */
+  .robot-arm {
+    position: absolute;
+    width: 12px;
+    height: 40px;
+    background: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    top: 15px;
+    transform-origin: top center;
+    z-index: 1020;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .robot-arm-right {
+    right: -10px;
+    animation: armWavingRight 1.5s infinite;
+  }
+
+  .robot-arm-left {
+    left: -10px;
+    animation: armWavingLeft 1.5s infinite;
+  }
+
+  .robot-hand {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 50%;
+    bottom: -10px;
+    z-index: 1020;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  }
+
+  .robot-hand-right {
+    left: -4px;
+  }
+
+  .robot-hand-left {
+    right: -4px;
+  }
+
+  @keyframes armWavingRight {
+    0%, 100% { transform: rotate(30deg); }
+    25% { transform: rotate(60deg); }
+    50% { transform: rotate(30deg); }
+    75% { transform: rotate(60deg); }
+  }
+
+  @keyframes armWavingLeft {
+    0%, 100% { transform: rotate(-30deg); }
+    25% { transform: rotate(-60deg); }
+    50% { transform: rotate(-30deg); }
+    75% { transform: rotate(-60deg); }
+  }
+
+  .robot-finger {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #e0e0e0;
+    border: 1px solid #d0d0d0;
+    border-radius: 50%;
+  }
+`;
+        document.head.appendChild(style);
+
+        // Render Ageli robot
+        function renderAgeli() {
+            ageli.innerHTML = `
+    <div class="relative">
+      ${permanentCaptionVisible ? `
+        <div class="ageli-permanent-caption">
+          Hi, I'm Ageli! Do you need help?
+        </div>
+      ` : ''}
+
+      ${speechBubbleVisible && !permanentCaptionVisible ? `
+        <div class="ageli-speech-bubble">
+          ${getRandomSpeech()}
+        </div>
+      ` : ''}
+
+      <!-- Robot Head -->
+      <div class="robot-head">
+        <div class="robot-face">
+          <div class="robot-eyes">
+            <div class="robot-eye"></div>
+            <div class="robot-eye"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Robot Body -->
+      <div class="robot-body">
+        <div class="robot-chest-light"></div>
+        <div class="robot-detail detail-left"></div>
+        <div class="robot-detail detail-right"></div>
+        <div class="robot-detail detail-bottom"></div>
+        <div class="robot-arm robot-arm-right">
+          <div class="robot-hand robot-hand-right">
+            <div class="robot-finger" style="top: 5px; left: 4px;"></div>
+            <div class="robot-finger" style="top: 5px; right: 4px;"></div>
+            <div class="robot-finger" style="bottom: 5px; left: 8px;"></div>
+          </div>
+        </div>
+        <div class="robot-arm robot-arm-left">
+          <div class="robot-hand robot-hand-left">
+            <div class="robot-finger" style="top: 5px; left: 4px;"></div>
+            <div class="robot-finger" style="top: 5px; right: 4px;"></div>
+            <div class="robot-finger" style="bottom: 5px; right: 8px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
         }
+
+        // Render the chat button (closed state)
+        function renderChatButton() {
+            // Empty implementation - no chat button displayed
+            chatContainer.innerHTML = '';
+        }
+
+        // Render the chat interface (open state)
+        function renderChatInterface() {
+            let messagesHTML = '';
+            messages.forEach(message => {
+                messagesHTML += `
+      <div class="mb-3 ${message.isBot ? 'text-left' : 'text-right'} animate-fadeIn">
+        <div class="flex ${message.isBot ? 'flex-row' : 'flex-row-reverse'} items-end">
+          ${message.isBot ? `
+            <div class="w-8 h-8 mr-2 rounded-full overflow-hidden" style="background: linear-gradient(135deg, #f0f0f0, #e0e0e0); border: 1px solid #d0d0d0;">
+              <div class="w-full h-full relative flex items-center justify-center">
+                <div class="w-6 h-3 bg-black rounded-full absolute" style="top: 30%;">
+                  <div class="flex justify-center space-x-1 w-full absolute" style="top: 50%; transform: translateY(-50%)">
+                    <div class="w-1.5 h-1.5 rounded-full" style="background: #00b7ff; box-shadow: 0 0 5px #00b7ff;"></div>
+                    <div class="w-1.5 h-1.5 rounded-full" style="background: #00b7ff; box-shadow: 0 0 5px #00b7ff;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ` : ''}
+          <div class="inline-block p-3 rounded-lg max-w-[80%] ${
+                    message.isBot
+                        ? 'bg-gray-100 text-black border border-gray-200'
+                        : 'bg-gray-800 text-white'
+                } shadow-md">
+            ${message.text}
+          </div>
+        </div>
+      </div>
+    `;
+            });
+
+            // Add typing indicator if needed
+            if (isTyping) {
+                messagesHTML += `
+      <div class="text-left mb-3 animate-fadeIn">
+        <div class="flex flex-row items-end">
+          <div class="w-8 h-8 mr-2 rounded-full overflow-hidden" style="background: linear-gradient(135deg, #f0f0f0, #e0e0e0); border: 1px solid #d0d0d0;">
+            <div class="w-full h-full relative flex items-center justify-center">
+              <div class="w-6 h-3 bg-black rounded-full absolute" style="top: 30%;">
+                <div class="flex justify-center space-x-1 w-full absolute" style="top: 50%; transform: translateY(-50%)">
+                  <div class="w-1.5 h-1.5 rounded-full animate-pulse" style="background: #00b7ff; box-shadow: 0 0 5px #00b7ff;"></div>
+                  <div class="w-1.5 h-1.5 rounded-full animate-pulse" style="animation-delay: 0.3s; background: #00b7ff; box-shadow: 0 0 5px #00b7ff;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inline-block p-3 rounded-lg bg-gray-100 text-black border border-gray-200">
+            <div class="flex space-x-1">
+              <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+              <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+              <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+            }
+
+            // Generate quick question buttons
+            let quickQuestionsHTML = '';
+            quickQuestions.forEach(question => {
+                quickQuestionsHTML += `
+      <button class="quick-question text-xs bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-full px-3 py-1 text-gray-700 transition-colors duration-200 mb-1 mr-1">
+        ${question}
+      </button>
+    `;
+            });
+
+            chatContainer.innerHTML = `
+    <div class="bg-white rounded-lg shadow-xl w-80 md:w-96 overflow-hidden flex flex-col animate-fadeIn border border-gray-200">
+      <div class="bg-gray-800 text-white p-4 flex justify-between items-center">
+        <div class="flex items-center">
+          <div class="w-8 h-8 mr-2 rounded-full overflow-hidden" style="background: linear-gradient(135deg, #f0f0f0, #e0e0e0); border: 1px solid #d0d0d0;">
+            <div class="w-full h-full relative flex items-center justify-center">
+              <div class="w-6 h-3 bg-black rounded-full absolute" style="top: 30%;">
+                <div class="flex justify-center space-x-1 w-full absolute" style="top: 50%; transform: translateY(-50%)">
+                  <div class="w-1.5 h-1.5 rounded-full" style="background: #00b7ff; box-shadow: 0 0 5px #00b7ff;"></div>
+                  <div class="w-1.5 h-1.5 rounded-full" style="background: #00b7ff; box-shadow: 0 0 5px #00b7ff;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span class="font-bold">Ageli - Fog & Flame Assistant</span>
+        </div>
+        <button id="close-chat-btn" class="text-white hover:text-gray-300 transition-colors duration-200">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div id="chat-messages" class="h-64 overflow-y-auto p-4 bg-white">
+        ${messagesHTML}
+      </div>
+
+      <div class="border-t border-gray-200">
+        <div class="p-2">
+          <div class="flex flex-wrap gap-1 mb-2">
+            ${quickQuestionsHTML}
+          </div>
+          <form id="chat-form" class="flex items-center">
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Type your question here..."
+              class="flex-1 border border-gray-300 rounded-l-lg p-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
+            />
+            <button
+              type="submit"
+              class="bg-gray-800 text-white p-2 rounded-r-lg hover:bg-gray-700 transition-colors duration-200"
+            >
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  `;
+
+            // Add event listeners
+            document.getElementById('close-chat-btn').addEventListener('click', () => {
+                toggleChat();
+            });
+
+            document.getElementById('chat-form').addEventListener('submit', handleSubmit);
+
+            // Add event listeners to quick questions
+            document.querySelectorAll('.quick-question').forEach(button => {
+                button.addEventListener('click', () => handleQuickQuestion(button.textContent.trim()));
+            });
+
+            // Scroll to bottom of messages
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Toggle chat open/closed
+        function toggleChat() {
+            isOpen = !isOpen;
+            if (isOpen) {
+                renderChatInterface();
+                // Hide Ageli when chat is open
+                ageli.style.display = 'none';
+            } else {
+                renderChatButton();
+                // Show Ageli when chat is closed
+                ageli.style.display = 'block';
+            }
+        }
+
+        // Handle user message submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+
+            if (message === '') return;
+
+            // Add user message
+            messages.push({ id: messages.length + 1, text: message, isBot: false });
+            input.value = '';
+
+            // Re-render and process bot response
+            renderChatInterface();
+            handleBotResponse(message);
+        }
+
+        // Handle quick question selection
+        function handleQuickQuestion(question) {
+            messages.push({ id: messages.length + 1, text: question, isBot: false });
+            renderChatInterface();
+            handleBotResponse(question);
+        }
+
+        // Process bot response
+        function handleBotResponse(userMessage) {
+            isTyping = true;
+            renderChatInterface();
+
+            // Simulate typing delay
+            setTimeout(() => {
+                isTyping = false;
+
+                // Generate response based on user message
+                let botResponse;
+                const lowerCaseMessage = userMessage.toLowerCase();
+
+                if (lowerCaseMessage.includes('hour') || lowerCaseMessage.includes('open')) {
+                    botResponse = "Fog & Flame is open Tuesday to Sunday from 11:00 AM to 10:00 PM. We're closed on Mondays for maintenance and preparation.";
+                } else if (lowerCaseMessage.includes('reservation') || lowerCaseMessage.includes('book') || lowerCaseMessage.includes('table')) {
+                    botResponse = "I'd be delighted to help with a reservation. You can book through our website's reservation page, or by calling us at (555) 123-4567. Weekend bookings should ideally be made 48 hours in advance.";
+                } else if (lowerCaseMessage.includes('menu') || lowerCaseMessage.includes('food') || lowerCaseMessage.includes('dish')) {
+                    botResponse = "The Fog & Flame menu features an exquisite fusion of international cuisines prepared with locally-sourced ingredients. Our renowned chef's specialties include our signature Gourmet Pasta, artisanal Sushi selection, and award-winning desserts.";
+                } else if (lowerCaseMessage.includes('location') || lowerCaseMessage.includes('address') || lowerCaseMessage.includes('where')) {
+                    botResponse = "Fog & Flame is located at 123 Borough High Street, Gourmet District, London SE1. We're conveniently situated just a 5-minute walk from London Bridge Station.";
+                } else if (lowerCaseMessage.includes('price') || lowerCaseMessage.includes('cost') || lowerCaseMessage.includes('expensive')) {
+                    botResponse = "Our main courses range from $18 to $35, with appetizers from $8 to $15. I would recommend our price-fixed tasting menu at $55 per person which includes an appetizer, main course, and dessert - excellent value for the experience.";
+                } else if (lowerCaseMessage.includes('special') || lowerCaseMessage.includes('event')) {
+                    botResponse = "We offer bespoke event hosting for parties of 8 or more. Our chef also prepares seasonal tasting menus and hosts monthly culinary experiences. May I suggest joining our mailing list for updates on upcoming special events?";
+                } else if (lowerCaseMessage.includes('allerg') || lowerCaseMessage.includes('dietary') || lowerCaseMessage.includes('vegan') || lowerCaseMessage.includes('vegetarian')) {
+                    botResponse = "We accommodate all dietary requirements including vegetarian, vegan, gluten-free options, and food allergies. Our chef takes great pride in creating exceptional dishes for every guest, regardless of dietary restrictions.";
+                } else {
+                    botResponse = "It's my pleasure to assist you with your inquiry about Fog & Flame. Is there something specific about our menu, reservations, special events, or location that I can help clarify for you?";
+                }
+
+                messages.push({ id: messages.length + 1, text: botResponse, isBot: true });
+                renderChatInterface();
+            }, 1500);
+        }
+
+        // Get random speech for Ageli
+        function getRandomSpeech() {
+            const phrases = [
+                "Need assistance with Fog & Flame?",
+                "Would you like to make a reservation?",
+                "May I help you today?",
+                "Questions about our menu?",
+                "Hi there! I'm Ageli!",
+                "Looking for dining options?",
+                "Need recommendations?",
+                "Can I suggest our chef's specials?",
+                "Welcome to Fog & Flame!",
+                "How may I assist you today?",
+                "Our specials today are amazing!",
+                "Can I help with your reservation?"
+            ];
+            return phrases[Math.floor(Math.random() * phrases.length)];
+        }
+
+        // Show speech bubble
+        function showSpeechBubble() {
+            // Only show speech bubble if permanent caption is not visible
+            if (!permanentCaptionVisible) {
+                speechBubbleVisible = true;
+                renderAgeli();
+
+                // Hide speech bubble after a few seconds
+                clearTimeout(speechTimeout);
+                speechTimeout = setTimeout(() => {
+                    speechBubbleVisible = false;
+                    renderAgeli();
+                }, 5000);
+            }
+        }
+
+        // Initialize
+        renderAgeli();
+        renderChatButton();
+
+        // Add click event to Ageli
+        ageli.addEventListener('click', function() {
+            clearTimeout(speechTimeout);
+            speechBubbleVisible = false;
+            permanentCaptionVisible = false; // Hide permanent caption when clicked
+            renderAgeli();
+            if (!isOpen) {
+                toggleChat();
+            } else {
+                // If chat is already open, hide it
+                toggleChat();
+            }
+        });
+
+        // Show initial speech bubble after a delay
+        setTimeout(showSpeechBubble, 2000);
+
+        // Periodically show speech bubbles
+        setInterval(() => {
+            if (!isOpen && Math.random() > 0.7) {
+                showSpeechBubble();
+            }
+        }, 15000);
     });
 </script>
 </body>
