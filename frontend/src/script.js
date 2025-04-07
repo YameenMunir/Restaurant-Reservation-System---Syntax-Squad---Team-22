@@ -70,7 +70,7 @@ function SendMail(event) {
     };
 
     // First send the email notification
-    emailjs.send('service_9rrhczs', 'template_2pz1h3y', templateParams)
+    emailjs.send(import.meta.env.EMAILJS_SERVICE_ID, import.meta.env.EMAILJS_TEMPLATE_ID, templateParams)
         .then(function(response) {
             console.log('Email sent successfully:', response);
 
