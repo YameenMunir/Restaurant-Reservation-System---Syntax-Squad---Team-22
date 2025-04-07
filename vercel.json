@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "public": true,
+  "routes": [
+    { "src": "/", "dest": "/frontend/HomePage.html" },
+    { "src": "/home", "dest": "/frontend/HomePage.html" },
+    { "src": "/about", "dest": "/frontend/AboutPage.html" },
+    { "src": "/menu", "dest": "/frontend/MenuPage.html" },
+    { "src": "/login", "dest": "/frontend/LoginPage.html" },
+    { "src": "/signup", "dest": "/frontend/SignUpPage.html" },
+    { "src": "/contact", "dest": "/frontend/contact.html" },
+    { "src": "/waiting-list", "dest": "/frontend/WaitingListPage.html" },
+    { "src": "/reservation", "dest": "/frontend/reservationPage.html" }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/frontend/$1.html" }
+  ],
+  "buildCommand": "echo 'No build needed'",
+  "outputDirectory": "frontend",
+  "framework": "html"
+}
