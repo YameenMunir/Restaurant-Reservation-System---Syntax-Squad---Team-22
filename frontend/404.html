@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting to Fog & Flame...</title>
+    <script>
+        // Configuration
+        const APP_BASE_PATH = '/Restaurant-Reservation-System---Syntax-Squad---Team-22/frontend/';
+        const DEFAULT_ROUTE = 'HomePage.html';
+
+        const ROUTES = {
+            '': DEFAULT_ROUTE,
+            'home': 'HomePage.html',
+            'about': 'AboutPage.html',
+            'menu': 'MenuPage.html',
+            'login': 'LoginPage.html',
+            'signup': 'SignUpPage.html',
+            'contact': 'contact.html',
+            'waiting-list': 'WaitingListPage.html',
+            'reservation': 'reservationPage.html'
+        };
+
+        // Get the clean path segment
+        function getCurrentPath() {
+            const path = window.location.pathname;
+            const segments = path.split('/').filter(segment => segment.trim() !== '');
+            return segments.length > 0 ? segments[segments.length - 1].toLowerCase() : '';
+        }
+
+        // Perform the redirection
+        function redirect() {
+            const currentPath = getCurrentPath();
+            const targetPage = ROUTES[currentPath] || DEFAULT_ROUTE;
+            const redirectUrl = APP_BASE_PATH + targetPage;
+
+            try {
+                window.location.href = redirectUrl;
+            } catch (error) {
+                console.error('Redirect failed:', error);
+                // Fallback to default route
+                window.location.href = APP_BASE_PATH + DEFAULT_ROUTE;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', redirect);
+    </script>
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=/Restaurant-Reservation-System---Syntax-Squad---Team-22/frontend/HomePage.html">
+    </noscript>
+</head>
+<body>
+<p>Redirecting to Fog & Flame...</p>
+<p>If you are not redirected automatically, <a href="/Restaurant-Reservation-System---Syntax-Squad---Team-22/frontend/HomePage.html">click here</a>.</p>
+</body>
+</html>
