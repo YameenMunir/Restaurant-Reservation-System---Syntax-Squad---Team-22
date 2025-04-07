@@ -1,465 +1,459 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Fog &amp; Flame</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Fog & Flame</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
-
+        :where([class^="ri-"])::before { content: "\f3c2"; }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
-        /* Add these styles to your existing CSS */
 
-        .flame-container {
+        .heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .logo {
+            font-family: 'Pacifico', cursive;
+        }
+
+        .hero-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://public.readdy.ai/ai/img_res/fd404799a24fa3757f864b9d52a746c4.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .input-effect {
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin-bottom: 30px;
         }
 
-        .flame-base {
+        .input-effect input, .input-effect textarea {
+            border: 0;
+            padding: 12px 0;
+            border-bottom: 1px solid #ccc;
+            background-color: transparent;
+            width: 100%;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-effect input:focus, .input-effect textarea:focus {
+            outline: none;
+            border-bottom: 1px solid #000;
+        }
+
+        .input-effect label {
             position: absolute;
-            bottom: 0;
-            width: 16px;
-            height: 20px;
-            background: #ff5722;
-            border-radius: 50% 50% 35% 35% / 50% 50% 50% 50%;
-            box-shadow: 0 0 10px #ff5722, 0 0 20px #ff5722;
-            animation: flicker 0.8s ease-in-out infinite alternate;
-            z-index: 2;
+            top: 10px;
+            left: 0;
+            color: #999;
+            transition: all 0.3s;
+            pointer-events: none;
         }
 
-        .flame-middle {
-            position: absolute;
-            bottom: 2px;
-            width: 14px;
-            height: 18px;
-            background: #ff9800;
-            border-radius: 50% 50% 35% 35% / 50% 50% 50% 50%;
-            box-shadow: 0 0 10px #ff9800, 0 0 20px #ff9800;
-            animation: flicker 0.9s ease-in-out infinite alternate;
-            animation-delay: 0.1s;
-            z-index: 3;
+        .input-effect input:focus ~ label,
+        .input-effect input:valid ~ label,
+        .input-effect textarea:focus ~ label,
+        .input-effect textarea:valid ~ label {
+            top: -15px;
+            font-size: 12px;
+            color: #000;
         }
 
-        .flame-top {
-            position: absolute;
-            bottom: 10px;
-            width: 10px;
-            height: 12px;
-            background: #ffeb3b;
-            border-radius: 50% 50% 35% 35% / 50% 50% 50% 50%;
-            box-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffeb3b;
-            animation: flicker 0.6s ease-in-out infinite alternate;
-            animation-delay: 0.2s;
-            z-index: 4;
+        .contact-card {
+            transition: transform 0.3s ease;
         }
 
-        @keyframes flicker {
-            0%, 100% {
-                transform: scale(1) rotate(-2deg);
-                opacity: 0.9;
-            }
-            25% {
-                transform: scale(1.05) rotate(1deg);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(0.95) rotate(-1deg);
-                opacity: 0.85;
-            }
-            75% {
-                transform: scale(1.05) rotate(2deg);
-                opacity: 1;
-            }
-        }
-        /* Custom animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translate3d(0, 40px, 0);
-            }
-            to {
-                opacity: 1;
-                transform: translate3d(0, 0, 0);
-            }
+        .contact-card:hover {
+            transform: translateY(-5px);
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
-            }
-            70% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translate3d(100%, 0, 0);
-                visibility: visible;
-            }
-            to {
-                transform: translate3d(0, 0, 0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                transform: translate3d(-100%, 0, 0);
-                visibility: visible;
-            }
-            to {
-                transform: translate3d(0, 0, 0);
-            }
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
-        }
-
-        @keyframes rotateIn {
-            from {
-                transform: rotate(-10deg) scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: rotate(0) scale(1);
-                opacity: 1;
-            }
-        }
-
-        .animate-fadeIn {
-            animation: fadeIn 1s ease;
-        }
-
-        .animate-fadeInUp {
-            animation: fadeInUp 1s ease;
-        }
-
-        .animate-pulse {
-            animation: pulse 2s infinite;
-        }
-
-        .animate-slideInRight {
-            animation: slideInRight 1s ease;
-        }
-
-        .animate-slideInLeft {
-            animation: slideInLeft 1s ease;
-        }
-
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .animate-rotateIn {
-            animation: rotateIn 0.8s ease;
-        }
-
-        .dish-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .dish-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-item {
+        .custom-btn {
+            transition: all 0.3s ease;
+            overflow: hidden;
             position: relative;
+            z-index: 1;
         }
 
-        .nav-item::after {
+        .custom-btn:after {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: white;
-            transition: width 0.3s ease;
-        }
-
-        .nav-item:hover::after {
-            width: 100%;
-        }
-
-        /* Parallax effect for hero image */
-        .parallax {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        /* Slideshow fade transition */
-        .slide {
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
+            height: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .custom-btn:hover:after {
             height: 100%;
-            object-fit: cover;
-        }
-
-        .slide.active {
-            opacity: 1;
         }
     </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#111827",
+                        secondary: "#4B5563",
+                        accent: "#0c0000",
+                    },
+                },
+            },
+        };
+    </script>
 </head>
-<body class="bg-gray-100">
-
-<!-- Navbar -->
-<nav class="bg-black text-white p-4 flex justify-between items-center fixed w-full z-50 animate-fadeIn">
-    <div class="text-xl font-bold flex items-center">
-        <div class="flame-container mr-2 h-8 w-8 relative">
-            <div class="flame-base"></div>
-            <div class="flame-middle"></div>
-            <div class="flame-top"></div>
-        </div>
-        <span class="transform hover:scale-105 transition-transform duration-300">Fog &amp; Flame</span>
-    </div>
-    <div class="space-x-6">
-        <a class="px-4 py-2 bg-white text-black rounded-full hover:bg-gray-300 transition-colors duration-300" href="#" id="login-btn">Log in</a>
-        <a class="nav-item hover:text-gray-300 transition-colors duration-300" href="reservationPage.html">Reservations</a>
-        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="about-btn" href="AboutPage.html">About</a>
-        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="contact-btn" href="contact.html">Contact</a>
-        <a class="nav-item hover:text-gray-300 transition-colors duration-300" id="menu-btn" href="MenuPage.html">Menu</a>
-    </div>
-</nav>
-
-
-
-<!-- Spacer for fixed navbar -->
-<div class="h-16"></div>
-
-<!-- Hero Section with Slideshow -->
-<section class="relative h-[75vh] overflow-hidden" id="hero-section">
-    <!-- Slideshow container -->
-    <div class="slideshow-container h-full">
-        <img class="slide active" src="https://storage.googleapis.com/a1aa/image/8Qh6eF0osUSoMtVJ832vehzkcUK0wVvbr0k6AD454Ow.jpg" alt="Delicious gourmet dish">
-        <img class="slide" src="https://storage.googleapis.com/a1aa/image/XYDBxClEvyGeiNR_t65-ezqXRxoFA8rpRys_iysdbIM.jpg" alt="Gourmet pasta">
-        <img class="slide" src="https://storage.googleapis.com/a1aa/image/5vY1zE8MlVMnPn76SzDj88C2s46IwiExv4sXc0UsyU4.jpg" alt="Exquisite sushi">
-        <img class="slide" src="https://storage.googleapis.com/a1aa/image/JD5bT1RjOr1bL-ant-njqSRKO1V0HAGvW7_ZPztJjIo.jpg" alt="Decadent dessert">
-    </div>
-    <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-center text-white">
-        <h1 class="text-5xl font-bold mb-4 opacity-0 animate-float" id="hero-title">Welcome to Fog &amp; Flame</h1>
-        <p class="mt-2 text-xl opacity-0" id="hero-subtitle">Reserve your table now for an unforgettable dining experience.</p>
-        <button id="reserve-btn" class="mt-6 bg-black text-white py-3 px-6 rounded-full border-2 border-white hover:bg-white hover:text-black transition-all duration-300 opacity-0 focus:outline-none transform hover:scale-105">
-            Reserve a Table
+<body class="min-h-screen bg-gray-50">
+<header class="fixed top-0 left-0 right-0 bg-primary z-50">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="/frontend/public" class="logo text-2xl text-white">Fog & Flame</a>
+        <nav class="hidden md:flex gap-8">
+            <a href="/frontend/public" class="text-gray-300 hover:text-white transition-colors">Home</a>
+            <a href="/reservation" class="text-gray-300 hover:text-white transition-colors">Reservation</a>
+            <a href="/contact" class="text-white border-b-2 border-white pb-1">Contact</a>
+        </nav>
+        <button class="md:hidden text-white">
+            <i class="ri-menu-line text-2xl"></i>
         </button>
     </div>
-</section>3
+</header>
 
-<!-- Featured Dishes Section -->
-<section class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold mb-10 text-center opacity-0" id="dishes-title">Featured Dishes</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 opacity-0" id="dishes-container">
-            <!-- Dish 1 -->
-            <div class="dish-card bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="overflow-hidden h-48">
-                    <img alt="A plate of gourmet pasta" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                         src="https://storage.googleapis.com/a1aa/image/XYDBxClEvyGeiNR_t65-ezqXRxoFA8rpRys_iysdbIM.jpg"/>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold">Gourmet Pasta</h3>
-                    <p class="mt-3 text-gray-600">A delightful blend of flavors with freshly made pasta and organic ingredients.</p>
-                    <button class="mt-4 bg-black text-white py-2 px-4 rounded-full hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">Order Now</button>
-                </div>
-            </div>
-            <!-- Dish 2 -->
-            <div class="dish-card bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="overflow-hidden h-48">
-                    <img alt="A variety of exquisite sushi" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                         src="https://storage.googleapis.com/a1aa/image/5vY1zE8MlVMnPn76SzDj88C2s46IwiExv4sXc0UsyU4.jpg"/>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold">Exquisite Sushi</h3>
-                    <p class="mt-3 text-gray-600">Experience the finest sushi crafted with precision and passion.</p>
-                    <button class="mt-4 bg-black text-white py-2 px-4 rounded-full hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">Order Now</button>
-                </div>
-            </div>
-            <!-- Dish 3 -->
-            <div class="dish-card bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="overflow-hidden h-48">
-                    <img alt="A decadent chocolate dessert" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                         src="https://storage.googleapis.com/a1aa/image/JD5bT1RjOr1bL-ant-njqSRKO1V0HAGvW7_ZPztJjIo.jpg"/>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold">Decadent Dessert</h3>
-                    <p class="mt-3 text-gray-600">Indulge in a sweet finale with our luxurious chocolate creations.</p>
-                    <button class="mt-4 bg-black text-white py-2 px-4 rounded-full hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">Order Now</button>
-                </div>
-            </div>
-        </div>
+<!-- Hero Section -->
+<section class="hero-image w-full h-64 md:h-96 flex items-center justify-center">
+    <div class="text-center">
+        <h1 class="heading text-white text-4xl md:text-5xl font-bold">Get in Touch</h1>
+        <p class="text-gray-200 mt-4 max-w-xl mx-auto px-4">We'd love to hear from you. Whether you have a question about our menu, need to make a reservation, or want to inquire about special events.</p>
     </div>
 </section>
 
-<!-- Footer -->
-<footer class="bg-black text-white py-8">
-    <div class="container mx-auto px-4">
-        <div class="flex flex-col md:flex-row justify-between items-center">
-            <p class="mb-4 md:mb-0">© 2025. All rights reserved.</p>
-            <div class="flex space-x-6">
-                <a class="text-2xl hover:text-gray-400 transition-colors duration-300 transform hover:scale-110" href="#"><i class="fab fa-facebook-f"></i></a>
-                <a class="text-2xl hover:text-gray-400 transition-colors duration-300 transform hover:scale-110" href="#"><i class="fab fa-instagram"></i></a>
+<main class="py-16 px-4">
+    <div class="max-w-7xl mx-auto">
+        <!-- Contact Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div class="contact-card bg-white rounded-lg shadow-md p-8 text-center">
+                <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="ri-map-pin-2-line text-2xl text-primary"></i>
+                </div>
+                <h3 class="heading text-lg font-semibold mb-2">Visit Us</h3>
+                <p class="text-gray-600">123 Gourmet Street<br>London, UK</p>
+                <a href="https://maps.google.com" target="_blank" class="inline-block mt-4 text-accent hover:underline">View on Map</a>
+            </div>
+
+            <div class="contact-card bg-white rounded-lg shadow-md p-8 text-center">
+                <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="ri-phone-line text-2xl text-primary"></i>
+                </div>
+                <h3 class="heading text-lg font-semibold mb-2">Call Us</h3>
+                <p class="text-gray-600">+44 20 1234 5678</p>
+                <p class="text-gray-500 text-sm mt-1">Mon-Sun: 10:00 - 22:00</p>
+                <a href="tel:+442012345678" class="inline-block mt-4 text-accent hover:underline">Call Now</a>
+            </div>
+
+            <div class="contact-card bg-white rounded-lg shadow-md p-8 text-center">
+                <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="ri-mail-line text-2xl text-primary"></i>
+                </div>
+                <h3 class="heading text-lg font-semibold mb-2">Email Us</h3>
+                <p class="text-gray-600">fogandflame@restaurant.com</p>
+                <p class="text-gray-500 text-sm mt-1">We'll respond within 24 hours</p>
+                <a href="mailto:fogandflame@restaurant.com" class="inline-block mt-4 text-accent hover:underline">Send Email</a>
+            </div>
+        </div>
+
+        <!-- Contact Form Section -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <div class="p-8 md:p-12">
+                    <h2 class="heading text-2xl font-semibold mb-8">Send Us a Message</h2>
+                    <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                        <!-- Web3Forms Access Key -->
+                        <input type="hidden" name="access_key" value="1eda9ba9-2c08-4abf-8464-3a1c0406f7d5">
+                        <!-- Optional Hidden Fields -->
+                        <input type="hidden" name="subject" value="New Message from Fog & Flame Contact Form">
+                        <input type="hidden" name="from_name" value="Fog & Flame Contact Form">
+                        <input type="checkbox" name="botcheck" style="display: none;">
+
+                        <!-- Form Fields -->
+                        <div class="input-effect">
+                            <input type="text" id="name" name="name" required>
+                            <label>Full Name</label>
+                        </div>
+
+                        <div class="input-effect">
+                            <input type="email" id="email" name="email" required>
+                            <label>Email Address</label>
+                        </div>
+
+                        <div class="input-effect">
+                            <input type="tel" id="phone" name="phone">
+                            <label>Phone Number (Optional)</label>
+                        </div>
+
+                        <div class="input-effect">
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                            <label>Your Message</label>
+                        </div>
+
+                        <div class="flex items-center mb-8">
+                            <input type="checkbox" id="newsletter" name="newsletter" class="mr-2">
+                            <label for="newsletter" class="text-gray-600 text-sm">Subscribe to our newsletter for special offers</label>
+                        </div>
+
+                        <button type="submit" class="custom-btn bg-primary text-white py-3 px-8 rounded-full font-medium hover:shadow-lg">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-gray-100 p-8 md:p-12 flex flex-col justify-between">
+                    <div>
+                        <h2 class="heading text-2xl font-semibold mb-6">Visit Our Restaurant</h2>
+                        <div class="space-y-4 mb-8">
+                            <p class="text-gray-700">Experience the unique ambiance and exquisite cuisine at Fog & Flame, where culinary art meets exceptional hospitality.</p>
+
+                            <div>
+                                <h3 class="font-semibold mb-2">Opening Hours</h3>
+                                <div class="grid grid-cols-2 gap-2 text-gray-600">
+                                    <div>Monday - Friday</div>
+                                    <div>12:00 - 23:00</div>
+                                    <div>Saturday</div>
+                                    <div>12:00 - 00:00</div>
+                                    <div>Sunday</div>
+                                    <div>12:00 - 22:00</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold mb-2">Follow Us</h3>
+                            <div class="flex space-x-4">
+                                <a href="#" class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+                                    <i class="ri-facebook-fill text-primary"></i>
+                                </a>
+                                <a href="#" class="bg-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+                                    <i class="ri-instagram-line text-primary"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <a href="/reservation" class="inline-block bg-accent text-white py-3 px-8 rounded-full font-medium hover:bg-accent/90 transition-colors">
+                            Make a Reservation
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="mt-16 rounded-lg overflow-hidden shadow-md h-96 relative">
+            <img src="https://public.readdy.ai/gen_page/map_placeholder_1280x720.png" alt="Location Map" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+                <div class="text-center text-white p-8">
+                    <h3 class="heading text-3xl font-semibold mb-4">Find Us</h3>
+                    <p class="mb-6">123 Gourmet Street, London, UK</p>
+                    <a href="https://maps.google.com" target="_blank" class="inline-block bg-white text-primary py-3 px-8 rounded-full font-medium hover:bg-gray-100 transition-colors">
+                        Get Directions
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="mt-16">
+            <h2 class="heading text-3xl font-semibold text-center mb-12">Frequently Asked Questions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="heading text-lg font-semibold mb-3">Do you offer private dining?</h3>
+                    <p class="text-gray-600">Yes, we offer private dining options for special occasions. Please contact us for more information about our private dining rooms and catering services.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="heading text-lg font-semibold mb-3">Can I make changes to my reservation?</h3>
+                    <p class="text-gray-600">Yes, you can modify your reservation up to 24 hours before your scheduled time. Please call us or use our online booking system.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="heading text-lg font-semibold mb-3">Do you cater to dietary restrictions?</h3>
+                    <p class="text-gray-600">Absolutely! We can accommodate various dietary needs including vegetarian, vegan, gluten-free, and allergen-specific requests. Please inform us when making your reservation.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="heading text-lg font-semibold mb-3">Is there a dress code?</h3>
+                    <p class="text-gray-600">We maintain a smart casual dress code. While formal attire is not required, we ask that guests refrain from wearing athletic wear, beachwear, or overly casual clothing.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-primary text-white pt-12 pb-6">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div>
+                <h3 class="logo text-2xl mb-4">Fog & Flame</h3>
+                <p class="text-gray-300 mb-4">A culinary journey through modern and traditional flavors in the heart of London.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                        <i class="ri-facebook-fill"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                        <i class="ri-instagram-line"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="font-semibold text-lg mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="/frontend/public" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
+                    <li><a href="/menu" class="text-gray-300 hover:text-white transition-colors">Menu</a></li>
+                    <li><a href="/reservation" class="text-gray-300 hover:text-white transition-colors">Reservation</a></li>
+                    <li><a href="/contact" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="font-semibold text-lg mb-4">Contact Info</h3>
+                <ul class="space-y-2 text-gray-300">
+                    <li class="flex items-center gap-2">
+                        <i class="ri-map-pin-2-line"></i>
+                        <span>123 Gourmet Street, London, UK</span>
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i class="ri-phone-line"></i>
+                        <span>+44 20 1234 5678</span>
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i class="ri-mail-line"></i>
+                        <span>fogandflame@restaurant.com</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="font-semibold text-lg mb-4">Newsletter</h3>
+                <p class="text-gray-300 mb-4">Subscribe to our newsletter for special offers and updates.</p>
+                <form class="flex">
+                    <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-md text-gray-800 w-full focus:outline-none">
+                    <button type="submit" class="bg-accent px-4 py-2 rounded-r-md hover:bg-accent/80 transition-colors">
+                        <i class="ri-send-plane-fill"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-400 text-sm">© 2023 Fog & Flame. All Rights Reserved.</p>
+            <div class="flex space-x-4 mt-4 md:mt-0">
+                <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
             </div>
         </div>
     </div>
 </footer>
-<!-- JavaScript -->
+
+<!-- Success Modal -->
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-green-100 rounded-full">
+                <i class="ri-check-line text-green-500 text-3xl"></i>
+            </div>
+            <h3 class="heading text-xl font-semibold mb-2">Message Sent Successfully!</h3>
+            <p class="text-gray-600 mb-6">Thank you for reaching out. We'll get back to you as soon as possible.</p>
+            <button onclick="closeModal()" class="custom-btn bg-primary text-white py-2 px-6 rounded-full hover:shadow-lg transition-colors">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
+
 <script>
-    // Animation for hero section
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(() => {
-            document.getElementById('hero-title').classList.add('animate-rotateIn');
-            document.getElementById('hero-title').style.opacity = '1';
-        }, 300);
-
-        setTimeout(() => {
-            document.getElementById('hero-subtitle').classList.add('animate-fadeInUp');
-            document.getElementById('hero-subtitle').style.opacity = '1';
-        }, 800);
-
-        setTimeout(() => {
-            const reserveBtn = document.getElementById('reserve-btn');
-            reserveBtn.classList.add('animate-fadeInUp');
-            reserveBtn.style.opacity = '1';
-
-            // Add pulse effect on hover
-            reserveBtn.addEventListener('mouseenter', function() {
-                this.classList.add('animate-pulse');
-            });
-
-            reserveBtn.addEventListener('mouseleave', function() {
-                this.classList.remove('animate-pulse');
-            });
-        }, 1200);
-
-        // Setup image slideshow
-        setupSlideshow();
-    });
-
-    // Food image slideshow function
-    function setupSlideshow() {
-        const slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
-
-        function showSlide(index) {
-            // Hide all slides
-            slides.forEach(slide => {
-                slide.classList.remove('active');
-            });
-
-            // Show the current slide
-            slides[index].classList.add('active');
-            slides[index].classList.add('animate-fadeIn');
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
-
-        // Change slide every 3 seconds
-        setInterval(nextSlide, 3000);
+    function closeModal() {
+        document.getElementById("successModal").classList.add("hidden");
     }
 
-    // Animation for dishes section with staggered animation
-    const dishesObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                if (entry.target.id === 'dishes-title') {
-                    entry.target.classList.add('animate-fadeInUp');
-                    entry.target.style.opacity = '1';
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+        e.preventDefault();
 
-                    setTimeout(() => {
-                        const dishesContainer = document.getElementById('dishes-container');
-                        dishesContainer.style.opacity = '1';
+        // Show loading state
+        const submitButton = this.querySelector("button[type='submit']");
+        submitButton.disabled = true;
+        submitButton.innerHTML = "Sending...";
 
-                        // Staggered animation for dish cards
-                        const dishCards = document.querySelectorAll('.dish-card');
-                        dishCards.forEach((card, index) => {
-                            setTimeout(() => {
-                                card.classList.add('animate-fadeInUp');
-                            }, index * 200);
-                        });
-                    }, 400);
+        // Submit the form to Web3Forms
+        const formData = new FormData(this);
+        fetch(this.action, {
+            method: "POST",
+            body: formData,
+            headers: {
+                Accept: "application/json",
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show success modal
+                    document.getElementById("successModal").classList.remove("hidden");
+                    this.reset();
+
+                    // Reset form labels
+                    const labels = document.querySelectorAll('.input-effect label');
+                    labels.forEach(label => {
+                        label.style.top = '10px';
+                        label.style.fontSize = '16px';
+                        label.style.color = '#999';
+                    });
+                } else {
+                    alert("There was an error submitting the form. Please try again.");
                 }
-                dishesObserver.unobserve(entry.target);
+            })
+            .catch(error => {
+                alert("There was an error submitting the form. Please try again.");
+            })
+            .finally(() => {
+                // Reset button state
+                submitButton.disabled = false;
+                submitButton.innerHTML = "Send Message";
+            });
+    });
+
+    // Handle input focus for floating labels
+    const inputs = document.querySelectorAll('.input-effect input, .input-effect textarea');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.nextElementSibling.style.top = '-15px';
+            this.nextElementSibling.style.fontSize = '12px';
+            this.nextElementSibling.style.color = '#000';
+        });
+
+        input.addEventListener('blur', function() {
+            if (this.value === '') {
+                this.nextElementSibling.style.top = '10px';
+                this.nextElementSibling.style.fontSize = '16px';
+                this.nextElementSibling.style.color = '#999';
             }
         });
-    }, { threshold: 0.1 });
 
-    dishesObserver.observe(document.getElementById('dishes-title'));
-
-    // Parallax effect for hero section
-    window.addEventListener('scroll', function() {
-        const scrollPosition = window.pageYOffset;
-        const heroSection = document.getElementById('hero-section');
-        const slides = heroSection.querySelectorAll('.slide');
-
-        slides.forEach(slide => {
-            if (slide.classList.contains('active')) {
-                slide.style.transform = `scale(${1 + scrollPosition * 0.0005}) translateY(${scrollPosition * 0.2}px)`;
-            }
-        });
+        // Initialize for any pre-filled inputs
+        if (input.value !== '') {
+            input.nextElementSibling.style.top = '-15px';
+            input.nextElementSibling.style.fontSize = '12px';
+            input.nextElementSibling.style.color = '#000';
+        }
     });
-
-
-
-    // Redirections
-    document.getElementById("reserve-btn").addEventListener("click", function() {
-        window.location.href = "reservationPage.html";
-    });
-
-    document.getElementById("contact-btn").addEventListener("click", function(event) {
-        event.preventDefault();
-        window.location.href = "contact.html";
-    });
-
-    document.getElementById("login-btn").addEventListener("click", function(event) {
-        event.preventDefault();
-        window.location.href = "LoginPage.html";
-    });
-
-    document.getElementById("menu-btn").addEventListener("click", function(event) {
-        event.preventDefault();
-        window.location.href = "MenuPage.html";
-    });
-
 
 
     // Replace the existing AI Assistant Chat Implementation section with this code
@@ -1092,68 +1086,6 @@
             }
         }, 15000);
     });
-
-
-</script>
-
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check if user has seen the intro already
-        const hasSeenIntro = localStorage.getItem('fogFlameIntroSeen');
-
-        if (!hasSeenIntro) {
-            // Create a temporary intro container,
-            const introFrame = document.createElement('iframe');
-            introFrame.style.position = 'fixed';
-            introFrame.style.top = '0';
-            introFrame.style.left = '0';
-            introFrame.style.width = '100vw';
-            introFrame.style.height = '100vh';
-            introFrame.style.border = 'none';
-            introFrame.style.zIndex = '9999';
-            introFrame.src = 'fog-flame-intro.html'; // Path to the intro HTML file
-
-            // Prevent scrolling while intro is playing
-            document.body.style.overflow = 'hidden';
-
-            // Add the intro frame to the document
-            document.body.appendChild(introFrame);
-
-            // Set the cookie to remember that user has seen the intro
-            localStorage.setItem('fogFlameIntroSeen', 'true');
-
-            // Remove the intro after it completes.
-            setTimeout(() => {
-                introFrame.remove();
-                document.body.style.overflow = '';
-            }, 8500); // Slightly longer than the animation to ensure smooth transition
-        }
-
-        // Add a button to watch the intro again (optional)
-        const footer = document.querySelector('footer');
-        if (footer) {
-            const watchIntroAgain = document.createElement('a');
-            watchIntroAgain.href = '#';
-            watchIntroAgain.style.color = '#fff';
-            watchIntroAgain.style.marginLeft = '15px';
-            watchIntroAgain.style.fontSize = '0.9rem';
-            watchIntroAgain.textContent = 'Watch Intro';
-
-            watchIntroAgain.addEventListener('click', function(e) {
-                e.preventDefault();
-                localStorage.removeItem('fogFlameIntroSeen');
-                window.location.reload();
-            });
-
-            footer.querySelector('.container').appendChild(watchIntroAgain);
-        }
-    });
 </script>
 </body>
-
 </html>
-
-
-
