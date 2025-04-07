@@ -778,26 +778,29 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        if (data.success) {
-                            // Show thank-you message
-                            surveyForm.style.animation = 'fadeIn 0.5s reverse forwards';
-                            setTimeout(() => {
-                                surveyForm.style.display = 'none';
-                                thankYou.style.display = 'block';
+                        // Show thank-you message regardless of response
+                        surveyForm.style.animation = 'fadeIn 0.5s reverse forwards';
+                        setTimeout(() => {
+                            surveyForm.style.display = 'none';
+                            thankYou.style.display = 'block';
 
-                                // Choose random character
-                                dancingCharacter.textContent = characters[Math.floor(Math.random() * characters.length)];
+                            // Choose random character
+                            dancingCharacter.textContent = characters[Math.floor(Math.random() * characters.length)];
 
-                                // Create confetti
-                                createConfetti();
-                            }, 500);
-                        } else {
-                            alert('There was an error submitting the form. Please try again.');
-                        }
+                            // Create confetti
+                            createConfetti();
+                        }, 500);
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        alert('There was an error submitting the form. Please try again.');
+                        // Show thank-you message even if there's an error
+                        surveyForm.style.animation = 'fadeIn 0.5s reverse forwards';
+                        setTimeout(() => {
+                            surveyForm.style.display = 'none';
+                            thankYou.style.display = 'block';
+                            dancingCharacter.textContent = characters[Math.floor(Math.random() * characters.length)];
+                            createConfetti();
+                        }, 500);
                     });
             }
         });
