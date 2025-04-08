@@ -335,12 +335,10 @@
       <div class="flex space-x-6">
         <a class="text-2xl hover:text-gray-400 transition-colors duration-300 transform hover:scale-110" href="#"><i class="fab fa-facebook-f"></i></a>
         <a class="text-2xl hover:text-gray-400 transition-colors duration-300 transform hover:scale-110" href="#"><i class="fab fa-instagram"></i></a>
-        <a class="text-2xl hover:text-gray-400 transition-colors duration-300 transform hover:scale-110" href="#"><i class="fab fa-twitter"></i></a>
       </div>
     </div>
   </div>
 </footer>
-
 <!-- JavaScript -->
 <script>
   // Animation for hero section
@@ -1095,7 +1093,10 @@
     }, 15000);
   });
 
+
 </script>
+
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -1103,7 +1104,7 @@
     const hasSeenIntro = localStorage.getItem('fogFlameIntroSeen');
 
     if (!hasSeenIntro) {
-      // Create a temporary intro container
+      // Create a temporary intro container,
       const introFrame = document.createElement('iframe');
       introFrame.style.position = 'fixed';
       introFrame.style.top = '0';
@@ -1123,7 +1124,7 @@
       // Set the cookie to remember that user has seen the intro
       localStorage.setItem('fogFlameIntroSeen', 'true');
 
-      // Remove the intro after it completes
+      // Remove the intro after it completes.
       setTimeout(() => {
         introFrame.remove();
         document.body.style.overflow = '';
